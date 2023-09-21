@@ -20,6 +20,42 @@ class BaseAssert {
 	/**
 	 * @phpstan-return PromiseInterface<null>
 	 */
+	protected function assertEquals(mixed $expected, mixed $actual, string $message = '') : PromiseInterface {
+		Assert::eq($expected, $actual, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertNotEquals(mixed $expected, mixed $actual, string $message = '') : PromiseInterface {
+		Assert::notEq($expected, $actual, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertStringContainsString(string $needle, string $haystack, string $message = '') : PromiseInterface {
+		Assert::contains($haystack, $needle, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertStringNotContainsString(string $needle, string $haystack, string $message = '') : PromiseInterface {
+		Assert::notContains($haystack, $needle, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	protected function assertNotSame(mixed $expected, mixed $actual, string $message = '') : PromiseInterface {
 		Assert::notSame($expected, $actual, $message);
 

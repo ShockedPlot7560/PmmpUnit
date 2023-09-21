@@ -11,6 +11,7 @@ use pocketmine\plugin\ResourceProvider;
 use pocketmine\scheduler\ClosureTask;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
+use ReflectionClass;
 use ShockedPlot7560\UnitTest\framework\result\FailedTest;
 use ShockedPlot7560\UnitTest\framework\result\FatalTest;
 use ShockedPlot7560\UnitTest\framework\result\ServerCrashedException;
@@ -18,10 +19,14 @@ use ShockedPlot7560\UnitTest\framework\result\SuccessTest;
 use ShockedPlot7560\UnitTest\framework\result\TestResults;
 use ShockedPlot7560\UnitTest\framework\RunnableTest;
 use ShockedPlot7560\UnitTest\framework\TestSuite;
+use ShockedPlot7560\UnitTest\players\PlayerBag;
+use ShockedPlot7560\UnitTest\players\TestPlayerManager;
 
 class UnitTest extends PluginBase {
 	use SingletonTrait;
 	private RunnableTest $test;
+	private TestPlayerManager $playerManager;
+	private PlayerBag $playerBag;
 
 	public function __construct(PluginLoader $loader, Server $server, PluginDescription $description, string $dataFolder, string $file, ResourceProvider $resourceProvider) {
 		self::setInstance($this);
@@ -39,7 +44,22 @@ class UnitTest extends PluginBase {
 	}
 
 	protected function onLoad() : void {
+		// prevent server waiting, so we can run tests faster for CI
+		$reflectionServer = new ReflectionClass(Server::getInstance());
+		$startTimeProperty = $reflectionServer->getProperty("startTime");
+		$startTimeProperty->setValue(Server::getInstance(), time() - 240);
+
+		$this->playerManager = new TestPlayerManager($this);
+		$this->playerBag = new PlayerBag();
 		$this->test->onLoad();
+	}
+
+	public function getTestPlayerManager() : TestPlayerManager {
+		return $this->playerManager;
+	}
+
+	public function getPlayerBag() : PlayerBag {
+		return $this->playerBag;
 	}
 
 	protected function onEnable() : void {

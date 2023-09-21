@@ -15,21 +15,23 @@ class TestMethod implements RunnableTest {
 	}
 
 	public function run() : PromiseInterface {
-		return $this->setUp()
-			->then(function () : PromiseInterface {
-				return $this->method->invoke($this->class->newInstanceWithoutConstructor())
-					->finally(fn (mixed $ret = null) => $this->tearDown($ret));
+		$test = $this->class->newInstanceWithoutConstructor();
+
+		return $this->setUp($test)
+			->then(function () use ($test) : PromiseInterface {
+				return $this->method->invoke($test)
+					->finally(fn (mixed $ret = null) => $this->tearDown($test, $ret));
 			})
-			->catch(fn (mixed $ret = null) => $this->tearDown($ret));
+			->catch(fn (mixed $ret = null) => $this->tearDown($test, $ret));
 	}
 
 	/**
 	 * @return PromiseInterface<null>
 	 */
-	public function tearDown(mixed $exception = null) : PromiseInterface {
+	public function tearDown(TestCase $test, mixed $exception = null) : PromiseInterface {
 		$tearDownMethod = $this->class->getMethod("tearDown");
 
-		return $tearDownMethod->invoke($this->class->newInstanceWithoutConstructor())
+		return $tearDownMethod->invoke($test)
 			->finally(function () use ($exception) : void {
 				if ($exception !== null && $exception instanceof Throwable) {
 					throw $exception;
@@ -40,10 +42,10 @@ class TestMethod implements RunnableTest {
 	/**
 	 * @return PromiseInterface<null>
 	 */
-	public function setUp() : PromiseInterface {
+	public function setUp(TestCase $test) : PromiseInterface {
 		$setUpMethod = $this->class->getMethod("setUp");
 
-		return $setUpMethod->invoke($this->class->newInstanceWithoutConstructor());
+		return $setUpMethod->invoke($test);
 	}
 
 	public function __toString() : string {
