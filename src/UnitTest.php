@@ -10,8 +10,10 @@ use pocketmine\plugin\PluginLoader;
 use pocketmine\plugin\ResourceProvider;
 use pocketmine\scheduler\ClosureTask;
 use pocketmine\Server;
+use pocketmine\utils\Process;
 use pocketmine\utils\SingletonTrait;
 use ReflectionClass;
+use RuntimeException;
 use ShockedPlot7560\UnitTest\framework\result\FailedTest;
 use ShockedPlot7560\UnitTest\framework\result\FatalTest;
 use ShockedPlot7560\UnitTest\framework\result\ServerCrashedException;
@@ -30,6 +32,17 @@ class UnitTest extends PluginBase {
 
 	public function __construct(PluginLoader $loader, Server $server, PluginDescription $description, string $dataFolder, string $file, ResourceProvider $resourceProvider) {
 		self::setInstance($this);
+
+		$vendorDir = dirname(__DIR__) . "/vendor";
+		if (is_dir($vendorDir . "/pocketmine")) {
+			$server->getLogger()->info("Found pocketmine vendor folder, installing composer dependencies without dev");
+			$exit = Process::execute("cd " . dirname(__DIR__) . " && composer install --no-dev --prefer-dist --optimize-autoloader", $stdout, $stderr);
+			if ($exit !== 0) {
+				throw new RuntimeException("Failed to run composer install: " . $stdout . " " . $stderr);
+			} else {
+				$server->getLogger()->info("Composer install successful");
+			}
+		}
 
 		include_once dirname(__DIR__) . "/vendor/autoload.php";
 

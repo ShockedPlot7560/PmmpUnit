@@ -8,8 +8,7 @@ namespace ShockedPlot7560\UnitTest\players\util;
  * @phpstan-template TKey of string|int
  * @phpstan-template TVal of mixed
  */
-final class SortedMap{
-
+final class SortedMap {
 	/**
 	 * @var array<string|int, mixed>
 	 * @phpstan-var array<TKey, TVal>
@@ -22,39 +21,30 @@ final class SortedMap{
 	 */
 	private array $key_scores = [];
 
-	public function __construct(){
+	public function __construct() {
 	}
 
 	/**
-	 * @param string|int $key
-	 * @return bool
-	 *
 	 * @phpstan-param TKey $key
 	 */
-	public function contains(string|int $key) : bool{
+	public function contains(string|int $key) : bool {
 		return isset($this->entries[$key]);
 	}
 
 	/**
-	 * @param string|int $key
-	 * @param mixed $value
-	 * @param int $score
-	 *
 	 * @phpstan-param TKey $key
 	 * @phpstan-param TVal $value
 	 */
-	public function set(string|int $key, mixed $value, int $score) : void{
+	public function set(string|int $key, mixed $value, int $score) : void {
 		$this->entries[$key] = $value;
 		$this->key_scores[$key] = $score;
-		uksort($this->key_scores, fn(string $k1, string $k2) : int => $this->key_scores[$k1] <=> $this->key_scores[$k2]);
+		uksort($this->key_scores, fn (string $k1, string $k2) : int => $this->key_scores[$k1] <=> $this->key_scores[$k2]);
 	}
 
 	/**
-	 * @param string|int $key
-	 *
 	 * @phpstan-param TKey $key
 	 */
-	public function remove(string|int $key) : void{
+	public function remove(string|int $key) : void {
 		unset($this->entries[$key], $this->key_scores[$key]);
 	}
 
@@ -63,7 +53,7 @@ final class SortedMap{
 	 *
 	 * @phpstan-return array<TKey, TVal>
 	 */
-	public function getAll() : array{
+	public function getAll() : array {
 		return $this->entries;
 	}
 }

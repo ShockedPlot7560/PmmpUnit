@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ShockedPlot7560\UnitTest\players\behaviour;
 
-use ShockedPlot7560\UnitTest\players\TestPlayer;
-use ShockedPlot7560\UnitTest\players\TestPlayerManager;
 use pocketmine\event\entity\EntityItemPickupEvent;
 use pocketmine\event\EventPriority;
 use pocketmine\item\Armor;
 use pocketmine\player\Player;
+use ShockedPlot7560\UnitTest\players\TestPlayer;
+use ShockedPlot7560\UnitTest\players\TestPlayerManager;
 
 final class AutoEquipArmorTestPlayerBehaviour implements TestPlayerBehaviour {
 	private const METADATA_KEY = "behaviour:auto_equip_armor";

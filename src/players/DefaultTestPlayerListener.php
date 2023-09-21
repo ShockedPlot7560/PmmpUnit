@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace ShockedPlot7560\UnitTest\players;
 
-use ShockedPlot7560\UnitTest\players\listener\TestPlayerListener;
-use ShockedPlot7560\UnitTest\players\network\TestPlayerNetworkSession;
-use ShockedPlot7560\UnitTest\players\network\listener\ClosureTestPlayerPacketListener;
 use pocketmine\network\mcpe\convert\TypeConverter;
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\ChangeDimensionPacket;
@@ -21,6 +18,9 @@ use pocketmine\network\mcpe\protocol\types\BlockPosition;
 use pocketmine\network\mcpe\protocol\types\PlayerAction;
 use pocketmine\player\Player;
 use pocketmine\scheduler\ClosureTask;
+use ShockedPlot7560\UnitTest\players\listener\TestPlayerListener;
+use ShockedPlot7560\UnitTest\players\network\listener\ClosureTestPlayerPacketListener;
+use ShockedPlot7560\UnitTest\players\network\TestPlayerNetworkSession;
 
 final class DefaultTestPlayerListener implements TestPlayerListener {
 	public function __construct(

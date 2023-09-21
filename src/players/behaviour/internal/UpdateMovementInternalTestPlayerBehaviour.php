@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace ShockedPlot7560\UnitTest\players\behaviour\internal;
 
-use ShockedPlot7560\UnitTest\players\behaviour\TestPlayerBehaviour;
-use ShockedPlot7560\UnitTest\players\TestPlayer;
-use ShockedPlot7560\UnitTest\players\TestPlayerManager;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Human;
 use pocketmine\entity\Location;
@@ -14,6 +11,9 @@ use pocketmine\math\Vector3;
 use pocketmine\player\Player;
 use ReflectionMethod;
 use ReflectionProperty;
+use ShockedPlot7560\UnitTest\players\behaviour\TestPlayerBehaviour;
+use ShockedPlot7560\UnitTest\players\TestPlayer;
+use ShockedPlot7560\UnitTest\players\TestPlayerManager;
 
 final class UpdateMovementInternalTestPlayerBehaviour implements TestPlayerBehaviour {
 	use InternalTestPlayerBehaviourTrait;

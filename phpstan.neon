@@ -1,0 +1,6 @@
+includes:
+	- tests/phpstan/actual-problem.neon
+parameters:
+    level: 8
+    paths:
+        - src

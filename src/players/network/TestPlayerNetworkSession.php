@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace ShockedPlot7560\UnitTest\players\network;
 
-use ShockedPlot7560\UnitTest\players\network\listener\TestPlayerPacketListener;
-use ShockedPlot7560\UnitTest\players\network\listener\TestPlayerSpecificPacketListener;
 use pocketmine\network\mcpe\compression\Compressor;
 use pocketmine\network\mcpe\convert\TypeConverter;
 use pocketmine\network\mcpe\NetworkSession;
@@ -22,6 +20,8 @@ use pocketmine\Server;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
+use ShockedPlot7560\UnitTest\players\network\listener\TestPlayerPacketListener;
+use ShockedPlot7560\UnitTest\players\network\listener\TestPlayerSpecificPacketListener;
 
 class TestPlayerNetworkSession extends NetworkSession {
 	/** @var TestPlayerPacketListener[] */

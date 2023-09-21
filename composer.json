@@ -1,6 +1,24 @@
 {
+    "name": "shockedplot7560/unit-test",
+    "description": "Basic Unit testing plugin for Pocketmine",
+    "authors": [
+        {
+            "name": "ShockedPlot7560",
+            "email": "no-reply@tchallon.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ShockedPlot7560\\UnitTest\\": "src/"
+        }
+    },
     "require": {
         "react/promise": "^3.0",
         "webmozart/assert": "^1.11"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "*",
+        "phpstan/phpstan": "^1.10",
+        "pocketmine/pocketmine-mp": "^5.6"
     }
 }
