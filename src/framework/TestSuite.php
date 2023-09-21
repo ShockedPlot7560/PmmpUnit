@@ -33,12 +33,37 @@ class TestSuite implements RunnableTest {
 	}
 
 	public function run() : PromiseInterface {
+		return $this->runRec($this->getIterator());
+	}
+
+	public function onLoad() : void {
+		foreach ($this->getIterator() as $test) {
+			$test->onLoad();
+		}
+	}
+
+	public function onEnable() : void {
+		foreach ($this->getIterator() as $test) {
+			$test->onEnable();
+		}
+	}
+
+	public function onDisable() : void {
+		foreach ($this->getIterator() as $test) {
+			$test->onDisable();
+		}
+	}
+
+	/**
+	 * @phpstan-return Iterator<RunnableTest>
+	 */
+	private function getIterator() : Iterator {
 		$iterator = new ArrayIterator($this->tests);
 		foreach ($this->testMethods as $testMethod) {
 			$iterator->append($testMethod);
 		}
 
-		return $this->runRec($iterator);
+		return $iterator;
 	}
 
 	/**

@@ -2,17 +2,96 @@
 
 namespace ShockedPlot7560\UnitTest\framework;
 
+use Countable;
 use React\Promise\PromiseInterface;
 use function React\Promise\resolve;
 use Webmozart\Assert\Assert;
 
 class BaseAssert {
-	protected function assertSame($expected, $actual, string $message = '') : PromiseInterface {
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertSame(mixed $expected, mixed $actual, string $message = '') : PromiseInterface {
 		Assert::same($expected, $actual, $message);
 
 		return $this->assertSyncPromise();
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertNotSame(mixed $expected, mixed $actual, string $message = '') : PromiseInterface {
+		Assert::notSame($expected, $actual, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertInstanceOf(mixed $expected, string|object $actual, string $message = '') : PromiseInterface {
+		Assert::isInstanceOf($actual, $expected, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertNotInstanceOf(mixed $expected, string|object $actual, string $message = '') : PromiseInterface {
+		Assert::notInstanceOf($actual, $expected, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertEmpty(mixed $actual, string $message = '') : PromiseInterface {
+		Assert::isEmpty($actual, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertNotEmpty(mixed $actual, string $message = '') : PromiseInterface {
+		Assert::notEmpty($actual, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertCount(int $expected, array|Countable $actual, string $message = '') : PromiseInterface {
+		Assert::count($actual, $expected, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertTrue(bool $actual, string $message = '') : PromiseInterface {
+		Assert::true($actual, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertFalse(bool $actual, string $message = '') : PromiseInterface {
+		Assert::false($actual, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	private function assertSyncPromise() : PromiseInterface {
 		return resolve(null);
 	}

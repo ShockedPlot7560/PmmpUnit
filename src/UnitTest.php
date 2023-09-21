@@ -8,6 +8,7 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\plugin\PluginDescription;
 use pocketmine\plugin\PluginLoader;
 use pocketmine\plugin\ResourceProvider;
+use pocketmine\scheduler\ClosureTask;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
 use ShockedPlot7560\UnitTest\framework\result\FailedTest;
@@ -23,31 +24,36 @@ class UnitTest extends PluginBase {
 	private RunnableTest $test;
 
 	public function __construct(PluginLoader $loader, Server $server, PluginDescription $description, string $dataFolder, string $file, ResourceProvider $resourceProvider) {
-		parent::__construct($loader, $server, $description, $dataFolder, $file, $resourceProvider);
 		self::setInstance($this);
 
 		include_once dirname(__DIR__) . "/vendor/autoload.php";
 
-		$unitFolder = $this->getDataFolder() . "tests";
+		$unitFolder = $dataFolder . "/tests";
 		if (!is_dir($unitFolder)) {
-			$this->getLogger()->warning("Unit test folder not found, creating one...");
+			$server->getLogger()->warning("Unit test folder not found, creating one...");
 			mkdir($unitFolder);
 		}
 
 		$this->test = TestSuite::fromDirectory($unitFolder);
+		parent::__construct($loader, $server, $description, $dataFolder, $file, $resourceProvider);
 	}
 
 	protected function onLoad() : void {
+		$this->test->onLoad();
 	}
 
 	protected function onEnable() : void {
-		$this->test->run()
-			->then(function () {
-				$this->finish();
-			});
+		$this->test->onEnable();
+		$this->getScheduler()->scheduleDelayedTask(new ClosureTask(function () {
+			$this->test->run()
+				->then(function () {
+					$this->finish();
+				});
+		}), 0);
 	}
 
 	public function onDisable() : void {
+		$this->test->onDisable();
 		if (TestSuite::$currentTest !== null) {
 			global $lastExceptionError, $lastError;
 			if (isset($lastExceptionError)) {
@@ -93,7 +99,7 @@ class UnitTest extends PluginBase {
 			$this->getLogger()->emergency("Failed tests:");
 			$i = 0;
 			foreach ($failedTests as $error) {
-				$this->getLogger()->emergency(++$i . ") " . $error->test->__toString() . ": " . $error->message);
+				$this->getLogger()->emergency(++$i . ") " . $error->test->__toString() . ": " . $error->throwable->getMessage());
 			}
 		}
 
