@@ -10,7 +10,7 @@ use ShockedPlot7560\UnitTest\framework\TestCase;
 
 class Utils {
 	/**
-     * @param ReflectionClass<TestCase> $class
+	 * @param ReflectionClass<TestCase> $class
 	 * @return ReflectionMethod[]
 	 */
 	public static function getTestMethodsInTestCase(ReflectionClass $class) : array {
