@@ -4,9 +4,9 @@ namespace ShockedPlot7560\UnitTest\framework\result;
 
 use ShockedPlot7560\UnitTest\framework\TestMethod;
 
-readonly class SuccessTest {
+class SuccessTest implements TestResult {
 	public function __construct(
-		public TestMethod $test
+		public readonly TestMethod $test
 	) {
 	}
 }

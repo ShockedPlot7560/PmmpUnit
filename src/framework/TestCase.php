@@ -9,10 +9,16 @@ use ShockedPlot7560\UnitTest\UnitTest;
 class TestCase extends BaseAssert {
 	use PocketmineSpecificAssert;
 
+    /**
+     * @phpstan-return PromiseInterface<null>
+     */
 	public function setUp() : PromiseInterface {
 		return resolve(null);
 	}
 
+    /**
+     * @phpstan-return PromiseInterface<null>
+     */
 	public function tearDown() : PromiseInterface {
 		foreach ($this->spawnedPlayers as $player) {
 			UnitTest::getInstance()->getTestPlayerManager()->removePlayer($player->getPlayer());

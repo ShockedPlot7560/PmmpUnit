@@ -14,6 +14,7 @@ class TestSuiteLoader {
 
 	public function load(string $suiteClassFile) : ReflectionClass {
 		$suiteClassFile = realpath($suiteClassFile);
+		assert($suiteClassFile !== false);
 		$suiteClassName = $this->classNameFromFileName($suiteClassFile);
 		$loadedClasses = $this->loadSuiteClassFile($suiteClassFile);
 
@@ -73,11 +74,13 @@ class TestSuiteLoader {
 		foreach ($loadedClasses as $loadedClass) {
 			$class = new ReflectionClass($loadedClass);
 
-			if (!isset(self::$fileToClassesMap[$class->getFileName()])) {
-				self::$fileToClassesMap[$class->getFileName()] = [];
+			$fileName = $class->getFileName();
+			assert($fileName !== false);
+			if (!isset(self::$fileToClassesMap[$fileName])) {
+				self::$fileToClassesMap[$fileName] = [];
 			}
 
-			self::$fileToClassesMap[$class->getFileName()][] = $class->getName();
+			self::$fileToClassesMap[$fileName][] = $class->getName();
 		}
 
 		self::$declaredClasses = get_declared_classes();

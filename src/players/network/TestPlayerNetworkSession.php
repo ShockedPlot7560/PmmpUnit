@@ -53,6 +53,7 @@ class TestPlayerNetworkSession extends NetworkSession {
 				break;
 			}
 		}
+		/** @var ReflectionClass<RakLibInterface> $reflection */
 		$reflection = new ReflectionClass($rakLibInterface);
 		$packetContect = $reflection->getProperty("packetSerializerContext");
 		$value = $packetContect->getValue($rakLibInterface);
@@ -73,12 +74,15 @@ class TestPlayerNetworkSession extends NetworkSession {
 		unset($this->packetListeners[spl_object_id($listener)]);
 	}
 
+	/**
+	 * @phpstan-param class-string<ClientboundPacket> $packet
+	 */
 	public function registerSpecificPacketListener(string $packet, TestPlayerPacketListener $listener) : void {
 		if ($this->specificPacketListener === null) {
 			$this->specificPacketListener = new TestPlayerSpecificPacketListener();
 			$this->registerPacketListener($this->specificPacketListener);
 		}
-		$this->specificPacketListener->register($packet, $listener);
+		$this->specificPacketListener?->register($packet, $listener);
 	}
 
 	public function unregisterSpecificPacketListener(string $packet, TestPlayerPacketListener $listener) : void {
@@ -114,7 +118,7 @@ class TestPlayerNetworkSession extends NetworkSession {
 			$this->onPlayerCreated($player);
 		}, function () : void {
 			$this->disconnect("Player creation failed");
-			$this->playerAddResolver->reject();
+			$this->playerAddResolver?->reject();
 		});
 	}
 
@@ -122,6 +126,6 @@ class TestPlayerNetworkSession extends NetworkSession {
 		// call parent private method
 		$rm = new ReflectionMethod(NetworkSession::class, "onPlayerCreated");
 		$rm->invoke($this, $player);
-		$this->playerAddResolver->resolve($player);
+		$this->playerAddResolver?->resolve($player);
 	}
 }

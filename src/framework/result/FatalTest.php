@@ -5,10 +5,10 @@ namespace ShockedPlot7560\UnitTest\framework\result;
 use ShockedPlot7560\UnitTest\framework\TestMethod;
 use Throwable;
 
-readonly class FatalTest {
+class FatalTest implements TestResult {
 	public function __construct(
-		public TestMethod $test,
-		public Throwable $throwable
+		public readonly TestMethod $test,
+		public readonly Throwable $throwable
 	) {
 	}
 }

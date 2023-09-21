@@ -13,6 +13,9 @@ trait PocketmineSpecificAssert {
 	/** @var TestPlayer[] */
 	private array $spawnedPlayers = [];
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	protected function promisePlayerReceiveMessageEquals(string|Translatable $message, TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
 		$message = $this->translate($player, $message);
 
@@ -22,6 +25,9 @@ trait PocketmineSpecificAssert {
 			});
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	protected function promisePlayerReceiveMessageNotEquals(string|Translatable $message, TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
 		$message = $this->translate($player, $message);
 
@@ -31,6 +37,9 @@ trait PocketmineSpecificAssert {
 			});
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	protected function promisePlayerReceiveMessageContains(string|Translatable $needle, TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
 		$needle = $this->translate($player, $needle);
 
@@ -40,6 +49,9 @@ trait PocketmineSpecificAssert {
 			});
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	protected function promisePlayerReceiveMessageNotContains(string|Translatable $needle, TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
 		$needle = $this->translate($player, $needle);
 
@@ -49,6 +61,9 @@ trait PocketmineSpecificAssert {
 			});
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	protected function promisePlayerReceivePopup(string|Translatable $message, TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
 		$message = $this->translate($player, $message);
 
@@ -65,6 +80,9 @@ trait PocketmineSpecificAssert {
 			});
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<string>
+	 */
 	private function promisePlayerReceiveMessage(TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
 		return $player->registerSpecificSendPacketListener(TextPacket::class)
 			->then(function (TextPacket $packet) use ($cleanPacket) : string {
@@ -78,6 +96,9 @@ trait PocketmineSpecificAssert {
 			});
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<TestPlayer>
+	 */
 	protected function getPlayer() : PromiseInterface {
 		return UnitTest::getInstance()->getPlayerBag()->shift()
 			->then(function (TestPlayer $player) : TestPlayer {

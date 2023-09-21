@@ -8,6 +8,9 @@ use ShockedPlot7560\UnitTest\framework\loader\exception\ClassDoesntExtendTestCas
 use ShockedPlot7560\UnitTest\framework\TestCase;
 
 class TestSuiteChecker {
+	/**
+	 * @param ReflectionClass<TestCase> $class
+	 */
 	public static function check(ReflectionClass $class) : void {
 		if (!$class->isSubclassOf(TestCase::class)) {
 			throw new ClassDoesntExtendTestCaseException($class);

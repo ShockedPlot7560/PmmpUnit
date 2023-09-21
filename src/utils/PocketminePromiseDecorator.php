@@ -2,21 +2,30 @@
 
 namespace ShockedPlot7560\UnitTest\Utils;
 
+use Exception;
 use pocketmine\promise\Promise;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 
+/**
+ * @phpstan-template-covariant TValue
+ * @phpstan-implements PromiseInterface<TValue>
+ */
 class PocketminePromiseDecorator implements PromiseInterface {
+	/** @var Deferred<TValue> */
 	private Deferred $deferred;
 
+	/**
+	 * @param Promise<TValue> $toDecorate
+	 */
 	public function __construct(
 		private Promise $toDecorate
 	) {
 		$this->deferred = new Deferred();
 		$this->toDecorate->onCompletion(function ($value) : void {
 			$this->deferred->resolve($value);
-		}, function ($reason) : void {
-			$this->deferred->reject($reason);
+		}, function () : void {
+			$this->deferred->reject(new Exception("Promise rejected"));
 		});
 	}
 

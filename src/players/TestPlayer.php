@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace ShockedPlot7560\UnitTest\players;
 
+use AssertionError;
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\ClientboundPacket;
+use pocketmine\network\mcpe\protocol\ServerboundPacket;
 use pocketmine\player\Player;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -26,7 +28,7 @@ final class TestPlayer {
 
 	public function __construct(TestPlayerNetworkSession $session) {
 		$this->session = $session;
-		$this->player = $session->getPlayer();
+		$this->player = $session->getPlayer() ?? throw new AssertionError("Player is null");
 		$this->behaviours = new SortedMap();
 	}
 
@@ -89,6 +91,9 @@ final class TestPlayer {
 		unset($this->metadata[$key]);
 	}
 
+	/**
+	 * @return PromiseInterface<ClientboundPacket>
+	 */
 	public function registerSpecificSendPacketListener(string $packetName) : PromiseInterface {
 		$promise = new Deferred();
 		$this->getNetworkSession()->registerSpecificPacketListener($packetName, new ClosureTestPlayerPacketListener(
@@ -100,6 +105,9 @@ final class TestPlayer {
 		return $promise->promise();
 	}
 
+	/**
+	 * @return PromiseInterface<ClientboundPacket>
+	 */
 	public function registerSendPacketListener() : PromiseInterface {
 		$promise = new Deferred();
 		$this->getNetworkSession()->registerPacketListener(new ClosureTestPlayerPacketListener(
@@ -111,6 +119,9 @@ final class TestPlayer {
 		return $promise->promise();
 	}
 
+	/**
+	 * @return PromiseInterface<ServerboundPacket>
+	 */
 	public function registerSpecificReceivePacketListener(string $packetName) : PromiseInterface {
 		$promise = TestPlayerManager::getInstance()->getPacketReceiveListener()->addListener(
 			$this->getPlayer()->getName(),

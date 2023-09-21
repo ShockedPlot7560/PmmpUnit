@@ -28,6 +28,9 @@ class TestResults {
 		}
 	}
 
+	/**
+	 * @return TestResult[]
+	 */
 	public static function getTestResults() : array {
 		return self::$testResults;
 	}

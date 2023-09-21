@@ -6,9 +6,11 @@ use React\Promise\PromiseInterface;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
+use ShockedPlot7560\UnitTest\framework\TestCase;
 
 class Utils {
 	/**
+     * @param ReflectionClass<TestCase> $class
 	 * @return ReflectionMethod[]
 	 */
 	public static function getTestMethodsInTestCase(ReflectionClass $class) : array {

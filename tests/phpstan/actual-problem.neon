@@ -1,2 +1,51 @@
 parameters:
-	ignoreErrors: []
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$onFulfilled of method React\\\\Promise\\\\PromiseInterface\\<pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\>\\:\\:then\\(\\) expects \\(callable\\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\)\\: \\(React\\\\Promise\\\\PromiseInterface\\<null\\>\\|null\\)\\)\\|null, Closure\\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\TextPacket\\)\\: React\\\\Promise\\\\PromiseInterface\\<null\\> given\\.$#"
+			count: 1
+			path: ../../src/framework/TestCase.php
+
+		-
+			message: "#^Parameter \\#1 \\$onFulfilled of method React\\\\Promise\\\\PromiseInterface\\<pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\>\\:\\:then\\(\\) expects \\(callable\\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\)\\: \\(React\\\\Promise\\\\PromiseInterface\\<string\\>\\|string\\)\\)\\|null, Closure\\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\TextPacket\\)\\: string given\\.$#"
+			count: 1
+			path: ../../src/framework/TestCase.php
+
+		-
+			message: "#^Method ShockedPlot7560\\\\UnitTest\\\\framework\\\\loader\\\\TestSuiteLoader\\:\\:load\\(\\) return type with generic class ReflectionClass does not specify its types\\: T$#"
+			count: 1
+			path: ../../src/framework/loader/TestSuiteLoader.php
+
+		-
+			message: "#^Static property ShockedPlot7560\\\\UnitTest\\\\framework\\\\loader\\\\TestSuiteLoader\\:\\:\\$fileToClassesMap \\(array\\<non\\-empty\\-string, array\\<int, class\\-string\\>\\>\\) does not accept non\\-empty\\-array\\<string, array\\<int, class\\-string\\>\\>\\.$#"
+			count: 2
+			path: ../../src/framework/loader/TestSuiteLoader.php
+
+		-
+			message: "#^Method ShockedPlot7560\\\\UnitTest\\\\framework\\\\loader\\\\exception\\\\ClassAbstractException\\:\\:__construct\\(\\) has parameter \\$className with generic class ReflectionClass but does not specify its types\\: T$#"
+			count: 1
+			path: ../../src/framework/loader/exception/ClassAbstractException.php
+
+		-
+			message: "#^Method ShockedPlot7560\\\\UnitTest\\\\framework\\\\loader\\\\exception\\\\ClassDoesntExtendTestCaseException\\:\\:__construct\\(\\) has parameter \\$className with generic class ReflectionClass but does not specify its types\\: T$#"
+			count: 1
+			path: ../../src/framework/loader/exception/ClassDoesntExtendTestCaseException.php
+
+		-
+			message: "#^Parameter \\#1 \\$packet of method ShockedPlot7560\\\\UnitTest\\\\players\\\\network\\\\TestPlayerNetworkSession\\:\\:registerSpecificPacketListener\\(\\) expects class\\-string\\<pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\>, string given\\.$#"
+			count: 1
+			path: ../../src/players/TestPlayer.php
+
+		-
+			message: "#^Call to an undefined method ReflectionType\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: ../../src/players/TestPlayerManager.php
+
+		-
+			message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<T of object\\>\\|T of object, pocketmine\\\\network\\\\mcpe\\\\raklib\\\\RakLibInterface\\|null given\\.$#"
+			count: 1
+			path: ../../src/players/network/TestPlayerNetworkSession.php
+
+		-
+			message: "#^Parameter \\#2 \\$callback of function uksort expects callable\\(TKey, TKey\\)\\: int, Closure\\(string, string\\)\\: int\\<\\-1, 1\\> given\\.$#"
+			count: 1
+			path: ../../src/players/util/SortedMap.php

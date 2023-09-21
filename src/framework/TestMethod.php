@@ -8,12 +8,18 @@ use ReflectionMethod;
 use Throwable;
 
 class TestMethod implements RunnableTest {
+	/**
+	 * @param ReflectionClass<TestCase> $class
+	 */
 	public function __construct(
 		private ReflectionClass $class,
 		private ReflectionMethod $method,
 	) {
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	public function run() : PromiseInterface {
 		$test = $this->class->newInstanceWithoutConstructor();
 
@@ -28,7 +34,7 @@ class TestMethod implements RunnableTest {
 	/**
 	 * @return PromiseInterface<null>
 	 */
-	public function tearDown(TestCase $test, mixed $exception = null) : PromiseInterface {
+	public function tearDown(object $test, mixed $exception = null) : PromiseInterface {
 		$tearDownMethod = $this->class->getMethod("tearDown");
 
 		return $tearDownMethod->invoke($test)
@@ -42,7 +48,7 @@ class TestMethod implements RunnableTest {
 	/**
 	 * @return PromiseInterface<null>
 	 */
-	public function setUp(TestCase $test) : PromiseInterface {
+	public function setUp(object $test) : PromiseInterface {
 		$setUpMethod = $this->class->getMethod("setUp");
 
 		return $setUpMethod->invoke($test);

@@ -28,10 +28,13 @@ class TestSuite implements RunnableTest {
 	public static ?RunnableTest $currentTest = null;
 
 	final private function __construct(
-		private string $name
+		public readonly string $name
 	) {
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	public function run() : PromiseInterface {
 		return $this->runRec($this->getIterator());
 	}
@@ -68,13 +71,15 @@ class TestSuite implements RunnableTest {
 
 	/**
 	 * @param Iterator<RunnableTest> $iterator
+	 * @phpstan-return PromiseInterface<null>
 	 */
-	private function runRec(Iterator $iterator) {
+	private function runRec(Iterator $iterator) : PromiseInterface {
 		if ($iterator->valid()) {
 			$test = $iterator->current();
 			self::$currentTest = $test;
 			$iterator->next();
 
+			$promise = null;
 			try {
 				$promise = $test->run()
 					->then(function () use ($test) {
@@ -86,11 +91,11 @@ class TestSuite implements RunnableTest {
 				TestResults::failedTest($test, $assertFailed);
 				$promise = resolve(null);
 			} finally {
-				return $promise->then(function () use ($iterator) {
+				return $promise?->then(function () use ($iterator) {
 					self::$currentTest = null;
 
 					return $this->runRec($iterator);
-				});
+				}) ?? resolve(null);
 			}
 		} else {
 			return resolve(null);
@@ -108,6 +113,9 @@ class TestSuite implements RunnableTest {
 		return $suite;
 	}
 
+	/**
+	 * @param iterable<string> $filenames
+	 */
 	public function addTestFiles(iterable $filenames) : void {
 		foreach ($filenames as $filename) {
 			$this->addTestFile($filename);
@@ -118,24 +126,22 @@ class TestSuite implements RunnableTest {
 		$this->addTestSuite((new TestSuiteLoader())->load($filename));
 	}
 
+	/**
+	 * @param ReflectionClass<TestCase> $class
+	 */
 	public function addTestSuite(ReflectionClass $class) : void {
 		TestSuiteChecker::check($class);
 
 		$this->addTest(self::fromClassReflection($class));
 	}
 
+	/**
+	 * @param ReflectionClass<TestCase> $class
+	 */
 	public static function fromClassReflection(ReflectionClass $class) : RunnableTest {
 		$testSuite = new static($class->getName());
 
 		foreach (Utils::getTestMethodsInTestCase($class) as $method) {
-			// if ($method->getDeclaringClass()->getName() === Assert::class) {
-			// 	continue;
-			// }
-
-			// if ($method->getDeclaringClass()->getName() === TestCase::class) {
-			// 	continue;
-			// }
-
 			if (!Utils::isTestMethod($method)) {
 				continue;
 			}
@@ -150,6 +156,9 @@ class TestSuite implements RunnableTest {
 		$this->tests[] = $test;
 	}
 
+	/**
+	 * @param ReflectionClass<TestCase> $class
+	 */
 	public function addTestMethod(ReflectionClass $class, ReflectionMethod $method) : void {
 		$this->testMethods[] = new TestMethod($class, $method);
 	}

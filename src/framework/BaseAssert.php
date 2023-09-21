@@ -99,6 +99,7 @@ class BaseAssert {
 	}
 
 	/**
+     * @param mixed[]|Countable $actual
 	 * @phpstan-return PromiseInterface<null>
 	 */
 	protected function assertCount(int $expected, array|Countable $actual, string $message = '') : PromiseInterface {

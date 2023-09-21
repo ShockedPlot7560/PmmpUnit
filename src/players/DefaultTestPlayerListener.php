@@ -54,6 +54,7 @@ final class DefaultTestPlayerListener implements TestPlayerListener {
 					$player = $session->getPlayer();
 					$player->respawn();
 					$testPlayer = $this->plugin->getTestPlayer($player);
+					assert($testPlayer !== null);
 					foreach ($testPlayer->getBehaviours() as $behaviour) {
 						$behaviour->onRespawn($testPlayer);
 					}

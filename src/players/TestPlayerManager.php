@@ -117,7 +117,7 @@ class TestPlayerManager implements Listener {
 		$this->listeners[spl_object_id($listener)] = $listener;
 		$server = $this->plugin->getServer();
 		foreach ($this->testPlayers as $uuid => $_) {
-			$listener->onPlayerAdd($server->getPlayerByRawUUID($uuid));
+			$listener->onPlayerAdd($server->getPlayerByRawUUID($uuid) ?? throw new RuntimeException("Player with UUID $uuid not found"));
 		}
 	}
 
@@ -148,6 +148,10 @@ class TestPlayerManager implements Listener {
 				break;
 			}
 		}
+		if ($rakLibInterface === null) {
+			throw new RuntimeException("RakLibInterface not found");
+		}
+		/** @var ReflectionClass<RakLibInterface> $reflection */
 		$reflection = new ReflectionClass($rakLibInterface);
 		$packetContect = $reflection->getProperty("packetSerializerContext");
 		$value = $packetContect->getValue($rakLibInterface);

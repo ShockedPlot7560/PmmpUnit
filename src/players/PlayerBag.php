@@ -2,6 +2,7 @@
 
 namespace ShockedPlot7560\UnitTest\players;
 
+use AssertionError;
 use pocketmine\player\Player;
 use React\Promise\PromiseInterface;
 use ShockedPlot7560\UnitTest\players\info\TestPlayerInfoBuilder;
@@ -31,7 +32,7 @@ class PlayerBag {
 
 				return $task->getPromise()
 					->then(function (Player $player) {
-						return UnitTest::getInstance()->getTestPlayerManager()->getTestPlayer($player);
+						return UnitTest::getInstance()->getTestPlayerManager()->getTestPlayer($player) ?? throw new AssertionError("Player is null");
 					});
 			});
 	}
