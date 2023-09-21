@@ -49,9 +49,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup PHP and tools
-        uses: shivammathur/setup-php@2.26.0
-        with:
-          php-version: 8.1
+        run: make php/install
 
       - name: Run PHP-CS-Fixer
-        run: make cs
+        run: make cs/diff
