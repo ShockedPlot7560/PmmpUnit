@@ -3,3 +3,4 @@ vendor/
 PHP-Linux-x86_64-PM5.tar.gz
 bin/
 dev/
+.php-cs-fixer.cache
