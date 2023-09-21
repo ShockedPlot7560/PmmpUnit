@@ -1,5 +1,5 @@
 ---
-name: UnitTest
+name: PmUnitTest
 version: 0.0.1
 main: ShockedPlot7560\UnitTest\UnitTest
 api: 5.0.0
