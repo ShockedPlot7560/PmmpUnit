@@ -34,7 +34,7 @@ class UnitTest extends PluginBase {
 		self::setInstance($this);
 
 		$vendorDir = dirname(__DIR__) . "/vendor";
-		if (is_dir($vendorDir . "/pocketmine")) {
+		if (!str_contains($vendorDir, "phar://") && is_dir($vendorDir . "/pocketmine")) {
 			$server->getLogger()->info("Found pocketmine vendor folder, installing composer dependencies without dev");
 			$exit = Process::execute("cd " . dirname(__DIR__) . " && composer install --no-dev --prefer-dist --optimize-autoloader", $stdout, $stderr);
 			if ($exit !== 0) {
