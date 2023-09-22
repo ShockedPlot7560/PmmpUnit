@@ -12,6 +12,11 @@
             "ShockedPlot7560\\UnitTest\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "ShockedPlot7560\\UnitTest\\tests\\normal": "tests/unittest/suitetest/normal/tests"
+        }
+    },
     "require": {
         "react/promise": "^3.0",
         "webmozart/assert": "^1.11"

@@ -1,12 +1,15 @@
 <?php
 
-namespace unittest\suitetest\normal\tests\pocketmine;
+namespace ShockedPlot7560\UnitTest\tests\normal\pocketmine;
 
 use React\Promise\PromiseInterface;
 use ShockedPlot7560\UnitTest\framework\TestCase;
 use ShockedPlot7560\UnitTest\players\TestPlayer;
 
 class PlayerPopupTest extends TestCase {
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	public function testPlayerReceivePopupEquals() : PromiseInterface {
 		return $this->getPlayer()
 			->then(function (TestPlayer $player) {
@@ -17,6 +20,9 @@ class PlayerPopupTest extends TestCase {
 			});
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	public function testPlayerReceivePopupNotEquals() : PromiseInterface {
 		return $this->getPlayer()
 			->then(function (TestPlayer $player) {
@@ -27,6 +33,9 @@ class PlayerPopupTest extends TestCase {
 			});
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	public function testPlayerReceivePopupContains() : PromiseInterface {
 		return $this->getPlayer()
 			->then(function (TestPlayer $player) {
@@ -37,6 +46,9 @@ class PlayerPopupTest extends TestCase {
 			});
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	public function testPlayerReceivePopupNotContains() : PromiseInterface {
 		return $this->getPlayer()
 			->then(function (TestPlayer $player) {

@@ -18,8 +18,8 @@ trait PlayerTextPacketAssert {
 	 * @phpstan-return PromiseInterface<string>
 	 */
 	private function promisePlayerReceiveTextPacketFormatted(TestPlayer $player, int $type, bool $cleanPacket = true) : PromiseInterface {
-		return $this->promisePlayerReceiveTextPacket($player, $type, $cleanPacket)
-			->then(function (TextPacket $packet) use ($type, $cleanPacket) : string {
+		return $this->promisePlayerReceiveTextPacket($player, $type)
+			->then(function (TextPacket $packet) use ($cleanPacket) : string {
 				if ($cleanPacket) {
 					$format = TextFormat::clean($packet->message);
 				} else {
@@ -32,11 +32,11 @@ trait PlayerTextPacketAssert {
 
 	/**
 	 * @phpstan-param TextPacket::TYPE_* $type
-	 * @phpstan-return PromiseInterface<string>
+	 * @phpstan-return PromiseInterface<TextPacket>
 	 */
-	private function promisePlayerReceiveTextPacket(TestPlayer $player, int $type, bool $cleanPacket = true) : PromiseInterface {
+	private function promisePlayerReceiveTextPacket(TestPlayer $player, int $type) : PromiseInterface {
 		return $player->registerSpecificSendPacketListener(TextPacket::class)
-			->then(function (TextPacket $packet) use ($type, $cleanPacket) {
+			->then(function (TextPacket $packet) use ($type) {
 				Assert::eq($packet->type, $type, sprintf(
 					"Expected %s type, got %s type",
 					$this->typeToString($type),

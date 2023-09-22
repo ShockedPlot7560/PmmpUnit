@@ -101,6 +101,9 @@ class TestSuite implements RunnableTest {
 		}
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	private function failed(RunnableTest $test, Throwable $throwable) : PromiseInterface {
 		TestResults::failedTest($test, $throwable);
 

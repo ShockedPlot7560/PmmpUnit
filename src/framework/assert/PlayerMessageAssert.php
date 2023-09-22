@@ -67,7 +67,7 @@ trait PlayerMessageAssert {
 		// 			return $packet->parameters[1];
 		// 		});
 		// } else {
-		return $this->promisePlayerReceiveTextPacket($player, TextPacket::TYPE_RAW, $cleanPacket)
+		return $this->promisePlayerReceiveTextPacket($player, TextPacket::TYPE_RAW)
 			->then(function (TextPacket $packet) : string {
 				return $packet->message;
 			});

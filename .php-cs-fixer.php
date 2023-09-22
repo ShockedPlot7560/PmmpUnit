@@ -116,6 +116,8 @@ return $config
 	->setFinder(
 		PhpCsFixer\Finder::create()
 			->in(__DIR__ . '/src')
+			->in(__DIR__ . '/tests/unittest/suitetest')
+			->in(__DIR__ . '/build')
 	)
 	->setIndent("\t")
 	->setLineEnding("\n");

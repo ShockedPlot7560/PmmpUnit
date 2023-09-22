@@ -9,6 +9,7 @@ use Throwable;
 use Webmozart\Assert\Assert;
 
 class TestMethod implements RunnableTest {
+	/** @var class-string<Throwable>|null */
 	private ?string $expectedException = null;
 	private ?string $expectedExceptionMessage = null;
 	private ?string $expectedExceptionMessageRegExp = null;
@@ -36,6 +37,8 @@ class TestMethod implements RunnableTest {
 			})
 			->then(function () {
 				$this->expectedExceptionWasNotRaised();
+
+				return null;
 			})
 			->catch(function (Throwable $th) {
 				if (!$this->shouldExceptionExpectationsBeVerified($th)) {

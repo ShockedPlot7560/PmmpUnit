@@ -1,16 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$onFulfilled of method React\\\\Promise\\\\PromiseInterface\\<pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\>\\:\\:then\\(\\) expects \\(callable\\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\)\\: \\(React\\\\Promise\\\\PromiseInterface\\<null\\>\\|null\\)\\)\\|null, Closure\\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\TextPacket\\)\\: React\\\\Promise\\\\PromiseInterface\\<null\\> given\\.$#"
-			count: 1
-			path: ../../src/framework/TestCase.php
-
-		-
-			message: "#^Parameter \\#1 \\$onFulfilled of method React\\\\Promise\\\\PromiseInterface\\<pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\>\\:\\:then\\(\\) expects \\(callable\\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\)\\: \\(React\\\\Promise\\\\PromiseInterface\\<string\\>\\|string\\)\\)\\|null, Closure\\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\TextPacket\\)\\: string given\\.$#"
-			count: 1
-			path: ../../src/framework/TestCase.php
-
-		-
 			message: "#^Method ShockedPlot7560\\\\UnitTest\\\\framework\\\\loader\\\\TestSuiteLoader\\:\\:load\\(\\) return type with generic class ReflectionClass does not specify its types\\: T$#"
 			count: 1
 			path: ../../src/framework/loader/TestSuiteLoader.php
@@ -49,3 +39,18 @@ parameters:
 			message: "#^Parameter \\#2 \\$callback of function uksort expects callable\\(TKey, TKey\\)\\: int, Closure\\(string, string\\)\\: int\\<\\-1, 1\\> given\\.$#"
 			count: 1
 			path: ../../src/players/util/SortedMap.php
+
+		-
+			message: "#^Parameter \\#1 \\$onFulfilled of method React\\\\Promise\\\\PromiseInterface\\<pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\>\\:\\:then\\(\\) expects \\(callable\\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\)\\: \\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\TextPacket\\|React\\\\Promise\\\\PromiseInterface\\<pocketmine\\\\network\\\\mcpe\\\\protocol\\\\TextPacket\\>\\)\\)\\|null, Closure\\(pocketmine\\\\network\\\\mcpe\\\\protocol\\\\TextPacket\\)\\: React\\\\Promise\\\\PromiseInterface\\<pocketmine\\\\network\\\\mcpe\\\\protocol\\\\TextPacket\\> given\\.$#"
+			count: 1
+			path: ../../src/framework/TestCase.php
+
+		-
+			message: "#^Parameter \\#1 \\$type of method ShockedPlot7560\\\\UnitTest\\\\framework\\\\TestCase\\:\\:typeToString\\(\\) expects 0\\|1\\|2\\|3\\|4\\|5\\|6\\|7\\|8\\|9\\|10\\|11, int given\\.$#"
+			count: 1
+			path: ../../src/framework/TestCase.php
+
+		-
+			message: "#^Method ShockedPlot7560\\\\UnitTest\\\\framework\\\\TestMethod\\:\\:run\\(\\) should return React\\\\Promise\\\\PromiseInterface\\<null\\> but returns React\\\\Promise\\\\PromiseInterface\\<void\\|null\\>\\.$#"
+			count: 1
+			path: ../../src/framework/TestMethod.php

@@ -27,6 +27,7 @@ use FilesystemIterator;
 use Generator;
 use Phar;
 use PharException;
+use pocketmine\utils\Utils;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RegexIterator;
@@ -81,7 +82,7 @@ function buildPhar(string $pharPath, string $basePath, array $includedPaths, arr
 
 	//If paths contain any of these, they will be excluded
 	$excludedSubstrings = preg_quote_array([
-		\realpath($pharPath), //don't add the phar to itself
+		Utils::assumeNotFalse(realpath($pharPath)), //don't add the phar to itself
 	], '/');
 
 	$folderPatterns = preg_quote_array([

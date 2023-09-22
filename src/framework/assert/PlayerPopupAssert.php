@@ -10,10 +10,10 @@ trait PlayerPopupAssert {
 	/**
 	 * @phpstan-return PromiseInterface<null>
 	 */
-	protected function promisePlayerReceivePopupEquals(string $message, TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
+	protected function promisePlayerReceivePopupEquals(string $message, TestPlayer $player) : PromiseInterface {
 		$message = $this->translate($player, $message);
 
-		return $this->promisePlayerReceivePopup($player, $cleanPacket)
+		return $this->promisePlayerReceivePopup($player)
 			->then(function (string $format) use ($message) {
 				return $this->assertEquals($message, $format);
 			});
@@ -22,10 +22,10 @@ trait PlayerPopupAssert {
 	/**
 	 * @phpstan-return PromiseInterface<null>
 	 */
-	protected function promisePlayerReceivePopupNotEquals(string $message, TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
+	protected function promisePlayerReceivePopupNotEquals(string $message, TestPlayer $player) : PromiseInterface {
 		$message = $this->translate($player, $message);
 
-		return $this->promisePlayerReceivePopup($player, $cleanPacket)
+		return $this->promisePlayerReceivePopup($player)
 			->then(function (string $format) use ($message) {
 				return $this->assertNotEquals($message, $format);
 			});
@@ -34,10 +34,10 @@ trait PlayerPopupAssert {
 	/**
 	 * @phpstan-return PromiseInterface<null>
 	 */
-	protected function promisePlayerReceivePopupContains(string $needle, TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
+	protected function promisePlayerReceivePopupContains(string $needle, TestPlayer $player) : PromiseInterface {
 		$needle = $this->translate($player, $needle);
 
-		return $this->promisePlayerReceivePopup($player, $cleanPacket)
+		return $this->promisePlayerReceivePopup($player)
 			->then(function (string $format) use ($needle) {
 				return $this->assertStringContainsString($needle, $format);
 			});
@@ -46,10 +46,10 @@ trait PlayerPopupAssert {
 	/**
 	 * @phpstan-return PromiseInterface<null>
 	 */
-	protected function promisePlayerReceivePopupNotContains(string $needle, TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
+	protected function promisePlayerReceivePopupNotContains(string $needle, TestPlayer $player) : PromiseInterface {
 		$needle = $this->translate($player, $needle);
 
-		return $this->promisePlayerReceivePopup($player, $cleanPacket)
+		return $this->promisePlayerReceivePopup($player)
 			->then(function (string $format) use ($needle) {
 				return $this->assertStringNotContainsString($needle, $format);
 			});
@@ -58,8 +58,8 @@ trait PlayerPopupAssert {
 	/**
 	 * @phpstan-return PromiseInterface<string>
 	 */
-	private function promisePlayerReceivePopup(TestPlayer $player, bool $cleanPacket = true) : PromiseInterface {
-		return $this->promisePlayerReceiveTextPacket($player, TextPacket::TYPE_POPUP, $cleanPacket)
+	private function promisePlayerReceivePopup(TestPlayer $player) : PromiseInterface {
+		return $this->promisePlayerReceiveTextPacket($player, TextPacket::TYPE_POPUP)
 			->then(function (TextPacket $packet) {
 				return $packet->message;
 			});
