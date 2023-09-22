@@ -49,6 +49,7 @@ RUN ln -s /usr/php/bin/php /usr/bin/php
 COPY --from=0 /build/PocketMine-MP.phar PocketMine-MP.phar
 COPY --from=0 /build/unittest/UnitTest.phar /pocketmine/default_plugins/UnitTest.phar
 ADD start.sh /usr/bin/start-pocketmine
+RUN chmod +x /usr/bin/start-pocketmine
 
 RUN mkdir /plugins /data
 RUN chown 1000:1000 /plugins /data . -R
