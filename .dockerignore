@@ -1,0 +1,11 @@
+vendor/
+tests/
+.gitignore
+.php-cs-fixer.*
+Makefile
+dev/
+bin/
+docker/
+PHP-Linux-x86_64-PM5.tar.gz
+phpstan.neon
+README.md
