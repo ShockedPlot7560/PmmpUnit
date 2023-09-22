@@ -1,11 +1,11 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework;
+namespace ShockedPlot7560\UnitTest\framework\assert;
 
 use Countable;
 use React\Promise\PromiseInterface;
-use function React\Promise\resolve;
 use Webmozart\Assert\Assert;
+use function React\Promise\resolve;
 
 class BaseAssert {
 	/**

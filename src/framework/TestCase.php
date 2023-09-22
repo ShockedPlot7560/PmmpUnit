@@ -3,8 +3,10 @@
 namespace ShockedPlot7560\UnitTest\framework;
 
 use React\Promise\PromiseInterface;
-use function React\Promise\resolve;
+use ShockedPlot7560\UnitTest\framework\assert\BaseAssert;
+use ShockedPlot7560\UnitTest\framework\assert\PocketmineSpecificAssert;
 use ShockedPlot7560\UnitTest\UnitTest;
+use function React\Promise\resolve;
 
 class TestCase extends BaseAssert {
 	use PocketmineSpecificAssert;
