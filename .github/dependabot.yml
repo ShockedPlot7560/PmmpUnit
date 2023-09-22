@@ -7,12 +7,12 @@ version: 2
 updates:
   - package-ecosystem: "composer"
     directory: "/"
-    target-branch: "dev"
+    target-branch: "stable"
     schedule:
       interval: daily
 
   - package-ecosystem: github-actions
     directory: "/"
-    target-branch: "dev"
+    target-branch: "stable"
     schedule:
       interval: daily
