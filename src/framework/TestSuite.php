@@ -85,11 +85,10 @@ class TestSuite implements RunnableTest {
 					->then(function () use ($test) {
 						TestResults::successTest($test);
 					}, function (Throwable $throwable) use ($test) {
-						TestResults::failedTest($test, $throwable);
+						return $this->failed($test, $throwable);
 					});
 			} catch (InvalidArgumentException $assertFailed) {
-				TestResults::failedTest($test, $assertFailed);
-				$promise = resolve(null);
+				$promise = $this->failed($test, $assertFailed);
 			} finally {
 				return $promise?->then(function () use ($iterator) {
 					self::$currentTest = null;
@@ -100,6 +99,12 @@ class TestSuite implements RunnableTest {
 		} else {
 			return resolve(null);
 		}
+	}
+
+	private function failed(RunnableTest $test, Throwable $throwable) : PromiseInterface {
+		TestResults::failedTest($test, $throwable);
+
+		return resolve(null);
 	}
 
 	public static function fromDirectory(string $path) : self {

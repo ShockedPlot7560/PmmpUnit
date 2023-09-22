@@ -9,6 +9,11 @@ use ShockedPlot7560\UnitTest\UnitTest;
 class TestCase extends BaseAssert {
 	use PocketmineSpecificAssert;
 
+	public function __construct(
+		private readonly TestMethod $testMethod
+	) {
+	}
+
 	/**
 	 * @phpstan-return PromiseInterface<null>
 	 */
@@ -34,5 +39,24 @@ class TestCase extends BaseAssert {
 	}
 
 	public function onDisable() : void {
+	}
+
+	/**
+	 * @phpstan-param class-string<\Throwable> $exception
+	 */
+	final public function expectException(string $exception) : void {
+		$this->testMethod->expectException($exception);
+	}
+
+	final public function expectExceptionCode(int|string $code) : void {
+		$this->testMethod->expectExceptionCode($code);
+	}
+
+	final public function expectExceptionMessage(string $message) : void {
+		$this->testMethod->expectExceptionMessage($message);
+	}
+
+	final public function expectExceptionMessageMatches(string $regularExpression) : void {
+		$this->testMethod->expectExceptionMessageMatches($regularExpression);
 	}
 }

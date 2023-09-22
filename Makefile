@@ -48,7 +48,7 @@ suitetest:
 	docker network create $(CONTAINER_PREFIX)-network > /dev/null || true
 
 	docker rm $(CONTAINER_PREFIX)-pocketmine > /dev/null || true
-	docker pull ghcr.io/shockedplot7560/pmunittest/pmunittest:latest > /dev/null
+	docker build -t ghcr.io/shockedplot7560/pmunittest/pmunittest:latest .
 	docker create --name $(CONTAINER_PREFIX)-pocketmine \
 		--network $(CONTAINER_PREFIX)-network \
 		-u root \

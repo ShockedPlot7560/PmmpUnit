@@ -14,7 +14,7 @@ class PlayerConnectTest extends TestCase {
 	public function testPlayerConnected() : PromiseInterface {
 		return $this->getPlayer()
 			->then(function (TestPlayer $player) {
-				$this->assertNotNull(Server::getInstance()->getPlayerExact($player->getPlayer()->getName()));
+				return $this->assertNotNull(Server::getInstance()->getPlayerExact($player->getPlayer()->getName()));
 			});
 	}
 }
