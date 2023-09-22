@@ -7,7 +7,7 @@ use pocketmine\player\Player;
 use React\Promise\PromiseInterface;
 use ShockedPlot7560\UnitTest\players\info\TestPlayerInfoBuilder;
 use ShockedPlot7560\UnitTest\UnitTest;
-use ShockedPlot7560\UnitTest\Utils\PocketminePromiseDecorator;
+use ShockedPlot7560\UnitTest\utils\PocketminePromiseDecorator;
 
 class PlayerBag {
 	/**

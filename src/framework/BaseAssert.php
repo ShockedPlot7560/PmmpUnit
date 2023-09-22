@@ -129,6 +129,24 @@ class BaseAssert {
 	/**
 	 * @phpstan-return PromiseInterface<null>
 	 */
+	protected function assertNull(mixed $actual, string $message = '') : PromiseInterface {
+		Assert::null($actual, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
+	protected function assertNotNull(mixed $actual, string $message = '') : PromiseInterface {
+		Assert::notNull($actual, $message);
+
+		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	private function assertSyncPromise() : PromiseInterface {
 		return resolve(null);
 	}

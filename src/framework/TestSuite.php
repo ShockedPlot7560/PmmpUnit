@@ -15,7 +15,7 @@ use RegexIterator;
 use ShockedPlot7560\UnitTest\framework\loader\TestSuiteChecker;
 use ShockedPlot7560\UnitTest\framework\loader\TestSuiteLoader;
 use ShockedPlot7560\UnitTest\framework\result\TestResults;
-use ShockedPlot7560\UnitTest\Utils\Utils;
+use ShockedPlot7560\UnitTest\utils\Utils;
 use Throwable;
 use Webmozart\Assert\InvalidArgumentException;
 
