@@ -14,7 +14,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "ShockedPlot7560\\UnitTest\\tests\\normal": "tests/unittest/suitetest/normal/tests"
+            "ShockedPlot7560\\UnitTest\\tests\\normal\\": "tests/unittest/suitetest/normal/tests"
         }
     },
     "require": {
