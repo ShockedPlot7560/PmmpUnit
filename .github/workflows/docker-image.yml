@@ -5,6 +5,11 @@ on:
     types:
       - published
 
+env:
+  REGISTRY: ghcr.io
+  SERVER_NAME: shockedplot7560/pmunittest
+  IMAGE_NAME: pmunittest
+
 jobs:
   build:
     name: Update Docker image
@@ -17,7 +22,7 @@ jobs:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -25,7 +30,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ${{ env.REGISTRY }}/${{ env.SERVER_NAME }}/${{ env.IMAGE_NAME }}
 
       - name: Get name of Docker repository name
         id: docker-repo-name
@@ -35,4 +40,4 @@ jobs:
         uses: docker/build-push-action@v5.0.0
         with:
           push: true
-          tags: ${{ steps.meta.outputs.tags }},ghcr.io/${{ github.repository }}:latest
+          tags: ${{ steps.meta.outputs.tags }},${{ env.REGISTRY }}/${{ env.SERVER_NAME }}/${{ env.IMAGE_NAME }}:latest
