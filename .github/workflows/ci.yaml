@@ -53,3 +53,22 @@ jobs:
 
       - name: Run PHP-CS-Fixer
         run: make cs/diff
+
+  unittests:
+    name: Unit tests
+    runs-on: ${{ matrix.image }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [ubuntu-20.04]
+        suittest: ["normal"]
+
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Setup PHP and tools
+          run: make php/install
+
+        - name: Run PHPUnit
+          run: make suitetest ${{ matrix.suittest }}
