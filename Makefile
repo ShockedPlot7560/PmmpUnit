@@ -6,15 +6,13 @@ PHP_DIR = $(dir $(PHP_PATH))
 PHP_DIR := $(shell echo $(PHP_DIR) | sed 's/\/$$//g')
 COMPOSER = ${shell pwd}/dev/composer.phar
 PHP_CS_FIXER = ${shell pwd}/vendor/bin/php-cs-fixer
+SUITE_TEST := normal
 
 ENGINE_SOURCE_FILES = plugin.yml $(shell find src resources -type f) vendor
 EXTENSION_DIR = $(shell find "$(shell pwd)/bin" -name "*debug-zts*" | tail -n 1)
 $(shell mkdir -p dev && chmod 755 dev)
 
 args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
-
-%:
-    @:
 
 cs: vendor
 	$(PHP) $(PHP_CS_FIXER) fix --verbose
@@ -46,6 +44,7 @@ composer/install: dev/composer.phar
 suitetest:
 	$(eval CONTAINER_PREFIX := unittest-suite)
 	docker network create $(CONTAINER_PREFIX)-network > /dev/null || true
+	echo $(SUITE_TEST)
 
 	docker rm $(CONTAINER_PREFIX)-pocketmine > /dev/null || true
 	docker build -t ghcr.io/shockedplot7560/pmunittest/pmunittest:latest .
@@ -57,8 +56,8 @@ suitetest:
 
 	docker cp tests/unittest/shared/data $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
 	docker cp resources $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data/PmUnitTest > /dev/null # create PmUnitTest directory
-	docker cp tests/unittest/suitetest/$(call args, "normal")/tests $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data/PmUnitTest/tests > /dev/null
-	docker cp tests/unittest/suitetest/$(call args, "normal")/config $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
+	docker cp tests/unittest/suitetest/$(SUITE_TEST)/tests $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data/PmUnitTest/tests > /dev/null
+	docker cp tests/unittest/suitetest/$(SUITE_TEST)/config $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
 
 	docker start -ia $(CONTAINER_PREFIX)-pocketmine
 	docker rm $(CONTAINER_PREFIX)-pocketmine > /dev/null

@@ -71,4 +71,4 @@ jobs:
           run: make php/install
 
         - name: Run PHPUnit
-          run: make suitetest ${{ matrix.suittest }}
+          run: export SUITE_TEST=${{ matrix.suittest }} && make suitetest
