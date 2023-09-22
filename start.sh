@@ -34,4 +34,4 @@ cp -r /pocketmine/default_plugins/* /plugins/
 
 # Run the server
 cd /pocketmine
-exec php PocketMine-MP.phar --no-wizard --enable-ansi --data=/data --plugins=/plugins
+exec php PocketMine-MP.phar --debug.level=2 --no-wizard --enable-ansi --data=/data --plugins=/plugins
