@@ -31,19 +31,8 @@ jobs:
         id: docker-repo-name
         run: echo NAME=$(echo "${GITHUB_REPOSITORY,,}") >> $GITHUB_OUTPUT
 
-      - name: Detect channel
-        id: channel
-        run: echo CHANNEL=$(jq -r '.channel' new_build_info.json) >> $GITHUB_OUTPUT
-
       - name: Build image for tag
         uses: docker/build-push-action@v5.0.0
         with:
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-
-      - name: Build image for latest tag
-        if: steps.channel.outputs.CHANNEL == 'stable'
-        uses: docker/build-push-action@v5.0.0
-        with:
-          push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: ${{ steps.meta.outputs.tags }},ghcr.io/${{ github.repository }}:latest
