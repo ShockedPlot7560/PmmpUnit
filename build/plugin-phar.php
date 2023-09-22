@@ -79,11 +79,11 @@ function buildPhar(string $pharPath, string $basePath, array $includedPaths, arr
 		$phar->addFile($file);
 	}
 
-	$real = realpath($basePath);
-	assert($real !== false);
+	$basePathNotFalse = \realpath($pharPath);
+	assert($basePathNotFalse !== false);
 	//If paths contain any of these, they will be excluded
 	$excludedSubstrings = preg_quote_array([
-		$real, //don't add the phar to itself
+		$basePathNotFalse, //don't add the phar to itself
 	], '/');
 
 	$folderPatterns = preg_quote_array([
