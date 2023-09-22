@@ -31,11 +31,14 @@ jobs:
         id: docker-repo-name
         run: echo NAME=$(echo "${GITHUB_REPOSITORY,,}") >> $GITHUB_OUTPUT
 
+      - name: Detect channel
+        id: channel
+        run: echo CHANNEL=$(jq -r '.channel' new_build_info.json) >> $GITHUB_OUTPUT
+
       - name: Build image for tag
         uses: docker/build-push-action@v5.0.0
         with:
           push: true
-          context: .
           tags: ${{ steps.meta.outputs.tags }}
 
       - name: Build image for latest tag
@@ -43,5 +46,4 @@ jobs:
         uses: docker/build-push-action@v5.0.0
         with:
           push: true
-          context: .
           tags: ghcr.io/${{ github.repository }}:latest
