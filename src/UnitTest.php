@@ -48,9 +48,20 @@ class UnitTest extends PluginBase {
 
 		$unitFolder = $dataFolder . "/tests";
 		if (!is_dir($unitFolder)) {
-			$server->getLogger()->warning("Unit test folder not found, creating one...");
+			$server->getLogger()->warning("Unit test folder ($unitFolder) not found, creating one...");
 			mkdir($unitFolder);
 		}
+
+		$testSuite = getenv("TEST_SUITE");
+		if ($testSuite !== false) {
+			$unitFolder .= "/" . $testSuite;
+			if (!is_dir($unitFolder)) {
+				$server->getLogger()->warning("Unit test folder ($unitFolder) not found, creating one...");
+				mkdir($unitFolder);
+			}
+		}
+
+		$server->getLogger()->debug("Loading tests from $unitFolder");
 
 		$this->test = TestSuite::fromDirectory($unitFolder);
 		parent::__construct($loader, $server, $description, $dataFolder, $file, $resourceProvider);
