@@ -7,8 +7,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  SERVER_NAME: shockedplot7560/pmunittest
-  IMAGE_NAME: pmunittest
+  SERVER_NAME: shockedplot7560/pmmpunit
+  IMAGE_NAME: tests-runner
 
 jobs:
   build:

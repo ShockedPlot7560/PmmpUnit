@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\players;
+namespace ShockedPlot7560\PmmpUnit\players;
 
 use pocketmine\player\Player;
 use pocketmine\scheduler\Task;

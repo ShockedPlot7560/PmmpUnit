@@ -1,10 +1,10 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\tests\normal;
+namespace ShockedPlot7560\PmmpUnit\tests\normal;
 
 use React\Promise\PromiseInterface;
 use RuntimeException;
-use ShockedPlot7560\UnitTest\framework\TestCase;
+use ShockedPlot7560\PmmpUnit\framework\TestCase;
 
 class ExceptionsTest extends TestCase {
 	/**

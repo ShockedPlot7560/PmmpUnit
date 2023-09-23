@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShockedPlot7560\UnitTest\players\network\listener;
+namespace ShockedPlot7560\PmmpUnit\players\network\listener;
 
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\ClientboundPacket;

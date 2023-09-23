@@ -1,12 +1,12 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\utils;
+namespace ShockedPlot7560\PmmpUnit\utils;
 
 use React\Promise\PromiseInterface;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
-use ShockedPlot7560\UnitTest\framework\TestCase;
+use ShockedPlot7560\PmmpUnit\framework\TestCase;
 
 class Utils {
 	/**

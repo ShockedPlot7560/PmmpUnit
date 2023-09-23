@@ -1,12 +1,12 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework\assert;
+namespace ShockedPlot7560\PmmpUnit\framework\assert;
 
 use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\utils\TextFormat;
 use React\Promise\PromiseInterface;
 use function React\Promise\resolve;
-use ShockedPlot7560\UnitTest\players\TestPlayer;
+use ShockedPlot7560\PmmpUnit\players\TestPlayer;
 use Webmozart\Assert\Assert;
 
 trait PlayerTextPacketAssert {

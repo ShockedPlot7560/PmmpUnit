@@ -1,12 +1,12 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework\assert;
+namespace ShockedPlot7560\PmmpUnit\framework\assert;
 
 use pocketmine\lang\Translatable;
 use pocketmine\utils\TextFormat;
 use React\Promise\PromiseInterface;
-use ShockedPlot7560\UnitTest\players\TestPlayer;
-use ShockedPlot7560\UnitTest\UnitTest;
+use ShockedPlot7560\PmmpUnit\players\TestPlayer;
+use ShockedPlot7560\PmmpUnit\PmmpUnit;
 
 trait PocketmineSpecificAssert {
 	use PlayerTextPacketAssert;
@@ -18,7 +18,7 @@ trait PocketmineSpecificAssert {
 	 * @phpstan-return PromiseInterface<TestPlayer>
 	 */
 	protected function getPlayer() : PromiseInterface {
-		return UnitTest::getInstance()->getPlayerBag()->shift()
+		return PmmpUnit::getInstance()->getPlayerBag()->shift()
 			->then(function (TestPlayer $player) : TestPlayer {
 				$this->spawnedPlayers[] = $player;
 

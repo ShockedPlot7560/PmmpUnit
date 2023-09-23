@@ -11,9 +11,9 @@ Tests are run asynchronously using promises to enable support with different sys
 
 ## Utilisation
 
-Tests are retrieved from the folder: `plugin_data/PmUnitTest/tests/` and are executed when the server start.
+Tests are retrieved from the folder: `plugin_data/PmmpUnit/tests/` and are executed when the server start.
 
-All test classes must inherit from `ShockedPlot7560\UnitTest\frameworkTestCase`.  
+All test classes must inherit from `ShockedPlot7560\PmmpUnit\framework\TestCase`.  
 All test methods must be prefixed with `test` and must not have any parameters, it must return a `PromiseInterface<null>`.  
 If the code is executed synchronously and does not have to wait for a result, use `resolve(null)`.
 Use `Deferred` instead for asynchronous code and `$deferred->resolve(null)` to resolve the promise.
@@ -26,16 +26,16 @@ Each test class can execute code when the server is `onLoad`, `onEnable` or `onD
 
 Using of our docker image is strongly recommended.  
 
-Mount your tests in `/data/plugin_data/PmUnitTest/tests/` and copy your plugin in `/plugins/`.
+Mount your tests in `/data/plugin_data/PmmpUnit/tests/` and copy your plugin in `/plugins/`.
 
 Exemple:
 ```bash
 docker run -it --rm \
   -u root
-  -v /tests/unittest/suitetest/normal/tests:/data/plugin_data/PmUnitTest/tests/ \
+  -v /tests/pmmpunit/suitetest/normal/tests:/data/plugin_data/PmmpUnit/tests/ \
   # -v /path/to/plugin:/plugins/ \
   --name pmunit-test \
-  ghcr.io/shockedplot7560/pmunittest/pmunittest:latest
+  ghcr.io/shockedplot7560/pmmpunit/tests-runner:latest
 ```
 
 > [!NOTE]

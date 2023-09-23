@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework\loader\exception;
+namespace ShockedPlot7560\PmmpUnit\framework\loader\exception;
 
 use RuntimeException;
 

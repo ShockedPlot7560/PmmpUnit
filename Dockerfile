@@ -27,11 +27,11 @@ RUN php -dphar.readonly=0 build/server-phar.php --git $(git rev-parse HEAD)
 RUN test -f /build/PocketMine-MP.phar
 
 WORKDIR /build
-COPY ../ /build/unittest
-WORKDIR /build/unittest
+COPY ../ /build/pmmpunit
+WORKDIR /build/pmmpunit
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install --no-dev --prefer-source --no-interaction --optimize-autoloader
-RUN php -dphar.readonly=0 build/plugin-phar.php UnitTest
+RUN php -dphar.readonly=0 build/plugin-phar.php PmmpUnit
 
 FROM ubuntu:22.04
 LABEL maintainer="PMMP Team <team@pmmp.io>"
@@ -47,7 +47,7 @@ RUN grep -q '^extension_dir' /usr/php/bin/php.ini && \
 	sed -ibak "s{^extension_dir=.*{extension_dir=\"$(find /usr/php -name *debug-zts*)\"{" /usr/php/bin/php.ini || echo "extension_dir=\"$(find /usr/php -name *debug-zts*)\"" >> /usr/php/bin/php.ini
 RUN ln -s /usr/php/bin/php /usr/bin/php
 COPY --from=0 /build/PocketMine-MP.phar PocketMine-MP.phar
-COPY --from=0 /build/unittest/UnitTest.phar /pocketmine/default_plugins/UnitTest.phar
+COPY --from=0 /build/pmmpunit/PmmpUnit.phar /pocketmine/default_plugins/PmmpUnit.phar
 ADD start.sh /usr/bin/start-pocketmine
 RUN chmod +x /usr/bin/start-pocketmine
 

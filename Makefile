@@ -42,21 +42,21 @@ composer/install: dev/composer.phar
 	$(PHP) $(COMPOSER) install
 
 suitetest:
-	$(eval CONTAINER_PREFIX := unittest-suite)
+	$(eval CONTAINER_PREFIX := unittests-suite)
 	docker network create $(CONTAINER_PREFIX)-network > /dev/null || true
 	echo $(SUITE_TEST)
 
 	docker rm $(CONTAINER_PREFIX)-pocketmine > /dev/null || true
-	docker build -t ghcr.io/shockedplot7560/pmunittest/pmunittest:latest .
+	docker build -t ghcr.io/shockedplot7560/pmmpunit/tests-runner:latest .
 	docker create --name $(CONTAINER_PREFIX)-pocketmine \
 		--network $(CONTAINER_PREFIX)-network \
 		-u root \
-		--mount type=bind,source="$(shell pwd)/tests/unittest/suitetest/$(SUITE_TEST)/tests",target=/data/plugin_data/PmUnitTest/tests \
-		ghcr.io/shockedplot7560/pmunittest/pmunittest:latest \
+		--mount type=bind,source="$(shell pwd)/tests/pmmpunit/suitetest/$(SUITE_TEST)/tests",target=/data/plugin_data/PmmpUnit/tests \
+		ghcr.io/shockedplot7560/pmmpunit/tests-runner:latest \
 		start-pocketmine > /dev/null
 
-	docker cp tests/unittest/shared/data $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
-	docker cp tests/unittest/suitetest/$(SUITE_TEST)/config $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
+	docker cp tests/pmmpunit/shared/data $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
+	docker cp tests/pmmpunit/suitetest/$(SUITE_TEST)/config $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
 
 	docker start -ia $(CONTAINER_PREFIX)-pocketmine
 	docker rm $(CONTAINER_PREFIX)-pocketmine > /dev/null

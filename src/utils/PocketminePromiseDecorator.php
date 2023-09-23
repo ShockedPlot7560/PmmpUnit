@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\utils;
+namespace ShockedPlot7560\PmmpUnit\utils;
 
 use Exception;
 use pocketmine\promise\Promise;

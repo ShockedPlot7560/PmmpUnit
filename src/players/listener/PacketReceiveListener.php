@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\players\listener;
+namespace ShockedPlot7560\PmmpUnit\players\listener;
 
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketReceiveEvent;

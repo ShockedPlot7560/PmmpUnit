@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShockedPlot7560\UnitTest\players;
+namespace ShockedPlot7560\PmmpUnit\players;
 
 use pocketmine\network\mcpe\PacketSender;
 

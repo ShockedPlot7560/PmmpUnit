@@ -1,13 +1,13 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\players;
+namespace ShockedPlot7560\PmmpUnit\players;
 
 use AssertionError;
 use pocketmine\player\Player;
 use React\Promise\PromiseInterface;
-use ShockedPlot7560\UnitTest\players\info\TestPlayerInfoBuilder;
-use ShockedPlot7560\UnitTest\UnitTest;
-use ShockedPlot7560\UnitTest\utils\PocketminePromiseDecorator;
+use ShockedPlot7560\PmmpUnit\players\info\TestPlayerInfoBuilder;
+use ShockedPlot7560\PmmpUnit\PmmpUnit;
+use ShockedPlot7560\PmmpUnit\utils\PocketminePromiseDecorator;
 
 class PlayerBag {
 	/**
@@ -21,18 +21,18 @@ class PlayerBag {
 	 * @return PromiseInterface<TestPlayer>
 	 */
 	private function create() : PromiseInterface {
-		$fakePlayer = UnitTest::getInstance()->getTestPlayerManager();
+		$fakePlayer = PmmpUnit::getInstance()->getTestPlayerManager();
 
 		$info = TestPlayerInfoBuilder::create()->build();
 
 		return (new PocketminePromiseDecorator($fakePlayer->addPlayer($info)))
 			->then(function () use ($info) : PromiseInterface {
 				$task = new PlayerSpawnWatcherTask($info->username);
-				UnitTest::getInstance()->getScheduler()->scheduleDelayedRepeatingTask($task, 1, 1);
+				PmmpUnit::getInstance()->getScheduler()->scheduleDelayedRepeatingTask($task, 1, 1);
 
 				return $task->getPromise()
 					->then(function (Player $player) {
-						return UnitTest::getInstance()->getTestPlayerManager()->getTestPlayer($player) ?? throw new AssertionError("Player is null");
+						return PmmpUnit::getInstance()->getTestPlayerManager()->getTestPlayer($player) ?? throw new AssertionError("Player is null");
 					});
 			});
 	}

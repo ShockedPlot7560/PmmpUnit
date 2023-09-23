@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace ShockedPlot7560\UnitTest\players\behaviour;
+namespace ShockedPlot7560\PmmpUnit\players\behaviour;
 
-use ShockedPlot7560\UnitTest\players\TestPlayerManager;
+use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
 
 final class TestPlayerBehaviourFactory {
 	/**

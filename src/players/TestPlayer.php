@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShockedPlot7560\UnitTest\players;
+namespace ShockedPlot7560\PmmpUnit\players;
 
 use AssertionError;
 use pocketmine\network\mcpe\NetworkSession;
@@ -11,10 +11,10 @@ use pocketmine\network\mcpe\protocol\ServerboundPacket;
 use pocketmine\player\Player;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
-use ShockedPlot7560\UnitTest\players\behaviour\TestPlayerBehaviour;
-use ShockedPlot7560\UnitTest\players\network\listener\ClosureTestPlayerPacketListener;
-use ShockedPlot7560\UnitTest\players\network\TestPlayerNetworkSession;
-use ShockedPlot7560\UnitTest\players\util\SortedMap;
+use ShockedPlot7560\PmmpUnit\players\behaviour\TestPlayerBehaviour;
+use ShockedPlot7560\PmmpUnit\players\network\listener\ClosureTestPlayerPacketListener;
+use ShockedPlot7560\PmmpUnit\players\network\TestPlayerNetworkSession;
+use ShockedPlot7560\PmmpUnit\players\util\SortedMap;
 
 final class TestPlayer {
 	private TestPlayerNetworkSession $session;

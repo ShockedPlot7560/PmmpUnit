@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShockedPlot7560\UnitTest\players\behaviour\internal;
+namespace ShockedPlot7560\PmmpUnit\players\behaviour\internal;
 
 use pocketmine\math\Vector3;
 

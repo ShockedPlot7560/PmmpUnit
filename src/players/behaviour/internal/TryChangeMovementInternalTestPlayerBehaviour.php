@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShockedPlot7560\UnitTest\players\behaviour\internal;
+namespace ShockedPlot7560\PmmpUnit\players\behaviour\internal;
 
 use pocketmine\entity\Entity;
 use pocketmine\entity\Human;
@@ -14,11 +14,11 @@ use pocketmine\player\Player;
 use ReflectionMethod;
 use ReflectionProperty;
 use RuntimeException;
-use ShockedPlot7560\UnitTest\players\behaviour\TestPlayerBehaviour;
-use ShockedPlot7560\UnitTest\players\network\listener\ClosureTestPlayerPacketListener;
-use ShockedPlot7560\UnitTest\players\network\listener\TestPlayerPacketListener;
-use ShockedPlot7560\UnitTest\players\TestPlayer;
-use ShockedPlot7560\UnitTest\players\TestPlayerManager;
+use ShockedPlot7560\PmmpUnit\players\behaviour\TestPlayerBehaviour;
+use ShockedPlot7560\PmmpUnit\players\network\listener\ClosureTestPlayerPacketListener;
+use ShockedPlot7560\PmmpUnit\players\network\listener\TestPlayerPacketListener;
+use ShockedPlot7560\PmmpUnit\players\TestPlayer;
+use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
 
 final class TryChangeMovementInternalTestPlayerBehaviour implements TestPlayerBehaviour {
 	use InternalTestPlayerBehaviourTrait;

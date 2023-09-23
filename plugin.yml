@@ -1,8 +1,8 @@
 ---
-name: PmUnitTest
-version: 0.0.1
-main: ShockedPlot7560\UnitTest\UnitTest
+name: PmmpUnit
+version: 1.0.0
+main: ShockedPlot7560\PmmpUnit\PmmpUnit
 api: 5.0.0
-src-namespace-prefix: ShockedPlot7560\UnitTest
+src-namespace-prefix: ShockedPlot7560\PmmpUnit
 author: ShockedPlot7560 (no-reply@tchallon.fr)
 ...

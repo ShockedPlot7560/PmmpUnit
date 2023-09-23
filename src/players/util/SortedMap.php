@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShockedPlot7560\UnitTest\players\util;
+namespace ShockedPlot7560\PmmpUnit\players\util;
 
 /**
  * @phpstan-template TKey of string|int

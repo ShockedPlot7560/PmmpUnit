@@ -1,27 +1,27 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method ShockedPlot7560\\\\UnitTest\\\\framework\\\\loader\\\\TestSuiteLoader\\:\\:load\\(\\) return type with generic class ReflectionClass does not specify its types\\: T$#"
+			message: "#^Method ShockedPlot7560\\\\PmmpUnit\\\\framework\\\\loader\\\\TestSuiteLoader\\:\\:load\\(\\) return type with generic class ReflectionClass does not specify its types\\: T$#"
 			count: 1
 			path: ../../src/framework/loader/TestSuiteLoader.php
 
 		-
-			message: "#^Static property ShockedPlot7560\\\\UnitTest\\\\framework\\\\loader\\\\TestSuiteLoader\\:\\:\\$fileToClassesMap \\(array\\<non\\-empty\\-string, array\\<int, class\\-string\\>\\>\\) does not accept non\\-empty\\-array\\<string, array\\<int, class\\-string\\>\\>\\.$#"
+			message: "#^Static property ShockedPlot7560\\\\PmmpUnit\\\\framework\\\\loader\\\\TestSuiteLoader\\:\\:\\$fileToClassesMap \\(array\\<non\\-empty\\-string, array\\<int, class\\-string\\>\\>\\) does not accept non\\-empty\\-array\\<string, array\\<int, class\\-string\\>\\>\\.$#"
 			count: 2
 			path: ../../src/framework/loader/TestSuiteLoader.php
 
 		-
-			message: "#^Method ShockedPlot7560\\\\UnitTest\\\\framework\\\\loader\\\\exception\\\\ClassAbstractException\\:\\:__construct\\(\\) has parameter \\$className with generic class ReflectionClass but does not specify its types\\: T$#"
+			message: "#^Method ShockedPlot7560\\\\PmmpUnit\\\\framework\\\\loader\\\\exception\\\\ClassAbstractException\\:\\:__construct\\(\\) has parameter \\$className with generic class ReflectionClass but does not specify its types\\: T$#"
 			count: 1
 			path: ../../src/framework/loader/exception/ClassAbstractException.php
 
 		-
-			message: "#^Method ShockedPlot7560\\\\UnitTest\\\\framework\\\\loader\\\\exception\\\\ClassDoesntExtendTestCaseException\\:\\:__construct\\(\\) has parameter \\$className with generic class ReflectionClass but does not specify its types\\: T$#"
+			message: "#^Method ShockedPlot7560\\\\PmmpUnit\\\\framework\\\\loader\\\\exception\\\\ClassDoesntExtendTestCaseException\\:\\:__construct\\(\\) has parameter \\$className with generic class ReflectionClass but does not specify its types\\: T$#"
 			count: 1
 			path: ../../src/framework/loader/exception/ClassDoesntExtendTestCaseException.php
 
 		-
-			message: "#^Parameter \\#1 \\$packet of method ShockedPlot7560\\\\UnitTest\\\\players\\\\network\\\\TestPlayerNetworkSession\\:\\:registerSpecificPacketListener\\(\\) expects class\\-string\\<pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\>, string given\\.$#"
+			message: "#^Parameter \\#1 \\$packet of method ShockedPlot7560\\\\PmmpUnit\\\\players\\\\network\\\\TestPlayerNetworkSession\\:\\:registerSpecificPacketListener\\(\\) expects class\\-string\\<pocketmine\\\\network\\\\mcpe\\\\protocol\\\\ClientboundPacket\\>, string given\\.$#"
 			count: 1
 			path: ../../src/players/TestPlayer.php
 
@@ -46,11 +46,11 @@ parameters:
 			path: ../../src/framework/TestCase.php
 
 		-
-			message: "#^Parameter \\#1 \\$type of method ShockedPlot7560\\\\UnitTest\\\\framework\\\\TestCase\\:\\:typeToString\\(\\) expects 0\\|1\\|2\\|3\\|4\\|5\\|6\\|7\\|8\\|9\\|10\\|11, int given\\.$#"
+			message: "#^Parameter \\#1 \\$type of method ShockedPlot7560\\\\PmmpUnit\\\\framework\\\\TestCase\\:\\:typeToString\\(\\) expects 0\\|1\\|2\\|3\\|4\\|5\\|6\\|7\\|8\\|9\\|10\\|11, int given\\.$#"
 			count: 1
 			path: ../../src/framework/TestCase.php
 
 		-
-			message: "#^Method ShockedPlot7560\\\\UnitTest\\\\framework\\\\TestMethod\\:\\:run\\(\\) should return React\\\\Promise\\\\PromiseInterface\\<null\\> but returns React\\\\Promise\\\\PromiseInterface\\<void\\|null\\>\\.$#"
+			message: "#^Method ShockedPlot7560\\\\PmmpUnit\\\\framework\\\\TestMethod\\:\\:run\\(\\) should return React\\\\Promise\\\\PromiseInterface\\<null\\> but returns React\\\\Promise\\\\PromiseInterface\\<void\\|null\\>\\.$#"
 			count: 1
 			path: ../../src/framework/TestMethod.php

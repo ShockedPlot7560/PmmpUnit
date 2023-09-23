@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShockedPlot7560\UnitTest\players\info;
+namespace ShockedPlot7560\PmmpUnit\players\info;
 
 use pocketmine\entity\Skin;
 use Ramsey\Uuid\Uuid;

@@ -1,6 +1,6 @@
 {
-    "name": "shockedplot7560/unit-test",
-    "description": "Basic Unit testing plugin for Pocketmine",
+    "name": "shockedplot7560/pmmp-unit",
+    "description": "Unit testing framework for PocketMine-MP",
     "authors": [
         {
             "name": "ShockedPlot7560",
@@ -9,12 +9,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "ShockedPlot7560\\UnitTest\\": "src/"
+            "ShockedPlot7560\\PmmpUnit\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ShockedPlot7560\\UnitTest\\tests\\normal\\": "tests/unittest/suitetest/normal/tests"
+            "ShockedPlot7560\\PmmpUnit\\tests\\normal\\": "tests/pmmpunit/suitetest/normal/tests"
         }
     },
     "require": {

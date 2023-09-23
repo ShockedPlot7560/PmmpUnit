@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\players;
+namespace ShockedPlot7560\PmmpUnit\players;
 
 use InvalidArgumentException;
 use pocketmine\event\Listener;
@@ -30,14 +30,14 @@ use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
 use RuntimeException;
-use ShockedPlot7560\UnitTest\players\behaviour\internal\TestPlayerMovementData;
-use ShockedPlot7560\UnitTest\players\behaviour\internal\TryChangeMovementInternalTestPlayerBehaviour;
-use ShockedPlot7560\UnitTest\players\behaviour\internal\UpdateMovementInternalTestPlayerBehaviour;
-use ShockedPlot7560\UnitTest\players\behaviour\TestPlayerBehaviourFactory;
-use ShockedPlot7560\UnitTest\players\info\TestPlayerInfo;
-use ShockedPlot7560\UnitTest\players\listener\PacketReceiveListener;
-use ShockedPlot7560\UnitTest\players\listener\TestPlayerListener;
-use ShockedPlot7560\UnitTest\players\network\TestPlayerNetworkSession;
+use ShockedPlot7560\PmmpUnit\players\behaviour\internal\TestPlayerMovementData;
+use ShockedPlot7560\PmmpUnit\players\behaviour\internal\TryChangeMovementInternalTestPlayerBehaviour;
+use ShockedPlot7560\PmmpUnit\players\behaviour\internal\UpdateMovementInternalTestPlayerBehaviour;
+use ShockedPlot7560\PmmpUnit\players\behaviour\TestPlayerBehaviourFactory;
+use ShockedPlot7560\PmmpUnit\players\info\TestPlayerInfo;
+use ShockedPlot7560\PmmpUnit\players\listener\PacketReceiveListener;
+use ShockedPlot7560\PmmpUnit\players\listener\TestPlayerListener;
+use ShockedPlot7560\PmmpUnit\players\network\TestPlayerNetworkSession;
 
 class TestPlayerManager implements Listener {
 	/** @var TestPlayerListener[] */

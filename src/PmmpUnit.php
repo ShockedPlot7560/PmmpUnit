@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShockedPlot7560\UnitTest;
+namespace ShockedPlot7560\PmmpUnit;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\plugin\PluginDescription;
@@ -14,17 +14,17 @@ use pocketmine\utils\Process;
 use pocketmine\utils\SingletonTrait;
 use ReflectionClass;
 use RuntimeException;
-use ShockedPlot7560\UnitTest\framework\result\FailedTest;
-use ShockedPlot7560\UnitTest\framework\result\FatalTest;
-use ShockedPlot7560\UnitTest\framework\result\ServerCrashedException;
-use ShockedPlot7560\UnitTest\framework\result\SuccessTest;
-use ShockedPlot7560\UnitTest\framework\result\TestResults;
-use ShockedPlot7560\UnitTest\framework\RunnableTest;
-use ShockedPlot7560\UnitTest\framework\TestSuite;
-use ShockedPlot7560\UnitTest\players\PlayerBag;
-use ShockedPlot7560\UnitTest\players\TestPlayerManager;
+use ShockedPlot7560\PmmpUnit\framework\result\FailedTest;
+use ShockedPlot7560\PmmpUnit\framework\result\FatalTest;
+use ShockedPlot7560\PmmpUnit\framework\result\ServerCrashedException;
+use ShockedPlot7560\PmmpUnit\framework\result\SuccessTest;
+use ShockedPlot7560\PmmpUnit\framework\result\TestResults;
+use ShockedPlot7560\PmmpUnit\framework\RunnableTest;
+use ShockedPlot7560\PmmpUnit\framework\TestSuite;
+use ShockedPlot7560\PmmpUnit\players\PlayerBag;
+use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
 
-class UnitTest extends PluginBase {
+class PmmpUnit extends PluginBase {
 	use SingletonTrait;
 	private RunnableTest $test;
 	private TestPlayerManager $playerManager;

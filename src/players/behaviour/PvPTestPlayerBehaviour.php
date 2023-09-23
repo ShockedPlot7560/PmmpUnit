@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ShockedPlot7560\UnitTest\players\behaviour;
+namespace ShockedPlot7560\PmmpUnit\players\behaviour;
 
 use pocketmine\entity\Entity;
 use pocketmine\entity\Living;
@@ -10,8 +10,8 @@ use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\player\GameMode;
 use pocketmine\player\Player;
-use ShockedPlot7560\UnitTest\players\TestPlayer;
-use ShockedPlot7560\UnitTest\players\TestPlayerManager;
+use ShockedPlot7560\PmmpUnit\players\TestPlayer;
+use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
 
 class PvPTestPlayerBehaviour implements TestPlayerBehaviour {
 	public static function create(array $data) : self {

@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework;
+namespace ShockedPlot7560\PmmpUnit\framework;
 
 use ArrayIterator;
 use Iterator;
@@ -12,10 +12,10 @@ use RecursiveRegexIterator;
 use ReflectionClass;
 use ReflectionMethod;
 use RegexIterator;
-use ShockedPlot7560\UnitTest\framework\loader\TestSuiteChecker;
-use ShockedPlot7560\UnitTest\framework\loader\TestSuiteLoader;
-use ShockedPlot7560\UnitTest\framework\result\TestResults;
-use ShockedPlot7560\UnitTest\utils\Utils;
+use ShockedPlot7560\PmmpUnit\framework\loader\TestSuiteChecker;
+use ShockedPlot7560\PmmpUnit\framework\loader\TestSuiteLoader;
+use ShockedPlot7560\PmmpUnit\framework\result\TestResults;
+use ShockedPlot7560\PmmpUnit\utils\Utils;
 use Throwable;
 use Webmozart\Assert\InvalidArgumentException;
 

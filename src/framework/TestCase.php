@@ -1,12 +1,12 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework;
+namespace ShockedPlot7560\PmmpUnit\framework;
 
 use React\Promise\PromiseInterface;
 use function React\Promise\resolve;
-use ShockedPlot7560\UnitTest\framework\assert\BaseAssert;
-use ShockedPlot7560\UnitTest\framework\assert\PocketmineSpecificAssert;
-use ShockedPlot7560\UnitTest\UnitTest;
+use ShockedPlot7560\PmmpUnit\framework\assert\BaseAssert;
+use ShockedPlot7560\PmmpUnit\framework\assert\PocketmineSpecificAssert;
+use ShockedPlot7560\PmmpUnit\PmmpUnit;
 
 class TestCase extends BaseAssert {
 	use PocketmineSpecificAssert;
@@ -28,7 +28,7 @@ class TestCase extends BaseAssert {
 	 */
 	public function tearDown() : PromiseInterface {
 		foreach ($this->spawnedPlayers as $player) {
-			UnitTest::getInstance()->getTestPlayerManager()->removePlayer($player->getPlayer());
+			PmmpUnit::getInstance()->getTestPlayerManager()->removePlayer($player->getPlayer());
 		}
 
 		return resolve(null);

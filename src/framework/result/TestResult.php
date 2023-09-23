@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework\result;
+namespace ShockedPlot7560\PmmpUnit\framework\result;
 
 interface TestResult {
 }

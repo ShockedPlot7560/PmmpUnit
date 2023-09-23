@@ -1,9 +1,9 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework\result;
+namespace ShockedPlot7560\PmmpUnit\framework\result;
 
-use ShockedPlot7560\UnitTest\framework\RunnableTest;
-use ShockedPlot7560\UnitTest\framework\TestMethod;
+use ShockedPlot7560\PmmpUnit\framework\RunnableTest;
+use ShockedPlot7560\PmmpUnit\framework\TestMethod;
 use Throwable;
 
 class TestResults {

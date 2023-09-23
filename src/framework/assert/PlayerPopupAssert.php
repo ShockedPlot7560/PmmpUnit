@@ -1,10 +1,10 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework\assert;
+namespace ShockedPlot7560\PmmpUnit\framework\assert;
 
 use pocketmine\network\mcpe\protocol\TextPacket;
 use React\Promise\PromiseInterface;
-use ShockedPlot7560\UnitTest\players\TestPlayer;
+use ShockedPlot7560\PmmpUnit\players\TestPlayer;
 
 trait PlayerPopupAssert {
 	/**

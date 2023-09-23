@@ -1,10 +1,10 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\tests\normal\pocketmine;
+namespace ShockedPlot7560\PmmpUnit\tests\normal\pocketmine;
 
 use React\Promise\PromiseInterface;
-use ShockedPlot7560\UnitTest\framework\TestCase;
-use ShockedPlot7560\UnitTest\players\TestPlayer;
+use ShockedPlot7560\PmmpUnit\framework\TestCase;
+use ShockedPlot7560\PmmpUnit\players\TestPlayer;
 
 class PlayerMessageTest extends TestCase {
 	/**

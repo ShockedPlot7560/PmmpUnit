@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework;
+namespace ShockedPlot7560\PmmpUnit\framework;
 
 use React\Promise\PromiseInterface;
 

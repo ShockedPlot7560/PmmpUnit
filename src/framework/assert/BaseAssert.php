@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework\assert;
+namespace ShockedPlot7560\PmmpUnit\framework\assert;
 
 use Countable;
 use React\Promise\PromiseInterface;

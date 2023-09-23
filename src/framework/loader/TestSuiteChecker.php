@@ -1,11 +1,11 @@
 <?php
 
-namespace ShockedPlot7560\UnitTest\framework\loader;
+namespace ShockedPlot7560\PmmpUnit\framework\loader;
 
 use ReflectionClass;
-use ShockedPlot7560\UnitTest\framework\loader\exception\ClassAbstractException;
-use ShockedPlot7560\UnitTest\framework\loader\exception\ClassDoesntExtendTestCaseException;
-use ShockedPlot7560\UnitTest\framework\TestCase;
+use ShockedPlot7560\PmmpUnit\framework\loader\exception\ClassAbstractException;
+use ShockedPlot7560\PmmpUnit\framework\loader\exception\ClassDoesntExtendTestCaseException;
+use ShockedPlot7560\PmmpUnit\framework\TestCase;
 
 class TestSuiteChecker {
 	/**
