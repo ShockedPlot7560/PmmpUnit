@@ -10,10 +10,16 @@ use ShockedPlot7560\PmmpUnit\framework\TestCase;
 class TestNotTestableTest extends TestCase {
 	private static bool $testRun = false;
 
+	/**
+	 * @return PromiseInterface<null>
+	 */
 	public function testNoop() : PromiseInterface {
 		return resolve(null);
 	}
 
+	/**
+	 * @return PromiseInterface<null>
+	 */
 	#[TestAttribute]
 	public function aFunctionToTest() : PromiseInterface {
 		self::$testRun = true;
