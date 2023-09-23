@@ -45,12 +45,12 @@ suitetest:
 	echo $(SUITE_TEST)
 
 	docker rm $(CONTAINER_PREFIX)-pocketmine > /dev/null || true
-	docker build -t ghcr.io/shockedplot7560/pmmpunit/tests-runner:latest .
+	docker build -t tests-runner .
 	docker create --name $(CONTAINER_PREFIX)-pocketmine \
 		--network $(CONTAINER_PREFIX)-network \
 		-u root \
 		--mount type=bind,source="$(shell pwd)/tests/pmmpunit/suitetest/$(SUITE_TEST)/tests",target=/data/plugin_data/PmmpUnit/tests \
-		ghcr.io/shockedplot7560/pmmpunit/tests-runner:latest \
+		tests-runner \
 		start-pocketmine > /dev/null
 
 	docker cp tests/pmmpunit/shared/data $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
