@@ -21,7 +21,8 @@ class TestMethodFeeded implements RunnableTest, ExceptionExpectationHandler {
 	public function __construct(
 		private ReflectionClass $class,
 		private ReflectionMethod $method,
-		private iterable $args
+		private iterable $args,
+		private ?string $name = null
 	) {
 	}
 
@@ -33,7 +34,7 @@ class TestMethodFeeded implements RunnableTest, ExceptionExpectationHandler {
 	}
 
 	public function __toString() : string {
-		return $this->class->getName() . "::" . $this->method->getName() . "(" .
+		return $this->name ?? $this->class->getName() . "::" . $this->method->getName() . "(" .
 			implode(", ", array_map(fn ($v) => stringify($v), $this->args))
 			. ")";
 	}

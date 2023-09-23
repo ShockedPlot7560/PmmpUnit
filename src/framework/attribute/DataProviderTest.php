@@ -26,6 +26,10 @@ class DataProviderTest implements RunnableTest, ExceptionExpectationHandler {
 		private ReflectionMethod $method,
 		private DataProviderAttribute $attribute
 	) {
+		$methodProvider = $this->attribute->getProvider();
+		Assert::true($this->class->hasMethod($methodProvider), "Method $methodProvider does not exist in class {$this->class->getName()}");
+		Assert::false($this->class->getMethod($methodProvider)->isStatic(), "Method $methodProvider is static in class {$this->class->getName()}");
+		Assert::true($this->class->getMethod($methodProvider)->isPublic(), "Method $methodProvider is not public in class {$this->class->getName()}");
 	}
 
 	/**
@@ -42,9 +46,14 @@ class DataProviderTest implements RunnableTest, ExceptionExpectationHandler {
 		$test = $this->getInstance(false);
 		$data = $this->getDataProvidingClosure()->call($this, $test);
 		$iterator = new ArrayIterator();
-		foreach ($data as $args) {
+		foreach ($data as $key => $args) {
 			Assert::isArray($args);
-			$iterator->append(new TestMethodFeeded($this->class, $this->method, $args));
+			$iterator->append(new TestMethodFeeded(
+				$this->class,
+				$this->method,
+				$args,
+				is_string($key) ? $key : null,
+			));
 		}
 
 		return $iterator;
@@ -56,7 +65,7 @@ class DataProviderTest implements RunnableTest, ExceptionExpectationHandler {
 	 */
 	private function getDataProvidingClosure() : Closure {
 		$provider = $this->attribute->getProvider();
-		$closure = function (TestCase $object) use ($provider) : array {
+		$closure = function (TestCase $object) use ($provider) : iterable {
 			return $this->class->getMethod($provider)->invoke($object);
 		};
 
