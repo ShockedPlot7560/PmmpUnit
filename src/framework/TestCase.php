@@ -12,7 +12,7 @@ class TestCase extends BaseAssert {
 	use PocketmineSpecificAssert;
 
 	public function __construct(
-		private readonly TestMethod $testMethod
+		private readonly ExceptionExpectationHandler $testMethod
 	) {
 	}
 

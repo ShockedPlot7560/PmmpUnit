@@ -3,8 +3,9 @@
 namespace ShockedPlot7560\PmmpUnit\framework;
 
 use React\Promise\PromiseInterface;
+use Stringable;
 
-interface RunnableTest {
+interface RunnableTest extends Stringable {
 	/**
 	 * @phpstan-return PromiseInterface<null>
 	 */
