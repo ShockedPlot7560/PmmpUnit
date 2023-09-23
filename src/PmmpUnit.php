@@ -14,6 +14,7 @@ use pocketmine\utils\Process;
 use pocketmine\utils\SingletonTrait;
 use ReflectionClass;
 use RuntimeException;
+use ShockedPlot7560\PmmpUnit\framework\CurrentTest;
 use ShockedPlot7560\PmmpUnit\framework\result\FailedTest;
 use ShockedPlot7560\PmmpUnit\framework\result\FatalTest;
 use ShockedPlot7560\PmmpUnit\framework\result\ServerCrashedException;
@@ -98,14 +99,14 @@ class PmmpUnit extends PluginBase {
 
 	public function onDisable() : void {
 		$this->test->onDisable();
-		if (TestSuite::$currentTest !== null) {
+		if (CurrentTest::$currentTest !== null) {
 			global $lastExceptionError, $lastError;
 			if (isset($lastExceptionError)) {
 				$error = $lastExceptionError;
 			} else {
 				$error = $lastError;
 			}
-			TestResults::fatalTest(TestSuite::$currentTest, ServerCrashedException::fromArray($error));
+			TestResults::fatalTest(CurrentTest::$currentTest, ServerCrashedException::fromArray($error));
 			$this->finish(false);
 		}
 	}

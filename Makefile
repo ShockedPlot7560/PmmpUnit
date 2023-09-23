@@ -30,7 +30,7 @@ dev/composer.phar: Makefile
 	cd dev && wget -O - https://getcomposer.org/installer | $(PHP)
 
 phpstan: vendor
-	PATH=$$PATH:$(PHP_DIR) php vendor/bin/phpstan analyse --memory-limit=2G
+	PATH=$$PATH:$(PHP_DIR) php vendor/bin/phpstan analyse --memory-limit=4G
 
 vendor: dev/composer.phar
 	$(PHP) $(COMPOSER) install

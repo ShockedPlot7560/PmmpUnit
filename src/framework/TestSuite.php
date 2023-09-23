@@ -4,28 +4,28 @@ namespace ShockedPlot7560\PmmpUnit\framework;
 
 use ArrayIterator;
 use Iterator;
+use pocketmine\Server;
 use React\Promise\PromiseInterface;
-use function React\Promise\resolve;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveRegexIterator;
 use ReflectionClass;
 use ReflectionMethod;
 use RegexIterator;
+use ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider\DataProviderAttribute;
+use ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider\DataProviderTest;
 use ShockedPlot7560\PmmpUnit\framework\loader\TestSuiteChecker;
 use ShockedPlot7560\PmmpUnit\framework\loader\TestSuiteLoader;
-use ShockedPlot7560\PmmpUnit\framework\result\TestResults;
 use ShockedPlot7560\PmmpUnit\utils\Utils;
-use Throwable;
-use Webmozart\Assert\InvalidArgumentException;
 
 class TestSuite implements RunnableTest {
+	use MultipleTestRunner;
+
 	/** @var TestMethod[] */
 	private array $testMethods = [];
 
 	/** @var RunnableTest[] */
 	private array $tests = [];
-	public static ?RunnableTest $currentTest = null;
 
 	final private function __construct(
 		public readonly string $name
@@ -36,6 +36,8 @@ class TestSuite implements RunnableTest {
 	 * @phpstan-return PromiseInterface<null>
 	 */
 	public function run() : PromiseInterface {
+		Server::getInstance()->getLogger()->debug("Starting test suite: " . $this->name);
+
 		return $this->runRec($this->getIterator());
 	}
 
@@ -60,54 +62,22 @@ class TestSuite implements RunnableTest {
 	/**
 	 * @phpstan-return Iterator<RunnableTest>
 	 */
-	private function getIterator() : Iterator {
-		$iterator = new ArrayIterator($this->tests);
+	public function getIterator() : Iterator {
+		$iterator = new ArrayIterator();
+		foreach ($this->tests as $test) {
+			if (method_exists($test, "getIterator")) {
+				foreach ($test->getIterator() as $subTest) {
+					$iterator->append($subTest);
+				}
+			} else {
+				$iterator->append($test);
+			}
+		}
 		foreach ($this->testMethods as $testMethod) {
 			$iterator->append($testMethod);
 		}
 
 		return $iterator;
-	}
-
-	/**
-	 * @param Iterator<RunnableTest> $iterator
-	 * @phpstan-return PromiseInterface<null>
-	 */
-	private function runRec(Iterator $iterator) : PromiseInterface {
-		if ($iterator->valid()) {
-			$test = $iterator->current();
-			self::$currentTest = $test;
-			$iterator->next();
-
-			$promise = null;
-			try {
-				$promise = $test->run()
-					->then(function () use ($test) {
-						TestResults::successTest($test);
-					}, function (Throwable $throwable) use ($test) {
-						return $this->failed($test, $throwable);
-					});
-			} catch (InvalidArgumentException $assertFailed) {
-				$promise = $this->failed($test, $assertFailed);
-			} finally {
-				return $promise?->then(function () use ($iterator) {
-					self::$currentTest = null;
-
-					return $this->runRec($iterator);
-				}) ?? resolve(null);
-			}
-		} else {
-			return resolve(null);
-		}
-	}
-
-	/**
-	 * @phpstan-return PromiseInterface<null>
-	 */
-	private function failed(RunnableTest $test, Throwable $throwable) : PromiseInterface {
-		TestResults::failedTest($test, $throwable);
-
-		return resolve(null);
 	}
 
 	public static function fromDirectory(string $path) : self {
@@ -154,7 +124,19 @@ class TestSuite implements RunnableTest {
 				continue;
 			}
 
-			$testSuite->addTestMethod($class, $method);
+			$attributes = $method->getAttributes();
+			$addTestMethod = true;
+			foreach ($attributes as $attribute) {
+				$attribute = $attribute->newInstance();
+				if ($attribute instanceof DataProviderAttribute) {
+					$testSuite->addTest(new DataProviderTest($class, $method, $attribute));
+					$addTestMethod = false;
+				}
+			}
+
+			if ($addTestMethod) {
+				$testSuite->addTestMethod($class, $method);
+			}
 		}
 
 		return $testSuite;
@@ -169,5 +151,9 @@ class TestSuite implements RunnableTest {
 	 */
 	public function addTestMethod(ReflectionClass $class, ReflectionMethod $method) : void {
 		$this->testMethods[] = new TestMethod($class, $method);
+	}
+
+	public function __toString() {
+		return "TestSuite: " . $this->name;
 	}
 }
