@@ -13,7 +13,12 @@ env:
 jobs:
   build:
     name: Update Docker image
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.image }}
+
+    strategy:
+      matrix:
+        image: [ubuntu-20.04]
+        php: [ "8.1", "8.2" ]
 
     steps:
       - name: Set up Docker Buildx
@@ -30,7 +35,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934
         with:
-          images: ${{ env.REGISTRY }}/${{ env.SERVER_NAME }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.SERVER_NAME }}/${{ env.IMAGE_NAME }}-php${{ matrix.php }}
 
       - name: Get name of Docker repository name
         id: docker-repo-name
@@ -40,4 +45,6 @@ jobs:
         uses: docker/build-push-action@v5.0.0
         with:
           push: true
-          tags: ${{ steps.meta.outputs.tags }},${{ env.REGISTRY }}/${{ env.SERVER_NAME }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ steps.meta.outputs.tags }},${{ env.REGISTRY }}/${{ env.SERVER_NAME }}/${{ env.IMAGE_NAME }}-php${{ matrix.php }}:latest
+          build-args:
+            PHP_VERSION: ${{ matrix.php }}

@@ -19,6 +19,7 @@
         }
     },
     "require": {
+        "php": "^8.1 || ^8.2",
         "react/promise": "^3.0",
         "webmozart/assert": "^1.11",
         "pocketmine/callback-validator": "^1.0",
