@@ -7,11 +7,7 @@ use Attribute;
 #[Attribute(Attribute::TARGET_METHOD)]
 class DataProviderAttribute {
 	public function __construct(
-		private string $provider
+		public readonly string $provider
 	) {
-	}
-
-	public function getProvider() : string {
-		return $this->provider;
 	}
 }

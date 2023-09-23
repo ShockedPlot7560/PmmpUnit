@@ -96,7 +96,7 @@ trait CommonTestFunctions {
 
 	private function getInstance(bool $regenerate = true) : TestCase {
 		if ($this->instance === null || $regenerate) {
-			$this->instance = $this->class->newInstance(new ExpectedExceptionHandler());
+			$this->instance = $this->class->newInstance(new ExpectedExceptionHandler($this->method));
 		}
 
 		return $this->instance;

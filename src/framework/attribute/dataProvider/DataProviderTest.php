@@ -28,7 +28,7 @@ class DataProviderTest implements RunnableTest {
 		private ReflectionMethod $method,
 		private DataProviderAttribute $attribute
 	) {
-		$methodProvider = $this->attribute->getProvider();
+		$methodProvider = $this->attribute->provider;
 		Assert::true($this->class->hasMethod($methodProvider), "Method $methodProvider does not exist in class {$this->class->getName()}");
 		Assert::false($this->class->getMethod($methodProvider)->isStatic(), "Method $methodProvider is static in class {$this->class->getName()}");
 		Assert::true($this->class->getMethod($methodProvider)->isPublic(), "Method $methodProvider is not public in class {$this->class->getName()}");
@@ -65,7 +65,7 @@ class DataProviderTest implements RunnableTest {
 	 * @return Closure(TestCase $object): iterable<iterable<mixed>>
 	 */
 	private function getDataProvidingClosure() : Closure {
-		$provider = $this->attribute->getProvider();
+		$provider = $this->attribute->provider;
 		$closure = function (TestCase $object) use ($provider) : iterable {
 			return $this->class->getMethod($provider)->invoke($object);
 		};

@@ -2,6 +2,11 @@
 
 namespace ShockedPlot7560\PmmpUnit\framework;
 
+use ReflectionMethod;
+use ShockedPlot7560\PmmpUnit\framework\attribute\ExpectedExceptionAttribute;
+use ShockedPlot7560\PmmpUnit\framework\attribute\ExpectedExceptionCodeAttribute;
+use ShockedPlot7560\PmmpUnit\framework\attribute\ExpectedExceptionMessageAttribute;
+use ShockedPlot7560\PmmpUnit\framework\attribute\ExpectedExceptionMessageMatchesAttribute;
 use Throwable;
 use Webmozart\Assert\Assert;
 
@@ -11,6 +16,30 @@ class ExpectedExceptionHandler {
 	private ?string $expectedExceptionMessage = null;
 	private ?string $expectedExceptionMessageRegExp = null;
 	private null|int|string $expectedExceptionCode = null;
+
+	public function __construct(
+		private ReflectionMethod $method,
+	) {
+		$attributes = $this->method->getAttributes();
+		foreach ($attributes as $attribute) {
+			$attribute = $attribute->newInstance();
+			if ($attribute instanceof ExpectedExceptionAttribute) {
+				$this->expectException($attribute->exception);
+			}
+
+			if ($attribute instanceof ExpectedExceptionCodeAttribute) {
+				$this->expectExceptionCode($attribute->code);
+			}
+
+			if ($attribute instanceof ExpectedExceptionMessageAttribute) {
+				$this->expectExceptionMessage($attribute->message);
+			}
+
+			if ($attribute instanceof ExpectedExceptionMessageMatchesAttribute) {
+				$this->expectExceptionMessageMatches($attribute->regex);
+			}
+		}
+	}
 
 	/**
 	 * @phpstan-param class-string<Throwable> $exception
