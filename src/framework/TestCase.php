@@ -12,8 +12,12 @@ class TestCase extends BaseAssert {
 	use PocketmineSpecificAssert;
 
 	public function __construct(
-		private readonly ExceptionExpectationHandler $testMethod
+		private readonly ExpectedExceptionHandler $exceptionHandler
 	) {
+	}
+
+	public function getExceptionHandler() : ExpectedExceptionHandler {
+		return $this->exceptionHandler;
 	}
 
 	/**
@@ -47,18 +51,18 @@ class TestCase extends BaseAssert {
 	 * @phpstan-param class-string<\Throwable> $exception
 	 */
 	final public function expectException(string $exception) : void {
-		$this->testMethod->expectException($exception);
+		$this->exceptionHandler->expectException($exception);
 	}
 
 	final public function expectExceptionCode(int|string $code) : void {
-		$this->testMethod->expectExceptionCode($code);
+		$this->exceptionHandler->expectExceptionCode($code);
 	}
 
 	final public function expectExceptionMessage(string $message) : void {
-		$this->testMethod->expectExceptionMessage($message);
+		$this->exceptionHandler->expectExceptionMessage($message);
 	}
 
 	final public function expectExceptionMessageMatches(string $regularExpression) : void {
-		$this->testMethod->expectExceptionMessageMatches($regularExpression);
+		$this->exceptionHandler->expectExceptionMessageMatches($regularExpression);
 	}
 }

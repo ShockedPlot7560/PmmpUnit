@@ -9,13 +9,12 @@ use React\Promise\PromiseInterface;
 use ReflectionClass;
 use ReflectionMethod;
 use ShockedPlot7560\PmmpUnit\framework\CommonTestFunctions;
-use ShockedPlot7560\PmmpUnit\framework\ExceptionExpectationHandler;
 use ShockedPlot7560\PmmpUnit\framework\MultipleTestRunner;
 use ShockedPlot7560\PmmpUnit\framework\RunnableTest;
 use ShockedPlot7560\PmmpUnit\framework\TestCase;
 use Webmozart\Assert\Assert;
 
-class DataProviderTest implements RunnableTest, ExceptionExpectationHandler {
+class DataProviderTest implements RunnableTest {
 	use CommonTestFunctions {
 		CommonTestFunctions::run as private runCommon;
 	}

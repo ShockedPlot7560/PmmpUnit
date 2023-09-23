@@ -7,11 +7,10 @@ use ReflectionClass;
 use ReflectionMethod;
 use function Respect\Stringifier\stringify;
 use ShockedPlot7560\PmmpUnit\framework\CommonTestFunctions;
-use ShockedPlot7560\PmmpUnit\framework\ExceptionExpectationHandler;
 use ShockedPlot7560\PmmpUnit\framework\RunnableTest;
 use ShockedPlot7560\PmmpUnit\framework\TestCase;
 
-class TestMethodFeeded implements RunnableTest, ExceptionExpectationHandler {
+class TestMethodFeeded implements RunnableTest {
 	use CommonTestFunctions;
 
 	/** @var mixed[]  */

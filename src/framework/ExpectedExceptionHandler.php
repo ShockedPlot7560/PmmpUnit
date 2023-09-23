@@ -5,7 +5,7 @@ namespace ShockedPlot7560\PmmpUnit\framework;
 use Throwable;
 use Webmozart\Assert\Assert;
 
-trait ExceptionExpectationTrait {
+class ExpectedExceptionHandler {
 	/** @var class-string<Throwable>|null */
 	private ?string $expectedException = null;
 	private ?string $expectedExceptionMessage = null;
@@ -31,7 +31,7 @@ trait ExceptionExpectationTrait {
 		$this->expectedExceptionMessageRegExp = $regularExpression;
 	}
 
-	private function expectedExceptionWasNotRaised() : void {
+	public function expectedExceptionWasNotRaised() : void {
 		if ($this->expectedException !== null) {
 			Assert::null($this->expectedException, "Failed asserting that exception of type {$this->expectedException} is thrown");
 		}
@@ -46,14 +46,14 @@ trait ExceptionExpectationTrait {
 		}
 	}
 
-	private function shouldExceptionExpectationsBeVerified(Throwable $throwable) : bool {
+	public function shouldExceptionExpectationsBeVerified(Throwable $throwable) : bool {
 		return $this->expectedException !== null
 			|| $this->expectedExceptionCode !== null
 			|| $this->expectedExceptionMessage !== null
 			|| $this->expectedExceptionMessageRegExp !== null;
 	}
 
-	private function verifyExceptionExpectations(Throwable $throwable) : void {
+	public function verifyExceptionExpectations(Throwable $throwable) : void {
 		if ($this->expectedException !== null) {
 			Assert::isInstanceOf(
 				$throwable,

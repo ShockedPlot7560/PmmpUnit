@@ -8,7 +8,7 @@ use function React\Promise\resolve;
 use Throwable;
 
 trait CommonTestFunctions {
-	use ExceptionExpectationTrait;
+	private ExpectedExceptionHandler $expectedExceptionHandler;
 	private ?TestCase $instance = null;
 
 	public function onLoad() : void {
@@ -70,17 +70,17 @@ trait CommonTestFunctions {
 						$this->tearDown($test);
 					});
 			})
-			->then(function () {
-				$this->expectedExceptionWasNotRaised();
+			->then(function () use ($test) {
+				$test->getExceptionHandler()->expectedExceptionWasNotRaised();
 
 				return resolve(null);
 			})
-			->catch(function (Throwable $th) {
-				if (!$this->shouldExceptionExpectationsBeVerified($th)) {
+			->catch(function (Throwable $th) use ($test) {
+				if (!$test->getExceptionHandler()->shouldExceptionExpectationsBeVerified($th)) {
 					throw $th;
 				}
 
-				$this->verifyExceptionExpectations($th);
+				$test->getExceptionHandler()->verifyExceptionExpectations($th);
 
 				return null;
 			})
@@ -96,7 +96,7 @@ trait CommonTestFunctions {
 
 	private function getInstance(bool $regenerate = true) : TestCase {
 		if ($this->instance === null || $regenerate) {
-			$this->instance = $this->class->newInstance($this);
+			$this->instance = $this->class->newInstance(new ExpectedExceptionHandler());
 		}
 
 		return $this->instance;

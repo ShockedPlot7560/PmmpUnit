@@ -5,7 +5,7 @@ namespace ShockedPlot7560\PmmpUnit\framework;
 use ReflectionClass;
 use ReflectionMethod;
 
-class TestMethod implements RunnableTest, ExceptionExpectationHandler {
+class TestMethod implements RunnableTest {
 	use CommonTestFunctions;
 
 	/**
