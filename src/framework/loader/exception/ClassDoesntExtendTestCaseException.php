@@ -3,10 +3,9 @@
 namespace ShockedPlot7560\PmmpUnit\framework\loader\exception;
 
 use ReflectionClass;
-use RuntimeException;
 use ShockedPlot7560\PmmpUnit\framework\TestCase;
 
-class ClassDoesntExtendTestCaseException extends RuntimeException {
+class ClassDoesntExtendTestCaseException extends LoaderException {
 	public function __construct(string|ReflectionClass $className, ?string $fileName = null) {
 		if ($className instanceof ReflectionClass) {
 			$fileName = $className->getFileName();

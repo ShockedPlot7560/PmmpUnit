@@ -3,9 +3,8 @@
 namespace ShockedPlot7560\PmmpUnit\framework\loader\exception;
 
 use ReflectionClass;
-use RuntimeException;
 
-class ClassAbstractException extends RuntimeException {
+class ClassAbstractException extends LoaderException {
 	public function __construct(string|ReflectionClass $className, ?string $file = null) {
 		if ($className instanceof ReflectionClass) {
 			$file = $className->getFileName();

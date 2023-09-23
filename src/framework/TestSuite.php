@@ -17,6 +17,7 @@ use RuntimeException;
 use ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider\DataProviderAttribute;
 use ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider\DataProviderTest;
 use ShockedPlot7560\PmmpUnit\framework\attribute\TestAttribute;
+use ShockedPlot7560\PmmpUnit\framework\loader\exception\LoaderException;
 use ShockedPlot7560\PmmpUnit\framework\loader\TestSuiteChecker;
 use ShockedPlot7560\PmmpUnit\framework\loader\TestSuiteLoader;
 use ShockedPlot7560\PmmpUnit\utils\Utils;
@@ -111,7 +112,11 @@ class TestSuite implements RunnableTest {
 	 * @param ReflectionClass<TestCase> $class
 	 */
 	public function addTestSuite(ReflectionClass $class) : void {
-		TestSuiteChecker::check($class);
+		try {
+			TestSuiteChecker::check($class);
+		} catch (LoaderException $e) {
+			return;
+		}
 
 		$this->addTest(self::fromClassReflection($class));
 	}
