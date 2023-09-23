@@ -51,12 +51,11 @@ suitetest:
 	docker create --name $(CONTAINER_PREFIX)-pocketmine \
 		--network $(CONTAINER_PREFIX)-network \
 		-u root \
+		--mount type=bind,source="$(shell pwd)/tests/unittest/suitetest/$(SUITE_TEST)/tests",target=/data/plugin_data/PmUnitTest/tests \
 		ghcr.io/shockedplot7560/pmunittest/pmunittest:latest \
 		start-pocketmine > /dev/null
 
 	docker cp tests/unittest/shared/data $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
-	docker cp resources $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data/PmUnitTest > /dev/null # create PmUnitTest directory
-	docker cp tests/unittest/suitetest/$(SUITE_TEST)/tests $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data/PmUnitTest/tests > /dev/null
 	docker cp tests/unittest/suitetest/$(SUITE_TEST)/config $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
 
 	docker start -ia $(CONTAINER_PREFIX)-pocketmine
