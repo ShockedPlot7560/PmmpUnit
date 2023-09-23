@@ -11,9 +11,12 @@ use RecursiveIteratorIterator;
 use RecursiveRegexIterator;
 use ReflectionClass;
 use ReflectionMethod;
+use ReflectionNamedType;
 use RegexIterator;
+use RuntimeException;
 use ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider\DataProviderAttribute;
 use ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider\DataProviderTest;
+use ShockedPlot7560\PmmpUnit\framework\attribute\TestAttribute;
 use ShockedPlot7560\PmmpUnit\framework\loader\TestSuiteChecker;
 use ShockedPlot7560\PmmpUnit\framework\loader\TestSuiteLoader;
 use ShockedPlot7560\PmmpUnit\utils\Utils;
@@ -120,17 +123,25 @@ class TestSuite implements RunnableTest {
 		$testSuite = new static($class->getName());
 
 		foreach (Utils::getTestMethodsInTestCase($class) as $method) {
-			if (!Utils::isTestMethod($method)) {
-				continue;
-			}
-
 			$attributes = $method->getAttributes();
-			$addTestMethod = true;
+			$addTestMethod = Utils::isTestMethod($method);
 			foreach ($attributes as $attribute) {
 				$attribute = $attribute->newInstance();
 				if ($attribute instanceof DataProviderAttribute) {
 					$testSuite->addTest(new DataProviderTest($class, $method, $attribute));
 					$addTestMethod = false;
+				}
+
+				if ($attribute instanceof TestAttribute) {
+					$addTestMethod = true;
+					if (!$method->isPublic()) {
+						throw new RuntimeException("Test method " . $method->getName() . " is not public!");
+					}
+					$returnType = $method->getReturnType();
+
+					if (!$returnType instanceof ReflectionNamedType || $returnType->getName() !== PromiseInterface::class || $returnType->allowsNull()) {
+						throw new RuntimeException("Test method " . $method->getName() . " must return a PromiseInterface!");
+					}
 				}
 			}
 
