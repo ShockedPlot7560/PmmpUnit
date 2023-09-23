@@ -63,11 +63,11 @@ class DataProviderTest implements RunnableTest, ExceptionExpectationHandler {
 	}
 
 	/**
-	 * @return Closure(TestCase $object): array<iterable<mixed>>
+	 * @return Closure(TestCase $object): iterable<iterable<mixed>>
 	 */
 	private function getDataProvidingClosure() : Closure {
 		$provider = $this->attribute->getProvider();
-		$closure = function (TestCase $object) use ($provider) : array {
+		$closure = function (TestCase $object) use ($provider) : iterable {
 			return $this->class->getMethod($provider)->invoke($object);
 		};
 
