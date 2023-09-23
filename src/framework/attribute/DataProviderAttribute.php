@@ -3,16 +3,15 @@
 namespace ShockedPlot7560\PmmpUnit\framework\attribute;
 
 use Attribute;
-use Closure;
 
 #[Attribute(Attribute::TARGET_METHOD)]
 class DataProviderAttribute {
 	public function __construct(
-		private string|Closure $provider
+		private string $provider
 	) {
 	}
 
-	public function getProvider() : string|Closure {
+	public function getProvider() : string {
 		return $this->provider;
 	}
 }

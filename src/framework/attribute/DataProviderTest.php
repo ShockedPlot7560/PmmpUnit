@@ -40,7 +40,7 @@ class DataProviderTest implements RunnableTest, ExceptionExpectationHandler {
 	 */
 	public function getIterator() : Iterator {
 		$test = $this->getInstance(false);
-		$data = $this->getDataProvidingClosure($this->class)->call($this, $test);
+		$data = $this->getDataProvidingClosure()->call($this, $test);
 		$iterator = new ArrayIterator();
 		foreach ($data as $args) {
 			Assert::isArray($args);
@@ -52,16 +52,12 @@ class DataProviderTest implements RunnableTest, ExceptionExpectationHandler {
 
 	/**
 	 * @phpstan-param ReflectionClass<TestCase> $class
-	 * @return Closure(): array<array<mixed>>
+	 * @return Closure(TestCase $object): array<iterable<mixed>>
 	 */
-	private function getDataProvidingClosure(ReflectionClass $class) : Closure {
+	private function getDataProvidingClosure() : Closure {
 		$provider = $this->attribute->getProvider();
 		$closure = function (TestCase $object) use ($provider) : array {
-			if (is_string($provider)) {
-				return $this->class->getMethod($provider)->invoke($object);
-			} else {
-				return $provider->call($object);
-			}
+			return $this->class->getMethod($provider)->invoke($object);
 		};
 
 		return $closure;
