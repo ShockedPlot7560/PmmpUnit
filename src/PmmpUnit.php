@@ -156,6 +156,8 @@ class PmmpUnit extends PluginBase {
 
 		$this->getLogger()->notice("=== ============ ===");
 
+		file_put_contents($this->getDataFolder() . "results.txt", count($failedTests) + count($fatalErrors));
+
 		if ($close) {
 			$this->getServer()->shutdown();
 		}

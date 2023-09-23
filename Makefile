@@ -6,7 +6,7 @@ PHP_DIR = $(dir $(PHP_PATH))
 PHP_DIR := $(shell echo $(PHP_DIR) | sed 's/\/$$//g')
 COMPOSER = ${shell pwd}/dev/composer.phar
 PHP_CS_FIXER = ${shell pwd}/vendor/bin/php-cs-fixer
-SUITE_TEST := ${shell echo $$SUITE_TEST}
+SUITE_TEST ?= normal
 
 ENGINE_SOURCE_FILES = plugin.yml $(shell find src resources -type f) vendor
 EXTENSION_DIR = $(shell find "$(shell pwd)/bin" -name "*debug-zts*" | tail -n 1)
@@ -55,8 +55,11 @@ suitetest:
 
 	docker cp tests/pmmpunit/shared/data $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
 	docker cp tests/pmmpunit/suitetest/$(SUITE_TEST)/config $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
-	docker cp tests/pmmpunit/suitetest/$(SUITE_TEST)/plugins $(CONTAINER_PREFIX)-pocketmine:/plugins > /dev/null
+	docker cp tests/pmmpunit/suitetest/$(SUITE_TEST)/plugins $(CONTAINER_PREFIX)-pocketmine:/ > /dev/null
 
 	docker start -ia $(CONTAINER_PREFIX)-pocketmine
+	docker cp $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data/PmmpUnit/results.txt /tmp/failed.txt
 	docker rm $(CONTAINER_PREFIX)-pocketmine > /dev/null
 	docker volume prune -f > /dev/null
+
+	if [ `cat /tmp/failed.txt` -eq 0 ]; then echo "All test passed"; else echo "Some test failed"; exit 1; fi
