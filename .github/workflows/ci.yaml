@@ -62,7 +62,7 @@ jobs:
       fail-fast: false
       matrix:
         image: [ubuntu-20.04]
-        suittest: ["normal"]
+        suittest: ["normal", "with_plugin"]
 
     steps:
         - uses: actions/checkout@v4

@@ -6,13 +6,11 @@ PHP_DIR = $(dir $(PHP_PATH))
 PHP_DIR := $(shell echo $(PHP_DIR) | sed 's/\/$$//g')
 COMPOSER = ${shell pwd}/dev/composer.phar
 PHP_CS_FIXER = ${shell pwd}/vendor/bin/php-cs-fixer
-SUITE_TEST := normal
+SUITE_TEST := ${shell echo $$SUITE_TEST}
 
 ENGINE_SOURCE_FILES = plugin.yml $(shell find src resources -type f) vendor
 EXTENSION_DIR = $(shell find "$(shell pwd)/bin" -name "*debug-zts*" | tail -n 1)
 $(shell mkdir -p dev && chmod 755 dev)
-
-args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
 
 cs: vendor
 	$(PHP) $(PHP_CS_FIXER) fix --verbose
@@ -57,6 +55,7 @@ suitetest:
 
 	docker cp tests/pmmpunit/shared/data $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
 	docker cp tests/pmmpunit/suitetest/$(SUITE_TEST)/config $(CONTAINER_PREFIX)-pocketmine:/data/plugin_data > /dev/null
+	docker cp tests/pmmpunit/suitetest/$(SUITE_TEST)/plugins $(CONTAINER_PREFIX)-pocketmine:/plugins > /dev/null
 
 	docker start -ia $(CONTAINER_PREFIX)-pocketmine
 	docker rm $(CONTAINER_PREFIX)-pocketmine > /dev/null
