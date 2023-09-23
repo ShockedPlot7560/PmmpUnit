@@ -2,6 +2,7 @@
 
 namespace ShockedPlot7560\PmmpUnit\framework;
 
+use pocketmine\Server;
 use React\Promise\PromiseInterface;
 use Throwable;
 
@@ -60,6 +61,8 @@ trait CommonTestFunctions {
 
 		return $this->setUp($test)
 			->then(function () use ($test) : PromiseInterface {
+				Server::getInstance()->getLogger()->debug("Testing : " . $this->__toString());
+
 				return $this->invokeTest($test)
 					->finally(fn (mixed $ret = null) => $this->tearDown($test, $ret));
 			})

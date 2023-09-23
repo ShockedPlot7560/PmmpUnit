@@ -4,6 +4,7 @@ namespace ShockedPlot7560\PmmpUnit\framework;
 
 use ArrayIterator;
 use Iterator;
+use pocketmine\Server;
 use React\Promise\PromiseInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -35,6 +36,8 @@ class TestSuite implements RunnableTest {
 	 * @phpstan-return PromiseInterface<null>
 	 */
 	public function run() : PromiseInterface {
+		Server::getInstance()->getLogger()->debug("Starting test suite: " . $this->name);
+
 		return $this->runRec($this->getIterator());
 	}
 
