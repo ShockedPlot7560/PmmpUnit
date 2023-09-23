@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\PmmpUnit\framework\attribute;
+namespace ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider;
 
 use React\Promise\PromiseInterface;
 use ReflectionClass;
@@ -14,6 +14,9 @@ use ShockedPlot7560\PmmpUnit\framework\TestCase;
 class TestMethodFeeded implements RunnableTest, ExceptionExpectationHandler {
 	use CommonTestFunctions;
 
+	/** @var mixed[]  */
+	private array $args;
+
 	/**
 	 * @param ReflectionClass<TestCase> $class
 	 * @param iterable<mixed> $args
@@ -21,9 +24,10 @@ class TestMethodFeeded implements RunnableTest, ExceptionExpectationHandler {
 	public function __construct(
 		private ReflectionClass $class,
 		private ReflectionMethod $method,
-		private iterable $args,
+		iterable $args,
 		private ?string $name = null
 	) {
+		$this->args = is_array($args) ? $args : iterator_to_array($args);
 	}
 
 	/**

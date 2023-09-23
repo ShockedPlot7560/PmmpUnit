@@ -10,8 +10,6 @@ use Throwable;
 use Webmozart\Assert\InvalidArgumentException;
 
 trait MultipleTestRunner {
-	private array $runnedTests = [];
-
 	/**
 	 * @param Iterator<RunnableTest> $iterator
 	 * @phpstan-return PromiseInterface<null>
@@ -24,7 +22,6 @@ trait MultipleTestRunner {
 
 			$promise = null;
 			try {
-				$this->runnedTests[] = $test;
 				$promise = $test->run()
 					->then(function () use ($test) {
 						TestResults::successTest($test);

@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\PmmpUnit\framework\attribute;
+namespace ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider;
 
 use Attribute;
 

@@ -49,8 +49,3 @@ parameters:
 			message: "#^Parameter \\#1 \\$type of method ShockedPlot7560\\\\PmmpUnit\\\\framework\\\\TestCase\\:\\:typeToString\\(\\) expects 0\\|1\\|2\\|3\\|4\\|5\\|6\\|7\\|8\\|9\\|10\\|11, int given\\.$#"
 			count: 1
 			path: ../../src/framework/TestCase.php
-
-		-
-			message: "#^Method ShockedPlot7560\\\\PmmpUnit\\\\framework\\\\TestMethod\\:\\:run\\(\\) should return React\\\\Promise\\\\PromiseInterface\\<null\\> but returns React\\\\Promise\\\\PromiseInterface\\<void\\|null\\>\\.$#"
-			count: 1
-			path: ../../src/framework/TestMethod.php

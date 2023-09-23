@@ -4,10 +4,12 @@ namespace ShockedPlot7560\PmmpUnit\framework;
 
 use pocketmine\Server;
 use React\Promise\PromiseInterface;
+use function React\Promise\resolve;
 use Throwable;
 
 trait CommonTestFunctions {
 	use ExceptionExpectationTrait;
+	private ?TestCase $instance = null;
 
 	public function onLoad() : void {
 		$method = $this->class->getMethod("onLoad");
@@ -64,12 +66,14 @@ trait CommonTestFunctions {
 				Server::getInstance()->getLogger()->debug("Testing : " . $this->__toString());
 
 				return $this->invokeTest($test)
-					->finally(fn (mixed $ret = null) => $this->tearDown($test, $ret));
+					->finally(function () use ($test) {
+						$this->tearDown($test);
+					});
 			})
 			->then(function () {
 				$this->expectedExceptionWasNotRaised();
 
-				return null;
+				return resolve(null);
 			})
 			->catch(function (Throwable $th) {
 				if (!$this->shouldExceptionExpectationsBeVerified($th)) {
@@ -77,6 +81,8 @@ trait CommonTestFunctions {
 				}
 
 				$this->verifyExceptionExpectations($th);
+
+				return null;
 			})
 			->catch(fn (mixed $ret = null) => $this->tearDown($test, $ret));
 	}
@@ -87,7 +93,6 @@ trait CommonTestFunctions {
 	private function invokeTest(TestCase $test) : PromiseInterface {
 		return $this->method->invoke($test);
 	}
-	private ?TestCase $instance = null;
 
 	private function getInstance(bool $regenerate = true) : TestCase {
 		if ($this->instance === null || $regenerate) {

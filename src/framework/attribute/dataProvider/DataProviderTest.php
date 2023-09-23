@@ -1,6 +1,6 @@
 <?php
 
-namespace ShockedPlot7560\PmmpUnit\framework\attribute;
+namespace ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider;
 
 use ArrayIterator;
 use Closure;
@@ -21,6 +21,9 @@ class DataProviderTest implements RunnableTest, ExceptionExpectationHandler {
 	}
 	use MultipleTestRunner;
 
+	/**
+	 * @phpstan-param ReflectionClass<TestCase> $class
+	 */
 	public function __construct(
 		private ReflectionClass $class,
 		private ReflectionMethod $method,
@@ -60,12 +63,11 @@ class DataProviderTest implements RunnableTest, ExceptionExpectationHandler {
 	}
 
 	/**
-	 * @phpstan-param ReflectionClass<TestCase> $class
 	 * @return Closure(TestCase $object): array<iterable<mixed>>
 	 */
 	private function getDataProvidingClosure() : Closure {
 		$provider = $this->attribute->getProvider();
-		$closure = function (TestCase $object) use ($provider) : iterable {
+		$closure = function (TestCase $object) use ($provider) : array {
 			return $this->class->getMethod($provider)->invoke($object);
 		};
 
