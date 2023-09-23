@@ -46,10 +46,13 @@ class PmmpUnit extends PluginBase {
 		}
 
 		include_once dirname(__DIR__) . "/vendor/autoload.php";
+		parent::__construct($loader, $server, $description, $dataFolder, $file, $resourceProvider);
+	}
 
-		$unitFolder = $dataFolder . "/tests";
+	protected function onLoad() : void {
+		$unitFolder = $this->getDataFolder() . "tests";
 		if (!is_dir($unitFolder)) {
-			$server->getLogger()->warning("Unit test folder ($unitFolder) not found, creating one...");
+			$this->getLogger()->warning("Unit test folder ($unitFolder) not found, creating one...");
 			mkdir($unitFolder);
 		}
 
@@ -57,18 +60,15 @@ class PmmpUnit extends PluginBase {
 		if ($testSuite !== false) {
 			$unitFolder .= "/" . $testSuite;
 			if (!is_dir($unitFolder)) {
-				$server->getLogger()->warning("Unit test folder ($unitFolder) not found, creating one...");
+				$this->getLogger()->warning("Unit test folder ($unitFolder) not found, creating one...");
 				mkdir($unitFolder);
 			}
 		}
 
-		$server->getLogger()->debug("Loading tests from $unitFolder");
+		$this->getLogger()->debug("Loading tests from $unitFolder");
 
 		$this->test = TestSuite::fromDirectory($unitFolder);
-		parent::__construct($loader, $server, $description, $dataFolder, $file, $resourceProvider);
-	}
 
-	protected function onLoad() : void {
 		// prevent server waiting, so we can run tests faster for CI
 		$reflectionServer = new ReflectionClass(Server::getInstance());
 		$startTimeProperty = $reflectionServer->getProperty("startTime");
