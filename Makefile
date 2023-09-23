@@ -45,7 +45,7 @@ suitetest:
 	echo $(SUITE_TEST)
 
 	docker rm $(CONTAINER_PREFIX)-pocketmine > /dev/null || true
-	docker build -t tests-runner .
+	docker build -t tests-runner --build-arg PHP_VERSION=$(PHP_VERSION) .
 	docker create --name $(CONTAINER_PREFIX)-pocketmine \
 		--network $(CONTAINER_PREFIX)-network \
 		-u root \
