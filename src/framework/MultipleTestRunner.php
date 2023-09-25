@@ -17,7 +17,7 @@ trait MultipleTestRunner {
 	private function runRec(Iterator $iterator) : PromiseInterface {
 		if ($iterator->valid()) {
 			$test = $iterator->current();
-			CurrentTest::$currentTest = $test;
+			TestMemory::$currentTest = $test;
 			$iterator->next();
 
 			$promise = null;
@@ -32,7 +32,7 @@ trait MultipleTestRunner {
 				$promise = $this->failed($test, $assertFailed);
 			} finally {
 				return $promise?->then(function () use ($iterator) {
-					CurrentTest::$currentTest = null;
+					TestMemory::$currentTest = null;
 
 					return $this->runRec($iterator);
 				}) ?? resolve(null);

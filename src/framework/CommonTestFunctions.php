@@ -12,23 +12,38 @@ trait CommonTestFunctions {
 	private ?TestCase $instance = null;
 
 	public function onLoad() : void {
+		if (TestMemory::$loadedClasses[$this->class->getName()] ?? false) {
+			return;
+		}
 		$method = $this->class->getMethod("onLoad");
 		if ($method->isPublic() && !$method->isAbstract()) {
 			$method->invoke($this->getInstance());
+
+			TestMemory::$loadedClasses[$this->class->getName()] = true;
 		}
 	}
 
 	public function onEnable() : void {
+		if (TestMemory::$enabledClasses[$this->class->getName()] ?? false) {
+			return;
+		}
 		$method = $this->class->getMethod("onEnable");
 		if ($method->isPublic() && !$method->isAbstract()) {
 			$method->invoke($this->getInstance());
+
+			TestMemory::$enabledClasses[$this->class->getName()] = true;
 		}
 	}
 
 	public function onDisable() : void {
+		if (TestMemory::$disabledClasses[$this->class->getName()] ?? false) {
+			return;
+		}
 		$method = $this->class->getMethod("onDisable");
 		if ($method->isPublic() && !$method->isAbstract()) {
 			$method->invoke($this->getInstance());
+
+			TestMemory::$disabledClasses[$this->class->getName()] = true;
 		}
 	}
 

@@ -39,6 +39,9 @@ composer/update: dev/composer.phar
 composer/install: dev/composer.phar
 	$(PHP) $(COMPOSER) install
 
+unittests:
+	export PHP_VERSION=8.1 && make suitetest
+
 suitetest:
 	$(eval CONTAINER_PREFIX := unittests-suite)
 	docker network create $(CONTAINER_PREFIX)-network > /dev/null || true

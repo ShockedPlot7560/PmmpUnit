@@ -14,7 +14,7 @@ use pocketmine\utils\Process;
 use pocketmine\utils\SingletonTrait;
 use ReflectionClass;
 use RuntimeException;
-use ShockedPlot7560\PmmpUnit\framework\CurrentTest;
+use ShockedPlot7560\PmmpUnit\framework\TestMemory;
 use ShockedPlot7560\PmmpUnit\framework\result\FailedTest;
 use ShockedPlot7560\PmmpUnit\framework\result\FatalTest;
 use ShockedPlot7560\PmmpUnit\framework\result\ServerCrashedException;
@@ -33,6 +33,10 @@ class PmmpUnit extends PluginBase {
 
 	public function __construct(PluginLoader $loader, Server $server, PluginDescription $description, string $dataFolder, string $file, ResourceProvider $resourceProvider) {
 		self::setInstance($this);
+        // prevent server waiting, so we can run tests faster for CI
+        $reflectionServer = new ReflectionClass(Server::getInstance());
+        $startTimeProperty = $reflectionServer->getProperty("startTime");
+        $startTimeProperty->setValue(Server::getInstance(), time() - 240);
 
 		$vendorDir = dirname(__DIR__) . "/vendor";
 		if (!str_contains($vendorDir, "phar://") && is_dir($vendorDir . "/pocketmine")) {
@@ -50,6 +54,7 @@ class PmmpUnit extends PluginBase {
 	}
 
 	protected function onLoad() : void {
+
 		$unitFolder = $this->getDataFolder() . "tests";
 		if (!is_dir($unitFolder)) {
 			$this->getLogger()->warning("Unit test folder ($unitFolder) not found, creating one...");
@@ -68,11 +73,6 @@ class PmmpUnit extends PluginBase {
 		$this->getLogger()->debug("Loading tests from $unitFolder");
 
 		$this->test = TestSuite::fromDirectory($unitFolder);
-
-		// prevent server waiting, so we can run tests faster for CI
-		$reflectionServer = new ReflectionClass(Server::getInstance());
-		$startTimeProperty = $reflectionServer->getProperty("startTime");
-		$startTimeProperty->setValue(Server::getInstance(), time() - 240);
 
 		$this->playerManager = new TestPlayerManager($this);
 		$this->playerBag = new PlayerBag();
@@ -99,14 +99,14 @@ class PmmpUnit extends PluginBase {
 
 	public function onDisable() : void {
 		$this->test->onDisable();
-		if (CurrentTest::$currentTest !== null) {
+		if (TestMemory::$currentTest !== null) {
 			global $lastExceptionError, $lastError;
 			if (isset($lastExceptionError)) {
 				$error = $lastExceptionError;
 			} else {
 				$error = $lastError;
 			}
-			TestResults::fatalTest(CurrentTest::$currentTest, ServerCrashedException::fromArray($error));
+			TestResults::fatalTest(TestMemory::$currentTest, ServerCrashedException::fromArray($error));
 			$this->finish(false);
 		}
 	}
