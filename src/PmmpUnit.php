@@ -14,13 +14,13 @@ use pocketmine\utils\Process;
 use pocketmine\utils\SingletonTrait;
 use ReflectionClass;
 use RuntimeException;
-use ShockedPlot7560\PmmpUnit\framework\TestMemory;
 use ShockedPlot7560\PmmpUnit\framework\result\FailedTest;
 use ShockedPlot7560\PmmpUnit\framework\result\FatalTest;
 use ShockedPlot7560\PmmpUnit\framework\result\ServerCrashedException;
 use ShockedPlot7560\PmmpUnit\framework\result\SuccessTest;
 use ShockedPlot7560\PmmpUnit\framework\result\TestResults;
 use ShockedPlot7560\PmmpUnit\framework\RunnableTest;
+use ShockedPlot7560\PmmpUnit\framework\TestMemory;
 use ShockedPlot7560\PmmpUnit\framework\TestSuite;
 use ShockedPlot7560\PmmpUnit\players\PlayerBag;
 use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
@@ -33,10 +33,10 @@ class PmmpUnit extends PluginBase {
 
 	public function __construct(PluginLoader $loader, Server $server, PluginDescription $description, string $dataFolder, string $file, ResourceProvider $resourceProvider) {
 		self::setInstance($this);
-        // prevent server waiting, so we can run tests faster for CI
-        $reflectionServer = new ReflectionClass(Server::getInstance());
-        $startTimeProperty = $reflectionServer->getProperty("startTime");
-        $startTimeProperty->setValue(Server::getInstance(), time() - 240);
+		// prevent server waiting, so we can run tests faster for CI
+		$reflectionServer = new ReflectionClass(Server::getInstance());
+		$startTimeProperty = $reflectionServer->getProperty("startTime");
+		$startTimeProperty->setValue(Server::getInstance(), time() - 240);
 
 		$vendorDir = dirname(__DIR__) . "/vendor";
 		if (!str_contains($vendorDir, "phar://") && is_dir($vendorDir . "/pocketmine")) {
@@ -54,7 +54,6 @@ class PmmpUnit extends PluginBase {
 	}
 
 	protected function onLoad() : void {
-
 		$unitFolder = $this->getDataFolder() . "tests";
 		if (!is_dir($unitFolder)) {
 			$this->getLogger()->warning("Unit test folder ($unitFolder) not found, creating one...");

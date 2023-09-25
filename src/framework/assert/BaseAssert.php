@@ -2,9 +2,11 @@
 
 namespace ShockedPlot7560\PmmpUnit\framework\assert;
 
+use AssertionError;
 use Countable;
 use React\Promise\PromiseInterface;
 use function React\Promise\resolve;
+use Throwable;
 use Webmozart\Assert\Assert;
 
 class BaseAssert {
@@ -30,7 +32,7 @@ class BaseAssert {
 	 * @phpstan-return PromiseInterface<null>
 	 */
 	protected function assertEquals(mixed $expected, mixed $actual, string $message = '') : PromiseInterface {
-		Assert::eq($actual, $expected, $message);
+		Assert::eq($expected, $actual, $message);
 
 		return $this->assertSyncPromise();
 	}
@@ -39,7 +41,7 @@ class BaseAssert {
 	 * @phpstan-return PromiseInterface<null>
 	 */
 	protected function assertNotEquals(mixed $expected, mixed $actual, string $message = '') : PromiseInterface {
-		Assert::notEq($actual, $expected, $message);
+		Assert::notEq($expected, $actual, $message);
 
 		return $this->assertSyncPromise();
 	}
@@ -142,6 +144,53 @@ class BaseAssert {
 		Assert::notNull($actual, $message);
 
 		return $this->assertSyncPromise();
+	}
+
+	/**
+	 * @phpstan-param PromiseInterface<mixed> $promise
+	 * @phpstan-return PromiseInterface<void>
+	 */
+	protected function assertPromiseRejects(PromiseInterface $promise) : PromiseInterface {
+		return $promise->then(function () {
+			throw new AssertionError('Promise was fulfilled but expected to be rejected');
+		}, function (Throwable $e) {
+		});
+	}
+
+	/**
+	 * @phpstan-param PromiseInterface<mixed> $promise
+	 * @phpstan-return PromiseInterface<void>
+	 */
+	protected function assertPromiseRejectsWith(PromiseInterface $promise, string $excepted) : PromiseInterface {
+		return $promise->then(function () use ($excepted) {
+			throw new AssertionError('Promise was fulfilled but expected to be rejected with ' . $excepted);
+		}, function (Throwable $e) use ($excepted) {
+			$this->assertInstanceOf($excepted, $e);
+		});
+	}
+
+	/**
+	 * @phpstan-param PromiseInterface<mixed> $promise
+	 * @phpstan-return PromiseInterface<void>
+	 */
+	protected function assertPromiseRejectsWithMessage(PromiseInterface $promise, string $excepted) : PromiseInterface {
+		return $promise->then(function () use ($excepted) {
+			throw new AssertionError('Promise was fulfilled but expected to be rejected with message ' . $excepted);
+		}, function (Throwable $e) use ($excepted) {
+			$this->assertEquals($excepted, $e->getMessage());
+		});
+	}
+
+	/**
+	 * @phpstan-param PromiseInterface<mixed> $promise
+	 * @phpstan-return PromiseInterface<void>
+	 */
+	protected function assertPromiseRejectsWithMessageThatContains(PromiseInterface $promise, string $excepted) : PromiseInterface {
+		return $promise->then(function () use ($excepted) {
+			throw new AssertionError('Promise was fulfilled but expected to be rejected with message that contains ' . $excepted);
+		}, function (Throwable $e) use ($excepted) {
+			$this->assertStringContainsString($excepted, $e->getMessage());
+		});
 	}
 
 	/**

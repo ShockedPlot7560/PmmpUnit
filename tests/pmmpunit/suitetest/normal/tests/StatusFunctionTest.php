@@ -17,10 +17,16 @@ class StatusFunctionTest extends TestCase {
 		self::$enableCount++;
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	public function testLoadFunctionExecutedOneTime() : PromiseInterface {
 		return $this->assertEquals(1, self::$loadCount);
 	}
 
+	/**
+	 * @phpstan-return PromiseInterface<null>
+	 */
 	public function testEnableFunctionExecutedOneTime() : PromiseInterface {
 		return $this->assertEquals(1, self::$enableCount);
 	}
