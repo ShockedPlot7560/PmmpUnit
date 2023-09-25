@@ -5,4 +5,7 @@ main: ShockedPlot7560\PmmpUnit\PmmpUnit
 api: 5.0.0
 src-namespace-prefix: ShockedPlot7560\PmmpUnit
 author: ShockedPlot7560 (no-reply@tchallon.fr)
+os:
+  - linux
+  - mac
 ...

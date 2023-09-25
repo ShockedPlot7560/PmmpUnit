@@ -1,6 +1,8 @@
 ## PmUnitTest - Unit Testing Framework for PocketMine
 
-This plugin has been created with the sole aim of making unit, integration and functional tests possible during the pocketmine runtime.  
+**Run only on Unix (Linux, Mac)**
+
+This plugin has been created with the sole aim of making unit, integration and functional tests possible during the pocketmine runtime.
 
 It can be used to correctly test the expected result of a command executed by a fake player, interaction with events and multi-threading support.
 
@@ -8,6 +10,24 @@ Tests are run asynchronously using promises to enable support with different sys
 
 > [!WARNING]
 > This plugin should not be used in production, as it will shutdown the server as soon as testing is complete.
+
+## Installation
+
+Using of official docker image is strongly recommended.
+
+Mount your tests in `/data/plugin_data/PmmpUnit/tests/` and copy your plugin in `/plugins/`.
+
+Exemple:
+```bash
+docker run -it --rm \
+  -v /tests/pmmpunit/suitetest/normal/tests:/data/plugin_data/PmmpUnit/tests/ \
+  # -v /path/to/plugin:/plugins/ \
+  --name pmunit-test \
+  ghcr.io/shockedplot7560/pmmpunit/tests-runner:latest
+```
+
+> [!NOTE]
+> An action to simplify the execution of unit tests in a github workflow should be available soon.
 
 ## Utilisation
 
@@ -22,24 +42,7 @@ Each test class can execute code when the server is `onLoad`, `onEnable` or `onD
 
 `setUp` and `tearDown` are called when each class test is run, respectively before and after the test, whatever the result.
 
-## Installation
-
-Using of our docker image is strongly recommended.  
-
-Mount your tests in `/data/plugin_data/PmmpUnit/tests/` and copy your plugin in `/plugins/`.
-
-Exemple:
-```bash
-docker run -it --rm \
-  -u root
-  -v /tests/pmmpunit/suitetest/normal/tests:/data/plugin_data/PmmpUnit/tests/ \
-  # -v /path/to/plugin:/plugins/ \
-  --name pmunit-test \
-  ghcr.io/shockedplot7560/pmmpunit/tests-runner:latest
-```
-
-> [!NOTE]
-> An action to simplify the execution of unit tests in a github workflow should be available soon.
+> For exemple tests, look at `tests/pmmpunit/suitetest/*/tests`
 
 ### TestPlayer utilisation
 
