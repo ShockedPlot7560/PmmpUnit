@@ -134,7 +134,7 @@ class PmmpUnit extends PluginBase {
 			$this->getLogger()->error("Fatal errors occurred during unit test:");
 			$i = 0;
 			foreach ($fatalErrors as $error) {
-				$this->getLogger()->error(++$i . ") " . $error->test->__toString() . ": ");
+				$this->getLogger()->error(++$i . ") " . $error->test->__toString() . ": " . str_replace("§", "&", $error->throwable->getMessage()));
 				$this->getLogger()->logException($error->throwable);
 			}
 		}
@@ -143,7 +143,7 @@ class PmmpUnit extends PluginBase {
 			$this->getLogger()->emergency("Failed tests:");
 			$i = 0;
 			foreach ($failedTests as $error) {
-				$this->getLogger()->emergency(++$i . ") " . $error->test->__toString() . ": " . $error->throwable->getMessage());
+				$this->getLogger()->emergency(++$i . ") " . $error->test->__toString() . ": " . str_replace("§", "&", $error->throwable->getMessage()));
 			}
 		}
 

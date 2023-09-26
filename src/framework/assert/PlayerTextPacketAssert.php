@@ -3,7 +3,6 @@
 namespace ShockedPlot7560\PmmpUnit\framework\assert;
 
 use pocketmine\network\mcpe\protocol\TextPacket;
-use pocketmine\utils\TextFormat;
 use React\Promise\PromiseInterface;
 use function React\Promise\resolve;
 use ShockedPlot7560\PmmpUnit\players\TestPlayer;
@@ -12,23 +11,6 @@ use Webmozart\Assert\Assert;
 trait PlayerTextPacketAssert {
 	use PlayerMessageAssert;
 	use PlayerPopupAssert;
-
-	/**
-	 * @phpstan-param TextPacket::TYPE_* $type
-	 * @phpstan-return PromiseInterface<string>
-	 */
-	private function promisePlayerReceiveTextPacketFormatted(TestPlayer $player, int $type, bool $cleanPacket = true) : PromiseInterface {
-		return $this->promisePlayerReceiveTextPacket($player, $type)
-			->then(function (TextPacket $packet) use ($cleanPacket) : string {
-				if ($cleanPacket) {
-					$format = TextFormat::clean($packet->message);
-				} else {
-					$format = $packet->message;
-				}
-
-				return $format;
-			});
-	}
 
 	/**
 	 * @phpstan-param TextPacket::TYPE_* $type

@@ -2,8 +2,6 @@
 
 namespace ShockedPlot7560\PmmpUnit\framework\assert;
 
-use pocketmine\lang\Translatable;
-use pocketmine\utils\TextFormat;
 use React\Promise\PromiseInterface;
 use ShockedPlot7560\PmmpUnit\players\TestPlayer;
 use ShockedPlot7560\PmmpUnit\PmmpUnit;
@@ -24,13 +22,5 @@ trait PocketmineSpecificAssert {
 
 				return $player;
 			});
-	}
-
-	protected function translate(TestPlayer $player, string|Translatable $message) : string {
-		if ($message instanceof Translatable) {
-			$message = $player->getPlayer()->getLanguage()->translate($message);
-		}
-
-		return TextFormat::clean($message);
 	}
 }
