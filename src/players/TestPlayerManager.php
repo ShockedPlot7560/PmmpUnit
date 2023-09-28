@@ -53,6 +53,8 @@ class TestPlayerManager implements Listener {
 		"DefaultInputMode" => InputMode::MOUSE_KEYBOARD, /** @see ClientData::$DefaultInputMode */
 		"DeviceOS" => DeviceOS::DEDICATED, /** @see ClientData::$DeviceOS */
 		"GameVersion" => ProtocolInfo::MINECRAFT_VERSION_NETWORK, /** @see ClientData::$GameVersion */
+		"DeviceModel" => "PmmpUnit", /** @see ClientData::$DeviceModel */
+		"DeviceId" => "PmmpUnit", /** @see ClientData::$DeviceId */
 	];
 	private static TestPlayerManager $instance;
 
