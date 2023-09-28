@@ -35,7 +35,7 @@ RUN composer install --no-dev --prefer-source --no-interaction --optimize-autolo
 RUN php -dphar.readonly=0 build/plugin-phar.php PmmpUnit
 
 FROM ubuntu:22.04
-LABEL maintainer="PMMP Team <team@pmmp.io>"
+LABEL maintainer="ShockedPlot7560 <no-reply@tchallon.fr>"
 
 RUN apt-get update && apt-get install --no-install-recommends -y ca-certificates wget
 
