@@ -2,9 +2,12 @@
 
 namespace ShockedPlot7560\PmmpUnit\framework\assert;
 
+use pocketmine\scheduler\AsyncTask;
+use pocketmine\Server;
 use React\Promise\PromiseInterface;
 use ShockedPlot7560\PmmpUnit\players\TestPlayer;
 use ShockedPlot7560\PmmpUnit\PmmpUnit;
+use ShockedPlot7560\PmmpUnit\utils\AsyncTaskDecorator;
 
 trait PocketmineSpecificAssert {
 	use PlayerTextPacketAssert;
@@ -22,5 +25,19 @@ trait PocketmineSpecificAssert {
 
 				return $player;
 			});
+	}
+
+	protected function submitAsyncTask(AsyncTask $task) : PromiseInterface {
+		$decorator = AsyncTaskDecorator::create($task);
+		Server::getInstance()->getAsyncPool()->submitTask($decorator);
+
+		return $decorator->promise();
+	}
+
+	protected function submitAsyncTaskToWorker(AsyncTask $task, int $workedId) : PromiseInterface {
+		$decorator = AsyncTaskDecorator::create($task);
+		Server::getInstance()->getAsyncPool()->submitTaskToWorker($decorator, $workedId);
+
+		return $decorator->promise();
 	}
 }
