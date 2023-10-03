@@ -14,8 +14,6 @@ final class TestPlayerBehaviourFactory {
 	private static array $behaviours = [];
 
 	public static function registerDefaults(TestPlayerManager $plugin) : void {
-		self::register($plugin, "testplayer:auto_equip_armor", AutoEquipArmorTestPlayerBehaviour::class);
-		self::register($plugin, "testplayer:pvp", PvPTestPlayerBehaviour::class);
 	}
 
 	/**
