@@ -28,7 +28,7 @@ RUN php -dphar.readonly=0 build/server-phar.php --git $(git rev-parse HEAD)
 RUN test -f /build/PocketMine-MP.phar
 
 WORKDIR /build
-COPY ../ /build/pmmpunit
+COPY ./ /build/pmmpunit
 WORKDIR /build/pmmpunit
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install --no-dev --prefer-source --no-interaction --optimize-autoloader

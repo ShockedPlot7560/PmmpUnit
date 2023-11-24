@@ -56,7 +56,7 @@ class PmmpUnit extends PluginBase {
 	protected function onLoad() : void {
 		$unitFolder = $this->getDataFolder() . "tests";
 		if (!is_dir($unitFolder)) {
-			$this->getLogger()->warning("Unit test folder ($unitFolder) not found, creating one...");
+			$this->getLogger()->warning("Tests folder ($unitFolder) not found, creating one...");
 			mkdir($unitFolder);
 		}
 
@@ -64,7 +64,7 @@ class PmmpUnit extends PluginBase {
 		if ($testSuite !== false) {
 			$unitFolder .= "/" . $testSuite;
 			if (!is_dir($unitFolder)) {
-				$this->getLogger()->warning("Unit test folder ($unitFolder) not found, creating one...");
+				$this->getLogger()->warning("Tests folder ($unitFolder) not found, creating one...");
 				mkdir($unitFolder);
 			}
 		}
@@ -129,9 +129,9 @@ class PmmpUnit extends PluginBase {
 			}
 		}
 
-		$this->getLogger()->notice("=== Unit Test Results ===");
+		$this->getLogger()->notice("=== Tests Results ===");
 		if (count($fatalErrors) > 0) {
-			$this->getLogger()->error("Fatal errors occurred during unit test:");
+			$this->getLogger()->error("Fatal errors occurred during tests:");
 			$i = 0;
 			foreach ($fatalErrors as $error) {
 				$this->getLogger()->error(++$i . ") " . $error->test->__toString() . ": " . str_replace("§", "&", $error->throwable->getMessage()) . " (line: " . $error->throwable->getLine() . ")");

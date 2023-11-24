@@ -1,6 +1,6 @@
 {
     "name": "shockedplot7560/pmmp-unit",
-    "description": "Unit testing framework for PocketMine-MP",
+    "description": "Integration testing framework for PocketMine-MP",
     "authors": [
         {
             "name": "ShockedPlot7560",

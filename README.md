@@ -1,8 +1,8 @@
-## PmUnitTest - Unit Testing Framework for PocketMine
+## PmIntegration - Integration Testing Framework for PocketMine
 
 **Run only on Unix (Linux, Mac)**
 
-This plugin has been created with the sole aim of making unit, integration and functional tests possible during the pocketmine runtime.
+This plugin has been created with the sole aim of making integration and functional tests possible during the pocketmine runtime.
 
 It can be used to correctly test the expected result of a command executed by a fake player, interaction with events and multi-threading support.
 
@@ -27,7 +27,7 @@ docker run -it --rm \
 ```
 
 > [!NOTE]
-> An action to simplify the execution of unit tests in a github workflow should be available soon.
+> An action to simplify the execution of integration tests in a github workflow should be available soon.
 
 ## Utilisation
 
