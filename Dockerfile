@@ -1,6 +1,6 @@
 # Build stage for compilation. Build tools like g++ will not be copied into the final stage to reduce image size.
 FROM ubuntu:22.04
-ARG PMMP_TAG=5.6.0
+ARG PMMP_TAG=5.8.2
 ARG PMMP_REPO=pmmp/PocketMine-MP
 ARG PHP_VERSION
 
