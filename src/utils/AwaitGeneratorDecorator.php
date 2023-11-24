@@ -11,7 +11,14 @@ use React\Promise\PromiseInterface;
 use SOFe\AwaitGenerator\Await;
 use Throwable;
 
+/**
+ * @template T
+ * @phpstan-implements PromiseInterface<T>
+ */
 class AwaitGeneratorDecorator implements PromiseInterface {
+    /**
+     * @phpstan-var Deferred<T>
+     */
 	private Deferred $delegate;
 
 	public function __construct(

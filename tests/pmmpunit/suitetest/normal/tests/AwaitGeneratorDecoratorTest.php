@@ -12,6 +12,9 @@ use ShockedPlot7560\PmmpUnit\utils\AwaitGeneratorDecorator;
 use SOFe\AwaitGenerator\Await;
 
 class AwaitGeneratorDecoratorTest extends TestCase {
+    /**
+     * @phpstan-return PromiseInterface<void>
+     */
 	public function testClosureCallback() : PromiseInterface {
 		$start = microtime(true);
 
@@ -24,6 +27,9 @@ class AwaitGeneratorDecoratorTest extends TestCase {
 		});
 	}
 
+    /**
+     * @phpstan-return PromiseInterface<void>
+     */
 	public function testGeneratorCallback() : PromiseInterface {
 		$start = microtime(true);
 
@@ -37,13 +43,10 @@ class AwaitGeneratorDecoratorTest extends TestCase {
 	private function sleep() : Generator {
 		yield from Await::promise(function ($resolve, $reject) {
 			$task = new class($resolve, $reject) extends Task {
-				private $resolve;
-				private $reject;
-
-				public function __construct($resolve, $reject) {
-					$this->resolve = $resolve;
-					$this->reject = $reject;
-				}
+				public function __construct(
+                    private \Closure $resolve,
+                    private \Closure $reject
+                ) { }
 
 				public function onRun() : void {
 					($this->resolve)();

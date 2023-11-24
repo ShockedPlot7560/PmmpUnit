@@ -27,6 +27,9 @@ trait PocketmineSpecificAssert {
 			});
 	}
 
+    /**
+     * @phpstan-return PromiseInterface<mixed>
+     */
 	protected function submitAsyncTask(AsyncTask $task) : PromiseInterface {
 		$decorator = AsyncTaskDecorator::create($task);
 		Server::getInstance()->getAsyncPool()->submitTask($decorator);
@@ -34,6 +37,9 @@ trait PocketmineSpecificAssert {
 		return $decorator->promise();
 	}
 
+    /**
+     * @phpstan-return PromiseInterface<mixed>
+     */
 	protected function submitAsyncTaskToWorker(AsyncTask $task, int $workedId) : PromiseInterface {
 		$decorator = AsyncTaskDecorator::create($task);
 		Server::getInstance()->getAsyncPool()->submitTaskToWorker($decorator, $workedId);
