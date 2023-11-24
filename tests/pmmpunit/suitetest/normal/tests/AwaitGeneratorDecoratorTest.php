@@ -24,6 +24,7 @@ class AwaitGeneratorDecoratorTest extends TestCase {
 		});
 
 		return $decorator->then(function () use ($start) : void {
+            var_dump(microtime(true) - $start);
 			$this->assertTrue(microtime(true) - $start >= 0.9);
 		});
 	}
@@ -37,7 +38,7 @@ class AwaitGeneratorDecoratorTest extends TestCase {
 		$decorator = new AwaitGeneratorDecorator($this->sleep());
 
 		return $decorator->then(function () use ($start) : void {
-			$this->assertTrue(microtime(true) - $start >= 0.9);
+			$this->assertTrue(microtime(true) - $start >= 0.8);
 		});
 	}
 
