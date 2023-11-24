@@ -7,9 +7,9 @@ use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 
 class AsyncTaskDecorator extends AsyncTask {
-    /**
-     * @phpstan-param Deferred<mixed> $deferred
-     */
+	/**
+	 * @phpstan-param Deferred<mixed> $deferred
+	 */
 	private function __construct(
 		private AsyncTask $task,
 		Deferred $deferred
@@ -42,16 +42,16 @@ class AsyncTaskDecorator extends AsyncTask {
 		$this->task->onProgressUpdate($progress);
 	}
 
-    /**
-     * @phpstan-return PromiseInterface<mixed>
-     */
+	/**
+	 * @phpstan-return PromiseInterface<mixed>
+	 */
 	public function promise() : PromiseInterface {
 		return $this->getDeferred()->promise();
 	}
 
-    /**
-     * @phpstan-return Deferred<mixed>
-     */
+	/**
+	 * @phpstan-return Deferred<mixed>
+	 */
 	private function getDeferred() : Deferred {
 		$deferred = $this->fetchLocal("deferred");
 		assert($deferred instanceof Deferred);

@@ -16,9 +16,7 @@ use Throwable;
  * @phpstan-implements PromiseInterface<T>
  */
 class AwaitGeneratorDecorator implements PromiseInterface {
-    /**
-     * @phpstan-var Deferred<T>
-     */
+	/** @phpstan-var Deferred<T> */
 	private Deferred $delegate;
 
 	public function __construct(
