@@ -38,9 +38,9 @@ final class SortedMap {
 	public function set(string|int $key, mixed $value, int $score) : void {
 		$this->entries[$key] = $value;
 		$this->key_scores[$key] = $score;
-        $scores = $this->key_scores;
+		$scores = $this->key_scores;
 		uksort($scores, fn (string $k1, string $k2) : int => $this->key_scores[$k1] <=> $this->key_scores[$k2]);
-        $this->key_scores = $scores;
+		$this->key_scores = $scores;
 	}
 
 	/**
