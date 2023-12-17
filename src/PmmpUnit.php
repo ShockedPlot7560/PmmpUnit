@@ -24,6 +24,7 @@ use ShockedPlot7560\PmmpUnit\framework\TestMemory;
 use ShockedPlot7560\PmmpUnit\framework\TestSuite;
 use ShockedPlot7560\PmmpUnit\players\PlayerBag;
 use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
+use Throwable;
 
 class PmmpUnit extends PluginBase {
 	use SingletonTrait;
@@ -93,10 +94,10 @@ class PmmpUnit extends PluginBase {
 				->then(function () {
 					$this->finish();
 				})
-                ->catch(function (\Throwable $e) {
-                    $this->getLogger()->logException($e);
-                    $this->finish();
-                });
+				->catch(function (Throwable $e) {
+					$this->getLogger()->logException($e);
+					$this->finish();
+				});
 		}), 0);
 	}
 
@@ -151,16 +152,15 @@ class PmmpUnit extends PluginBase {
 			}
 		}
 
-        if(count($results) > 0) {
-            $this->getLogger()->notice("Total tests: " . count($results));
-            $this->getLogger()->info("  Total passed: " . count($passedTests) . " (" . round(count($passedTests) / count($results) * 100, 2) . "%)");
-            $this->getLogger()->info((count($failedTests) > 0 ? "§4" : "") . "  Total failed: " . count($failedTests) . " (" . round(count($failedTests) / count($results) * 100, 2) . "%)");
-            $this->getLogger()->info((count($fatalErrors) > 0 ? "§c" : "") . "  Total fatal: " . count($fatalErrors) . " (" . round(count($fatalErrors) / count($results) * 100, 2) . "%)");
-            $this->getLogger()->info($heatmap);
-        } else {
-            $this->getLogger()->notice("No tests were run.");
-        }
-
+		if (count($results) > 0) {
+			$this->getLogger()->notice("Total tests: " . count($results));
+			$this->getLogger()->info("  Total passed: " . count($passedTests) . " (" . round(count($passedTests) / count($results) * 100, 2) . "%)");
+			$this->getLogger()->info((count($failedTests) > 0 ? "§4" : "") . "  Total failed: " . count($failedTests) . " (" . round(count($failedTests) / count($results) * 100, 2) . "%)");
+			$this->getLogger()->info((count($fatalErrors) > 0 ? "§c" : "") . "  Total fatal: " . count($fatalErrors) . " (" . round(count($fatalErrors) / count($results) * 100, 2) . "%)");
+			$this->getLogger()->info($heatmap);
+		} else {
+			$this->getLogger()->notice("No tests were run.");
+		}
 
 		$this->getLogger()->notice("=== ============ ===");
 
