@@ -725,16 +725,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.48",
+            "version": "1.10.50",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "087ed4b5f4a7a6e8f3bbdfbfe98ce5c181380bc6"
+                "reference": "06a98513ac72c03e8366b5a0cb00750b487032e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/087ed4b5f4a7a6e8f3bbdfbfe98ce5c181380bc6",
-                "reference": "087ed4b5f4a7a6e8f3bbdfbfe98ce5c181380bc6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/06a98513ac72c03e8366b5a0cb00750b487032e4",
+                "reference": "06a98513ac72c03e8366b5a0cb00750b487032e4",
                 "shasum": ""
             },
             "require": {
@@ -783,7 +783,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-08T14:34:28+00:00"
+            "time": "2023-12-13T10:59:42+00:00"
         },
         {
             "name": "pocketmine/bedrock-block-upgrade-schema",
@@ -1232,16 +1232,16 @@
         },
         {
             "name": "pocketmine/pocketmine-mp",
-            "version": "5.9.0",
+            "version": "5.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pmmp/PocketMine-MP.git",
-                "reference": "46307973e33e569e3730117a6a0a976c11438fe5"
+                "reference": "daeba95101e6278d1f2552397043d29d29d272f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/PocketMine-MP/zipball/46307973e33e569e3730117a6a0a976c11438fe5",
-                "reference": "46307973e33e569e3730117a6a0a976c11438fe5",
+                "url": "https://api.github.com/repos/pmmp/PocketMine-MP/zipball/daeba95101e6278d1f2552397043d29d29d272f8",
+                "reference": "daeba95101e6278d1f2552397043d29d29d272f8",
                 "shasum": ""
             },
             "require": {
@@ -1314,7 +1314,7 @@
             "homepage": "https://pmmp.io",
             "support": {
                 "issues": "https://github.com/pmmp/PocketMine-MP/issues",
-                "source": "https://github.com/pmmp/PocketMine-MP/tree/5.9.0"
+                "source": "https://github.com/pmmp/PocketMine-MP/tree/5.10.0"
             },
             "funding": [
                 {
@@ -1326,7 +1326,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-12-06T15:02:57+00:00"
+            "time": "2023-12-14T16:54:38+00:00"
         },
         {
             "name": "pocketmine/raklib",

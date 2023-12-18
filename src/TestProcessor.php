@@ -63,7 +63,11 @@ class TestProcessor {
 		$this->test->run()
 			->then(function () {
 				$this->finish();
-			});
+			})
+            ->catch(function (\Throwable $e) {
+                $this->getLogger()->logException($e);
+                $this->finish();
+            });
 	}
 
 	public function stop() : void {
