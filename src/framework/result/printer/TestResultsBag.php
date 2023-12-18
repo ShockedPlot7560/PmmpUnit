@@ -17,9 +17,9 @@ class TestResultsBag {
 	/** @var SuccessTest[] $passedTests */
 	private array $passedTests = [];
 
-    /**
-     * @param TestResult[] $testResults
-     */
+	/**
+	 * @param TestResult[] $testResults
+	 */
 	public function __construct(
 		private array $testResults
 	) {
@@ -98,9 +98,9 @@ class TestResultsBag {
 		return round(count($this->fatalErrors) / count($this->testResults) * 100, 2);
 	}
 
-    /**
-     * @return TestResult[]
-     */
+	/**
+	 * @return TestResult[]
+	 */
 	public function getAllErrors() : array {
 		return array_merge($this->failedTests, $this->fatalErrors);
 	}
