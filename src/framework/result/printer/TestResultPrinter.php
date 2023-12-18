@@ -19,9 +19,12 @@ class TestResultPrinter {
     }
 
     private function printFatal(\Logger $logger): void {
+        if(count($errors = $this->resultsBag->getFatalErrors()) === 0){
+            return;
+        }
         $logger->error("Fatal errors occurred during tests:");
         $i = 0;
-        foreach ($this->resultsBag->getFatalErrors() as $error) {
+        foreach ($errors as $error) {
             $errorString = ++$i . ") " . $this->errorToString($error);
             $logger->error($errorString);
             $logger->logException($error->throwable);
@@ -29,9 +32,12 @@ class TestResultPrinter {
     }
 
     private function printFailed(\Logger $logger) : void {
+        if(count($errors = $this->resultsBag->getFailedTests()) === 0){
+            return;
+        }
         $logger->emergency("Failed tests:");
         $i = 0;
-        foreach ($this->resultsBag->getFailedTests() as $error) {
+        foreach ($errors as $error) {
             $errorString = ++$i . ") " . $this->errorToString($error);
             $logger->emergency($errorString);
         }
@@ -44,10 +50,11 @@ class TestResultPrinter {
         $logger->notice("Total tests: " . count($this->resultsBag->getAllTests()));
         $logger->notice("Passed tests: " . count($passedTests) . " (" . $this->resultsBag->getSuccessRate() . "%)");
         $logger->info((count($failedTests) > 0 ? "§4" : "") . "Total failed: " . count($failedTests) . " (" . $this->resultsBag->getFailedRate() . "%)");
-        $logger->info((count($fatalErrors) > 0 ? "§c" : "") . "Total fatal: " . count($fatalErrors) . " (" . $this->resultsBag->getFatalRate() . "%)");
-
-        $heatmap = new HeatmapCalculator($this->resultsBag);
-        $logger->info($heatmap->calculateHeatmap());
+        $logger->info(
+            (count($fatalErrors) > 0 ? "§c" : "") . "Total fatal: " . count($fatalErrors) . " (" . $this->resultsBag->getFatalRate() . "%)\n" .
+            "Heatmap: §a" . $this->resultsBag->getSuccessRate() . "% §c" . $this->resultsBag->getFailedRate() . "% §4" . $this->resultsBag->getFatalRate() . "%\n" .
+            (new HeatmapCalculator($this->resultsBag))->calculateHeatmap()
+        );
     }
 
     private function errorToString(FatalTest|FailedTest $error) : string {
