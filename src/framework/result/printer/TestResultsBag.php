@@ -71,22 +71,31 @@ class TestResultsBag {
 		return $result instanceof SuccessTest;
 	}
 
-    public function getSuccessRate() : float {
-        if(count($this->testResults) === 0) return 100;
-        return round(count($this->passedTests) / count($this->testResults) * 100, 2);
-    }
+	public function getSuccessRate() : float {
+		if (count($this->testResults) === 0) {
+			return 100;
+		}
 
-    public function getFailedRate() : float {
-        if(count($this->testResults) === 0) return 0;
-        return round(count($this->failedTests) / count($this->testResults) * 100, 2);
-    }
+		return round(count($this->passedTests) / count($this->testResults) * 100, 2);
+	}
 
-    public function getFatalRate() : float {
-        if(count($this->testResults) === 0) return 0;
-        return round(count($this->fatalErrors) / count($this->testResults) * 100, 2);
-    }
+	public function getFailedRate() : float {
+		if (count($this->testResults) === 0) {
+			return 0;
+		}
 
-    public function getAllErrors() : array {
-        return array_merge($this->failedTests, $this->fatalErrors);
-    }
+		return round(count($this->failedTests) / count($this->testResults) * 100, 2);
+	}
+
+	public function getFatalRate() : float {
+		if (count($this->testResults) === 0) {
+			return 0;
+		}
+
+		return round(count($this->fatalErrors) / count($this->testResults) * 100, 2);
+	}
+
+	public function getAllErrors() : array {
+		return array_merge($this->failedTests, $this->fatalErrors);
+	}
 }

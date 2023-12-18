@@ -5,18 +5,16 @@ namespace ShockedPlot7560\PmmpUnit;
 use Logger;
 use PrefixedLogger;
 use ShockedPlot7560\PmmpUnit\framework\result\exporter\FileResultExporter;
-use ShockedPlot7560\PmmpUnit\framework\result\FailedTest;
-use ShockedPlot7560\PmmpUnit\framework\result\FatalTest;
 use ShockedPlot7560\PmmpUnit\framework\result\printer\TestResultPrinter;
 use ShockedPlot7560\PmmpUnit\framework\result\printer\TestResultsBag;
 use ShockedPlot7560\PmmpUnit\framework\result\ServerCrashedException;
-use ShockedPlot7560\PmmpUnit\framework\result\SuccessTest;
 use ShockedPlot7560\PmmpUnit\framework\result\TestResults;
 use ShockedPlot7560\PmmpUnit\framework\RunnableTest;
 use ShockedPlot7560\PmmpUnit\framework\TestMemory;
 use ShockedPlot7560\PmmpUnit\framework\TestSuite;
 use ShockedPlot7560\PmmpUnit\players\PlayerBag;
 use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
+use Throwable;
 
 class TestProcessor {
 	private Logger $logger;
@@ -64,17 +62,17 @@ class TestProcessor {
 			->then(function () {
 				$this->finish();
 			})
-            ->catch(function (\Throwable $e) {
-                $this->getLogger()->logException($e);
-                $this->finish();
-            });
+			->catch(function (Throwable $e) {
+				$this->getLogger()->logException($e);
+				$this->finish();
+			});
 	}
 
 	public function stop() : void {
 		$this->test->onDisable();
 		if (TestMemory::$currentTest !== null) {
 			global $lastExceptionError, $lastError;
-            $error = $lastExceptionError ?? $lastError;
+			$error = $lastExceptionError ?? $lastError;
 			TestResults::fatalTest(TestMemory::$currentTest, ServerCrashedException::fromArray($error));
 			$this->finish(false);
 		}
@@ -95,13 +93,13 @@ class TestProcessor {
 	private function finish(bool $close = true) : void {
 		$results = TestResults::getTestResults();
 
-        $resultBag = new TestResultsBag($results);
-        $printer = new TestResultPrinter($resultBag);
+		$resultBag = new TestResultsBag($results);
+		$printer = new TestResultPrinter($resultBag);
 
-        $printer->print($this->logger);
+		$printer->print($this->logger);
 
-        $exporter = new FileResultExporter($this->pmmpUnit, $resultBag);
-        $exporter->export();
+		$exporter = new FileResultExporter($this->pmmpUnit, $resultBag);
+		$exporter->export();
 
 		if ($close) {
 			$this->pmmpUnit->getServer()->shutdown();

@@ -16,7 +16,6 @@ use ReflectionClass;
 use RuntimeException;
 use ShockedPlot7560\PmmpUnit\players\PlayerBag;
 use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
-use Throwable;
 
 class PmmpUnit extends PluginBase {
 	use SingletonTrait;
