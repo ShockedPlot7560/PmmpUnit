@@ -8,15 +8,18 @@ use ShockedPlot7560\PmmpUnit\framework\result\SuccessTest;
 use ShockedPlot7560\PmmpUnit\framework\result\TestResult;
 
 class TestResultsBag {
-	/** @var TestResult[] $fatalErrors */
+	/** @var FatalTest[] $fatalErrors */
 	private array $fatalErrors = [];
 
-	/** @var TestResult[] $failedTests */
+	/** @var FailedTest[] $failedTests */
 	private array $failedTests = [];
 
-	/** @var TestResult[] $successTests */
+	/** @var SuccessTest[] $passedTests */
 	private array $passedTests = [];
 
+    /**
+     * @param TestResult[] $testResults
+     */
 	public function __construct(
 		private array $testResults
 	) {
@@ -95,6 +98,9 @@ class TestResultsBag {
 		return round(count($this->fatalErrors) / count($this->testResults) * 100, 2);
 	}
 
+    /**
+     * @return TestResult[]
+     */
 	public function getAllErrors() : array {
 		return array_merge($this->failedTests, $this->fatalErrors);
 	}
