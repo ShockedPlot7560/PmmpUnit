@@ -14,22 +14,12 @@ use pocketmine\utils\Process;
 use pocketmine\utils\SingletonTrait;
 use ReflectionClass;
 use RuntimeException;
-use ShockedPlot7560\PmmpUnit\framework\result\FailedTest;
-use ShockedPlot7560\PmmpUnit\framework\result\FatalTest;
-use ShockedPlot7560\PmmpUnit\framework\result\ServerCrashedException;
-use ShockedPlot7560\PmmpUnit\framework\result\SuccessTest;
-use ShockedPlot7560\PmmpUnit\framework\result\TestResults;
-use ShockedPlot7560\PmmpUnit\framework\RunnableTest;
-use ShockedPlot7560\PmmpUnit\framework\TestMemory;
-use ShockedPlot7560\PmmpUnit\framework\TestSuite;
 use ShockedPlot7560\PmmpUnit\players\PlayerBag;
 use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
 
 class PmmpUnit extends PluginBase {
 	use SingletonTrait;
-	private RunnableTest $test;
-	private TestPlayerManager $playerManager;
-	private PlayerBag $playerBag;
+	private TestProcessor $testProcessor;
 
 	public function __construct(PluginLoader $loader, Server $server, PluginDescription $description, string $dataFolder, string $file, ResourceProvider $resourceProvider) {
 		self::setInstance($this);
@@ -54,111 +44,26 @@ class PmmpUnit extends PluginBase {
 	}
 
 	protected function onLoad() : void {
-		$unitFolder = $this->getDataFolder() . "tests";
-		if (!is_dir($unitFolder)) {
-			$this->getLogger()->warning("Tests folder ($unitFolder) not found, creating one...");
-			mkdir($unitFolder);
-		}
-
-		$testSuite = getenv("TEST_SUITE");
-		if ($testSuite !== false) {
-			$unitFolder .= "/" . $testSuite;
-			if (!is_dir($unitFolder)) {
-				$this->getLogger()->warning("Tests folder ($unitFolder) not found, creating one...");
-				mkdir($unitFolder);
-			}
-		}
-
-		$this->getLogger()->debug("Loading tests from $unitFolder");
-
-		$this->test = TestSuite::fromDirectory($unitFolder);
-
-		$this->playerManager = new TestPlayerManager($this);
-		$this->playerBag = new PlayerBag();
-		$this->test->onLoad();
+		$this->testProcessor = new TestProcessor($this);
+		$this->testProcessor->setup();
 	}
 
 	public function getTestPlayerManager() : TestPlayerManager {
-		return $this->playerManager;
+		return $this->testProcessor->getPlayerManager();
 	}
 
 	public function getPlayerBag() : PlayerBag {
-		return $this->playerBag;
+		return $this->testProcessor->getPlayerBag();
 	}
 
 	protected function onEnable() : void {
-		$this->test->onEnable();
+		$this->testProcessor->prepare();
 		$this->getScheduler()->scheduleDelayedTask(new ClosureTask(function () {
-			$this->test->run()
-				->then(function () {
-					$this->finish();
-				});
+			$this->testProcessor->start();
 		}), 0);
 	}
 
 	public function onDisable() : void {
-		$this->test->onDisable();
-		if (TestMemory::$currentTest !== null) {
-			global $lastExceptionError, $lastError;
-			if (isset($lastExceptionError)) {
-				$error = $lastExceptionError;
-			} else {
-				$error = $lastError;
-			}
-			TestResults::fatalTest(TestMemory::$currentTest, ServerCrashedException::fromArray($error));
-			$this->finish(false);
-		}
-	}
-
-	private function finish(bool $close = true) : void {
-		$results = TestResults::getTestResults();
-		$fatalErrors = [];
-		$failedTests = [];
-		$passedTests = [];
-		$heatmap = "Heatmap: \n";
-		foreach ($results as $result) {
-			if ($result instanceof FailedTest) {
-				$failedTests[] = $result;
-				$heatmap .= "§4X";
-			} elseif ($result instanceof SuccessTest) {
-				$passedTests[] = $result;
-				$heatmap .= "§aO";
-			} elseif ($result instanceof FatalTest) {
-				$fatalErrors[] = $result;
-				$heatmap .= "§c!";
-			}
-		}
-
-		$this->getLogger()->notice("=== Tests Results ===");
-		if (count($fatalErrors) > 0) {
-			$this->getLogger()->error("Fatal errors occurred during tests:");
-			$i = 0;
-			foreach ($fatalErrors as $error) {
-				$this->getLogger()->error(++$i . ") " . $error->test->__toString() . ": " . str_replace("§", "&", $error->throwable->getMessage()) . " (line: " . $error->throwable->getLine() . ")");
-				$this->getLogger()->logException($error->throwable);
-			}
-		}
-
-		if (count($failedTests) > 0) {
-			$this->getLogger()->emergency("Failed tests:");
-			$i = 0;
-			foreach ($failedTests as $error) {
-				$this->getLogger()->emergency(++$i . ") " . $error->test->__toString() . ": " . str_replace("§", "&", $error->throwable->getMessage()) . " (line: " . $error->throwable->getLine() . ")");
-			}
-		}
-
-		$this->getLogger()->notice("Total tests: " . count($results));
-		$this->getLogger()->info("  Total passed: " . count($passedTests) . " (" . round(count($passedTests) / count($results) * 100, 2) . "%)");
-		$this->getLogger()->info((count($failedTests) > 0 ? "§4" : "") . "  Total failed: " . count($failedTests) . " (" . round(count($failedTests) / count($results) * 100, 2) . "%)");
-		$this->getLogger()->info((count($fatalErrors) > 0 ? "§c" : "") . "  Total fatal: " . count($fatalErrors) . " (" . round(count($fatalErrors) / count($results) * 100, 2) . "%)");
-		$this->getLogger()->info($heatmap);
-
-		$this->getLogger()->notice("=== ============ ===");
-
-		file_put_contents($this->getDataFolder() . "results.txt", count($failedTests) + count($fatalErrors));
-
-		if ($close) {
-			$this->getServer()->shutdown();
-		}
+		$this->testProcessor->stop();
 	}
 }
