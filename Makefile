@@ -40,7 +40,7 @@ composer/install: dev/composer.phar
 	$(PHP) $(COMPOSER) install
 
 unittests:
-	export PHP_VERSION=8.1 && make suitetest
+	export PHP_VERSION=8.1 && export PMMP_TAG=5.10.0 && make suitetest
 
 suitetest:
 	$(eval CONTAINER_PREFIX := unittests-suite)
@@ -48,7 +48,7 @@ suitetest:
 	echo $(SUITE_TEST)
 
 	docker rm $(CONTAINER_PREFIX)-pocketmine > /dev/null || true
-	docker build -t tests-runner --build-arg PHP_VERSION=$(PHP_VERSION) .
+	docker build -t tests-runner --build-arg PHP_VERSION=$(PHP_VERSION) --build-arg PMMP_TAG=$(PMMP_TAG) .
 	docker create --name $(CONTAINER_PREFIX)-pocketmine \
 		--network $(CONTAINER_PREFIX)-network \
 		-u root \
