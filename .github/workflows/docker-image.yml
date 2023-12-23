@@ -48,3 +48,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }},${{ env.REGISTRY }}/${{ env.SERVER_NAME }}/${{ env.IMAGE_NAME }}-php${{ matrix.php }}:latest
           build-args: |
             PHP_VERSION=${{ matrix.php }}
+            PMMP_TAG=5.10.0

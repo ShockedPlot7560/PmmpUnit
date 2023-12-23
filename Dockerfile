@@ -1,7 +1,7 @@
 # Build stage for compilation. Build tools like g++ will not be copied into the final stage to reduce image size.
 FROM ubuntu:22.04
-ARG PMMP_TAG
 ARG PMMP_REPO=pmmp/PocketMine-MP
+ARG PMMP_TAG
 ARG PHP_VERSION
 
 RUN test ! -z ${PHP_VERSION} || (echo "Missing build-arg PHP_VERSION" && false)
