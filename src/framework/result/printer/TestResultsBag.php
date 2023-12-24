@@ -4,12 +4,11 @@ namespace ShockedPlot7560\PmmpUnit\framework\result\printer;
 
 use ShockedPlot7560\PmmpUnit\framework\result\FailedTest;
 use ShockedPlot7560\PmmpUnit\framework\result\Fatal;
-use ShockedPlot7560\PmmpUnit\framework\result\FatalTest;
 use ShockedPlot7560\PmmpUnit\framework\result\SuccessTest;
 use ShockedPlot7560\PmmpUnit\framework\result\TestResult;
 
 class TestResultsBag {
-	/** @var FatalTest[] $fatalErrors */
+	/** @var Fatal[] $fatalErrors */
 	private array $fatalErrors = [];
 
 	/** @var FailedTest[] $failedTests */
@@ -57,7 +56,7 @@ class TestResultsBag {
 	}
 
 	/**
-	 * @return FatalTest[]
+	 * @return Fatal[]
 	 */
 	public function getFatalErrors() : array {
 		return $this->fatalErrors;

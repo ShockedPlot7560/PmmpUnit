@@ -15,6 +15,9 @@ use Throwable;
 abstract class EndChildRunner implements TestRunnerInterface {
 	private ?TestCase $instance = null;
 
+	/**
+	 * @param ReflectionClass<TestCase> $class
+	 */
 	public function __construct(
 		protected ReflectionClass $class,
 		protected ReflectionMethod $method
@@ -128,6 +131,9 @@ abstract class EndChildRunner implements TestRunnerInterface {
 	}
 
 	private function createInstance() : TestCase {
-		return $this->class->newInstance(new ExpectedExceptionHandler($this->method));
+		/** @var TestCase $instance */
+		$instance = $this->class->newInstance(new ExpectedExceptionHandler($this->method));
+
+		return $instance;
 	}
 }

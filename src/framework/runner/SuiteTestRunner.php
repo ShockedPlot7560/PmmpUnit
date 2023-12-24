@@ -5,6 +5,7 @@ namespace ShockedPlot7560\PmmpUnit\framework\runner;
 use React\Promise\PromiseInterface;
 use ReflectionClass;
 use ShockedPlot7560\PmmpUnit\framework\attribute\MethodAttributeToRunner;
+use ShockedPlot7560\PmmpUnit\framework\TestCase;
 use ShockedPlot7560\PmmpUnit\utils\Utils;
 
 class SuiteTestRunner extends MultipleTestRunner implements TestRunnerInterface {
@@ -24,8 +25,11 @@ class SuiteTestRunner extends MultipleTestRunner implements TestRunnerInterface 
 		return "SuiteTest: " . $this->name;
 	}
 
+	/**
+	 * @param ReflectionClass<TestCase> $class
+	 */
 	public static function fromClassReflection(ReflectionClass $class) : self {
-		$testSuite = new static($class->getName());
+		$testSuite = new self($class->getName());
 
 		foreach (Utils::getTestMethodsInTestCase($class) as $method) {
 			foreach ($method->getAttributes() as $attribute) {

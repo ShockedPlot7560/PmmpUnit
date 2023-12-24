@@ -10,7 +10,6 @@ use ShockedPlot7560\PmmpUnit\framework\event\TestFailedEvent;
 use ShockedPlot7560\PmmpUnit\framework\event\TestStartEvent;
 use ShockedPlot7560\PmmpUnit\framework\event\TestSuccessEvent;
 use Throwable;
-use Webmozart\Assert\InvalidArgumentException;
 
 class TestRunnerUtils {
 	/**
@@ -23,6 +22,7 @@ class TestRunnerUtils {
 			(new TestStartEvent($test))->call();
 			$iterator->next();
 
+			$promise = null;
 			try {
 				$promise = $test->run()
 					->then(function () use ($test) {
@@ -30,14 +30,14 @@ class TestRunnerUtils {
 					}, function (Throwable $throwable) use ($test) {
 						return self::failed($test, $throwable);
 					});
-			} catch (InvalidArgumentException $assertFailed) {
+			} catch (Throwable $assertFailed) {
 				$promise = self::failed($test, $assertFailed);
 			} finally {
-				return $promise->then(function () use ($iterator, $test) {
+				return $promise?->then(function () use ($iterator, $test) {
 					(new TestEndEvent($test))->call();
 
 					return self::runRec($iterator);
-				});
+				}) ?? resolve(null);
 			}
 		} else {
 			return resolve(null);

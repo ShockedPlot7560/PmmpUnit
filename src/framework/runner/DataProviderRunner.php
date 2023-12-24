@@ -8,7 +8,7 @@ use Iterator;
 use React\Promise\PromiseInterface;
 use ReflectionClass;
 use ReflectionMethod;
-use ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider\DataProviderAttribute;
+use ShockedPlot7560\PmmpUnit\framework\attribute\DataProviderAttribute;
 use ShockedPlot7560\PmmpUnit\framework\TestCase;
 use Webmozart\Assert\Assert;
 

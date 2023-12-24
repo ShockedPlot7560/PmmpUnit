@@ -7,7 +7,7 @@ use Generator;
 use Iterator;
 use React\Promise\PromiseInterface;
 use function React\Promise\resolve;
-use ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider\DataProviderAttribute;
+use ShockedPlot7560\PmmpUnit\framework\attribute\DataProviderAttribute;
 use ShockedPlot7560\PmmpUnit\framework\TestCase;
 
 class DataProviderAttributeTest extends TestCase {

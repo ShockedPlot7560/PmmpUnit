@@ -1,11 +1,10 @@
 <?php
 
-namespace ShockedPlot7560\PmmpUnit\framework\attribute\dataProvider;
+namespace ShockedPlot7560\PmmpUnit\framework\attribute;
 
 use Attribute;
 use ReflectionClass;
 use ReflectionMethod;
-use ShockedPlot7560\PmmpUnit\framework\attribute\MethodAttributeToRunner;
 use ShockedPlot7560\PmmpUnit\framework\runner\DataProviderRunner;
 use ShockedPlot7560\PmmpUnit\framework\runner\TestRunnerInterface;
 

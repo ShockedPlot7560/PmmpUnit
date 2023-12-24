@@ -21,9 +21,9 @@ class TestResults {
 		self::$testResults[] = new FatalTest($test, $throwable);
 	}
 
-    public static function fatal(Throwable $throwable) : void {
-        self::$testResults[] = new Fatal($throwable);
-    }
+	public static function fatal(Throwable $throwable) : void {
+		self::$testResults[] = new Fatal($throwable);
+	}
 
 	/**
 	 * @return TestResult[]

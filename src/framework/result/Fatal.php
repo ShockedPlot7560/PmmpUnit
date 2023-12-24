@@ -2,17 +2,20 @@
 
 namespace ShockedPlot7560\PmmpUnit\framework\result;
 
-class Fatal implements TestResult, ThrowableResult, \Stringable {
-    public function __construct(
-        public readonly \Throwable $throwable
-    ) { }
+use Stringable;
+use Throwable;
 
-    public function getThrowable(): \Throwable {
-        return $this->throwable;
-    }
+class Fatal implements TestResult, ThrowableResult, Stringable {
+	public function __construct(
+		public readonly Throwable $throwable
+	) {
+	}
 
-    public function __toString(): string
-    {
-        return "Runtime exception";
-    }
+	public function getThrowable() : Throwable {
+		return $this->throwable;
+	}
+
+	public function __toString() : string {
+		return "Runtime exception";
+	}
 }

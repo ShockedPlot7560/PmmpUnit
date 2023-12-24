@@ -3,9 +3,8 @@
 namespace ShockedPlot7560\PmmpUnit\framework\result\printer;
 
 use Logger;
-use ShockedPlot7560\PmmpUnit\framework\result\FailedTest;
-use ShockedPlot7560\PmmpUnit\framework\result\FatalTest;
 use ShockedPlot7560\PmmpUnit\framework\result\ThrowableResult;
+use Stringable;
 
 class TestResultPrinter {
 	public function __construct(
@@ -60,7 +59,7 @@ class TestResultPrinter {
 		);
 	}
 
-	private function errorToString(ThrowableResult&\Stringable $error) : string {
+	private function errorToString(ThrowableResult&Stringable $error) : string {
 		$ret = $error->__toString() . ": ";
 		$ret .= str_replace("§", "&", $error->getThrowable()->getMessage());
 		$ret .= " (line: " . $error->getThrowable()->getLine() . ")";

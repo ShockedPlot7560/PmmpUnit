@@ -10,11 +10,10 @@ class FatalTest extends Fatal {
 		public readonly TestRunnerInterface $test,
 		Throwable $throwable
 	) {
-        parent::__construct($throwable);
+		parent::__construct($throwable);
 	}
 
-    public function __toString(): string
-    {
-        return $this->test->__toString();
-    }
+	public function __toString() : string {
+		return $this->test->__toString();
+	}
 }

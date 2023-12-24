@@ -52,21 +52,21 @@ class TestProcessor {
 
 		$this->playerManager = new TestPlayerManager($this->pmmpUnit);
 		$this->playerBag = new PlayerBag();
-        try {
-            $this->runner->onLoad();
-        } catch (Throwable $e) {
-            TestResults::fatal($e);
-            $this->finish();
-        }
+		try {
+			$this->runner->onLoad();
+		} catch (Throwable $e) {
+			TestResults::fatal($e);
+			$this->finish();
+		}
 	}
 
 	public function prepare() : void {
-        try {
-            $this->runner->onEnable();
-        } catch (Throwable $e) {
-            TestResults::fatal($e);
-            $this->finish();
-        }
+		try {
+			$this->runner->onEnable();
+		} catch (Throwable $e) {
+			TestResults::fatal($e);
+			$this->finish();
+		}
 	}
 
 	public function start() : void {
@@ -81,14 +81,15 @@ class TestProcessor {
 	}
 
 	public function stop() : void {
-        try {
-            $this->runner->onDisable();
-        } catch (Throwable $e) {
-            TestResults::fatal($e);
+		try {
+			$this->runner->onDisable();
+		} catch (Throwable $e) {
+			TestResults::fatal($e);
 
-            $this->finish(false);
-            return;
-        }
+			$this->finish(false);
+
+			return;
+		}
 		if (TestMemory::$currentTest !== null) {
 			global $lastExceptionError, $lastError;
 			$error = $lastExceptionError ?? $lastError;
