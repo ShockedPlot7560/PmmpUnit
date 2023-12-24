@@ -3,6 +3,7 @@
 namespace ShockedPlot7560\PmmpUnit\framework\result\printer;
 
 use ShockedPlot7560\PmmpUnit\framework\result\FailedTest;
+use ShockedPlot7560\PmmpUnit\framework\result\Fatal;
 use ShockedPlot7560\PmmpUnit\framework\result\FatalTest;
 use ShockedPlot7560\PmmpUnit\framework\result\SuccessTest;
 use ShockedPlot7560\PmmpUnit\framework\result\TestResult;
@@ -28,7 +29,7 @@ class TestResultsBag {
 				$this->failedTests[] = $result;
 			} elseif ($result instanceof SuccessTest) {
 				$this->passedTests[] = $result;
-			} elseif ($result instanceof FatalTest) {
+			} elseif ($result instanceof Fatal) {
 				$this->fatalErrors[] = $result;
 			}
 		}
@@ -67,7 +68,7 @@ class TestResultsBag {
 	}
 
 	public function isFatal(TestResult $result) : bool {
-		return $result instanceof FatalTest;
+		return $result instanceof Fatal;
 	}
 
 	public function isPassed(TestResult $result) : bool {

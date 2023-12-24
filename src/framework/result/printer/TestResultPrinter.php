@@ -5,6 +5,7 @@ namespace ShockedPlot7560\PmmpUnit\framework\result\printer;
 use Logger;
 use ShockedPlot7560\PmmpUnit\framework\result\FailedTest;
 use ShockedPlot7560\PmmpUnit\framework\result\FatalTest;
+use ShockedPlot7560\PmmpUnit\framework\result\ThrowableResult;
 
 class TestResultPrinter {
 	public function __construct(
@@ -59,10 +60,10 @@ class TestResultPrinter {
 		);
 	}
 
-	private function errorToString(FatalTest|FailedTest $error) : string {
-		$ret = $error->test->__toString() . ": ";
-		$ret .= str_replace("§", "&", $error->throwable->getMessage());
-		$ret .= " (line: " . $error->throwable->getLine() . ")";
+	private function errorToString(ThrowableResult&\Stringable $error) : string {
+		$ret = $error->__toString() . ": ";
+		$ret .= str_replace("§", "&", $error->getThrowable()->getMessage());
+		$ret .= " (line: " . $error->getThrowable()->getLine() . ")";
 
 		return $ret;
 	}
