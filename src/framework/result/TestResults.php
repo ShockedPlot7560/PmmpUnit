@@ -2,22 +2,22 @@
 
 namespace ShockedPlot7560\PmmpUnit\framework\result;
 
-use ShockedPlot7560\PmmpUnit\framework\RunnableTest;
+use ShockedPlot7560\PmmpUnit\framework\runner\TestRunnerInterface;
 use Throwable;
 
 class TestResults {
 	/** @var TestResult[] */
 	private static array $testResults = [];
 
-	public static function successTest(RunnableTest $test) : void {
+	public static function successTest(TestRunnerInterface $test) : void {
 		self::$testResults[] = new SuccessTest($test);
 	}
 
-	public static function failedTest(RunnableTest $test, Throwable $throwable) : void {
+	public static function failedTest(TestRunnerInterface $test, Throwable $throwable) : void {
 		self::$testResults[] = new FailedTest($test, $throwable);
 	}
 
-	public static function fatalTest(RunnableTest $test, Throwable $throwable) : void {
+	public static function fatalTest(TestRunnerInterface $test, Throwable $throwable) : void {
 		self::$testResults[] = new FatalTest($test, $throwable);
 	}
 

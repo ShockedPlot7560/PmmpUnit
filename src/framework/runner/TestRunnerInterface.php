@@ -1,11 +1,11 @@
 <?php
 
-namespace ShockedPlot7560\PmmpUnit\framework;
+namespace ShockedPlot7560\PmmpUnit\framework\runner;
 
 use React\Promise\PromiseInterface;
 use Stringable;
 
-interface RunnableTest extends Stringable {
+interface TestRunnerInterface extends Stringable {
 	/**
 	 * @phpstan-return PromiseInterface<null>
 	 */

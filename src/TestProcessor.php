@@ -3,22 +3,23 @@
 namespace ShockedPlot7560\PmmpUnit;
 
 use Logger;
+use pocketmine\utils\SingletonTrait;
 use PrefixedLogger;
 use ShockedPlot7560\PmmpUnit\framework\result\exporter\FileResultExporter;
 use ShockedPlot7560\PmmpUnit\framework\result\printer\TestResultPrinter;
 use ShockedPlot7560\PmmpUnit\framework\result\printer\TestResultsBag;
 use ShockedPlot7560\PmmpUnit\framework\result\ServerCrashedException;
 use ShockedPlot7560\PmmpUnit\framework\result\TestResults;
-use ShockedPlot7560\PmmpUnit\framework\RunnableTest;
+use ShockedPlot7560\PmmpUnit\framework\runner\TestRunner;
 use ShockedPlot7560\PmmpUnit\framework\TestMemory;
-use ShockedPlot7560\PmmpUnit\framework\TestSuite;
 use ShockedPlot7560\PmmpUnit\players\PlayerBag;
 use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
 use Throwable;
 
 class TestProcessor {
+	use SingletonTrait;
 	private Logger $logger;
-	private RunnableTest $test;
+	private TestRunner $runner;
 	private TestPlayerManager $playerManager;
 	private PlayerBag $playerBag;
 
@@ -26,6 +27,7 @@ class TestProcessor {
 		private PmmpUnit $pmmpUnit
 	) {
 		$this->logger = new PrefixedLogger($this->pmmpUnit->getServer()->getLogger(), "Integration tests");
+		self::setInstance($this);
 	}
 
 	public function setup() : void {
@@ -46,19 +48,19 @@ class TestProcessor {
 
 		$this->getLogger()->debug("Loading tests from $unitFolder");
 
-		$this->test = TestSuite::fromDirectory($unitFolder);
+		$this->runner = TestRunner::fromDirectory($unitFolder);
 
 		$this->playerManager = new TestPlayerManager($this->pmmpUnit);
 		$this->playerBag = new PlayerBag();
-		$this->test->onLoad();
+		$this->runner->onLoad();
 	}
 
 	public function prepare() : void {
-		$this->test->onEnable();
+		$this->runner->onEnable();
 	}
 
 	public function start() : void {
-		$this->test->run()
+		$this->runner->run()
 			->then(function () {
 				$this->finish();
 			})
@@ -69,7 +71,7 @@ class TestProcessor {
 	}
 
 	public function stop() : void {
-		$this->test->onDisable();
+		$this->runner->onDisable();
 		if (TestMemory::$currentTest !== null) {
 			global $lastExceptionError, $lastError;
 			$error = $lastExceptionError ?? $lastError;

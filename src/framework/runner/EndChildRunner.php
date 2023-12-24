@@ -1,15 +1,25 @@
 <?php
 
-namespace ShockedPlot7560\PmmpUnit\framework;
+namespace ShockedPlot7560\PmmpUnit\framework\runner;
 
 use pocketmine\Server;
 use React\Promise\PromiseInterface;
 use function React\Promise\resolve;
+use ReflectionClass;
+use ReflectionMethod;
+use ShockedPlot7560\PmmpUnit\framework\ExpectedExceptionHandler;
+use ShockedPlot7560\PmmpUnit\framework\TestCase;
+use ShockedPlot7560\PmmpUnit\framework\TestMemory;
 use Throwable;
 
-trait CommonTestFunctions {
-	private ExpectedExceptionHandler $expectedExceptionHandler;
+abstract class EndChildRunner implements TestRunnerInterface {
 	private ?TestCase $instance = null;
+
+	public function __construct(
+		protected ReflectionClass $class,
+		protected ReflectionMethod $method
+	) {
+	}
 
 	public function onLoad() : void {
 		if (TestMemory::$loadedClasses[$this->class->getName()] ?? false) {
@@ -105,15 +115,19 @@ trait CommonTestFunctions {
 	/**
 	 * @return PromiseInterface<null>
 	 */
-	private function invokeTest(TestCase $test) : PromiseInterface {
+	protected function invokeTest(TestCase $test) : PromiseInterface {
 		return $this->method->invoke($test);
 	}
 
-	private function getInstance(bool $regenerate = true) : TestCase {
+	protected function getInstance(bool $regenerate = true) : TestCase {
 		if ($this->instance === null || $regenerate) {
-			$this->instance = $this->class->newInstance(new ExpectedExceptionHandler($this->method));
+			$this->instance = $this->createInstance();
 		}
 
 		return $this->instance;
+	}
+
+	private function createInstance() : TestCase {
+		return $this->class->newInstance(new ExpectedExceptionHandler($this->method));
 	}
 }

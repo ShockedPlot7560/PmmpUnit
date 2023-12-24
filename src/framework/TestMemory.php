@@ -2,8 +2,10 @@
 
 namespace ShockedPlot7560\PmmpUnit\framework;
 
+use ShockedPlot7560\PmmpUnit\framework\runner\TestRunnerInterface;
+
 class TestMemory {
-	public static ?RunnableTest $currentTest = null;
+	public static ?TestRunnerInterface $currentTest = null;
 
 	/** @var array<class-string, true> */
 	public static array $loadedClasses = [];

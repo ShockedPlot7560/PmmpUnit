@@ -14,6 +14,7 @@ use pocketmine\utils\Process;
 use pocketmine\utils\SingletonTrait;
 use ReflectionClass;
 use RuntimeException;
+use ShockedPlot7560\PmmpUnit\framework\listener\TestRunnerListener;
 use ShockedPlot7560\PmmpUnit\players\PlayerBag;
 use ShockedPlot7560\PmmpUnit\players\TestPlayerManager;
 
@@ -57,6 +58,7 @@ class PmmpUnit extends PluginBase {
 	}
 
 	protected function onEnable() : void {
+		$this->getServer()->getPluginManager()->registerEvents(new TestRunnerListener(), $this);
 		$this->testProcessor->prepare();
 		$this->getScheduler()->scheduleDelayedTask(new ClosureTask(function () {
 			$this->testProcessor->start();
